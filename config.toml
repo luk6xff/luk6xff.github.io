@@ -26,7 +26,7 @@ minify_html = false
 # copied over to the `public` directory.
 # Example:
 #     ignored_content = ["*.{graphml,xlsx}", "temp.*"]
-ignored_content = ["content/books/*"]
+ignored_content = ["books/*"]
 
 # When set to "true", a feed is automatically generated.
 generate_feed = true
@@ -74,7 +74,7 @@ extra_syntaxes = []
 
 # The theme to use for code highlighting.
 # See below for list of allowed values.
-highlight_theme = "one-dark"
+highlight_theme = "visual-studio-dark"
 
 # When set to "true", emoji aliases translated to their corresponding
 # Unicode emoji equivalent in the rendered Markdown files. (e.g.: :smile: => 😄)
