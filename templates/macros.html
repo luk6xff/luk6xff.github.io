@@ -1,0 +1,195 @@
+{% macro social_links(social_config) %}
+<p>
+  {% if social_config.github %}
+  <a class="has-text-github" href="https://github.com/{{ social_config.github }}" target="_blank">
+    <span class="icon is-large" title="GitHub">
+      <i class="fab fa-github fa-lg"></i>
+    </span>
+  </a>
+  {% endif %}
+
+  {% if social_config.twitter %}
+  <a class="has-text-twitter" href="https://twitter.com/{{ social_config.twitter }}" target="_blank">
+    <span class="icon is-large" title="Twitter">
+      <i class="fab fa-twitter fa-lg"></i>
+    </span>
+  </a>
+  {% endif %}
+
+  {% if social_config.email %}
+  <a class="has-text-black" href="mailto:{{ social_config.email }}" target="_blank">
+    <span class="icon is-large" title="Email">
+      <i class="far fa-envelope fa-lg"></i>
+    </span>
+  </a>
+  {% endif %}
+
+  {% if social_config.linkedin %}
+  <a class="has-text-linkedin" href="https://www.linkedin.com/in/{{ social_config.linkedin }}" target="_blank">
+    <span class="icon is-large" title="LinkedIn">
+      <i class="fab fa-linkedin fa-lg"></i>
+    </span>
+  </a>
+  {% endif %}
+
+  {% if social_config.discord %}
+  <a class="has-text-discord" href="https://discordapp.com/users/{{ social_config.discord }}" target="_blank">
+    <span class="icon is-large" title="Discord">
+      <i class="fa-brands fa-discord"></i>
+    </span>
+  </a>
+  {% endif %}
+
+  {# Certainly not the best implementation but Tera bombs if you try to access a nonexistent key #}
+  {% if social_config.mastodon_username %}
+    {% set mastodon_username = social_config.mastodon_username %}
+  {% elif social_config.mastodon %}
+    {% set mastodon_username = social_config.mastodon %}
+  {% endif %}
+  {% if mastodon_username %}
+  <a class="has-text-mastodon" href="https://{{ social_config.mastodon_server | default(value='mastodon.social') }}/@{{ mastodon_username }}" target="_blank" rel="me">
+    <span class="icon is-large" title="Mastodon">
+      <i class="fab fa-mastodon fa-lg"></i>
+    </span>
+  </a>
+  {% endif %}
+
+  {% if social_config.bitbucket %}
+  <a class="has-text-bitbucket" href="https://bitbucket.org/{{ social_config.bitbucket }}" target="_blank">
+    <span class="icon is-large" title="Bitbucket">
+      <i class="fab fa-bitbucket fa-lg"></i>
+    </span>
+  </a>
+  {% endif %}
+
+  {% if social_config.gitlab %}
+  <a class="has-text-gitlab" href="https://gitlab.com/{{ social_config.gitlab }}" target="_blank">
+    <span class="icon is-large" title="GitLab">
+      <i class="fab fa-gitlab fa-lg"></i>
+    </span>
+  </a>
+  {% endif %}
+
+  {% if social_config.behance %}
+  <a class="has-text-behance" href="https://www.behance.net/{{ social_config.behance }}" target="_blank">
+    <span class="icon is-large" title="Behance">
+      <i class="fab fa-behance fa-lg"></i>
+    </span>
+  </a>
+  {% endif %}
+
+  {% if social_config.stackoverflow %}
+  <a class="has-text-stackoverflow" href="https://stackoverflow.com/users/{{ social_config.stackoverflow }}" target="_blank">
+    <span class="icon is-large" title="Stack Overflow">
+      <i class="fab fa-stack-overflow fa-lg"></i>
+    </span>
+  </a>
+  {% endif %}
+
+  {% if social_config.medium %}
+  <a class="has-text-medium" href="https://medium.com/@{{ social_config.medium }}" target="_blank">
+    <span class="icon is-large" title="Medium">
+      <i class="fab fa-medium fa-lg"></i>
+    </span>
+  </a>
+  {% endif %}
+
+  {% if social_config.dev %}
+  <a class="has-text-dev" href="https://dev.to/{{ social_config.dev }}" target="_blank">
+    <span class="icon is-large" title="dev.to">
+      <i class="fab fa-dev fa-lg"></i>
+    </span>
+  </a>
+  {% endif %}
+
+  {% if social_config.keybase %}
+  <a class="has-text-keybase" href="https://keybase.io/{{ social_config.keybase }}" target="_blank">
+    <span class="icon is-large" title="Keybase">
+      <i class="fab fa-keybase fa-lg"></i>
+    </span>
+  </a>
+  {% endif %}
+
+  {% if social_config.googleplay %}
+  <a href="https://play.google.com/store/apps/developer?id={{ social_config.googleplay }}&hl=en" target="_blank">
+    <span class="icon is-large" title="Google play">
+      <i class="fab fa-google-play fa-lg"></i>
+    </span>
+  </a>
+  {% endif %}
+
+  {% if social_config.youtube %}
+  <a class="has-text-youtube" href="https://www.youtube.com/c/{{ social_config.youtube }}" target="_blank">
+    <span class="icon is-large" title="YouTube">
+      <i class="fa-brands fa-youtube"></i>
+    </span>
+  </a>
+  {% endif %}
+
+  {% if config.generate_feed %}
+  <a class="has-text-rss" href="{{ config.base_url }}/{{ config.feed_filename }}" target="_blank">
+    <span class="icon is-large" title="RSS Feed">
+      <i class="fas fa-rss fa-lg"></i>
+    </span>
+  </a>
+  {% endif %}
+</p>
+{% endmacro %}
+
+{% macro page_publish_metadata(page) %}
+<span class="icon-text has-text-grey">
+  <span class="icon">
+    <i class="fas fa-user"></i>
+  </span>
+  <span>{{ config.extra.author.name }} published on</span>
+  <span class="icon">
+    <i class="far fa-calendar-alt"></i>
+  </span>
+  <span><time datetime="{{ page.date }}">{{ page.date | date(format='%B %d, %Y') }}</time></span>
+</span>
+{% endmacro %}
+
+{% macro page_content_metadata(page) %}
+<span class="icon-text has-text-grey">
+  <span class="icon">
+    <i class="far fa-clock"></i>
+  </span>
+  <span>{{ page.reading_time }} min,</span>
+  <span class="icon">
+    <i class="fas fa-pencil-alt"></i>
+  </span>
+  <span>{{ page.word_count }} words</span>
+</span>
+{% endmacro %}
+
+{% macro render_categories(categories) %}
+<p>
+  Categories:
+  {% for category in categories %}
+  <a class="has-text-info-dark has-text-weight-semibold" href="{{ get_taxonomy_url(kind='categories', name=category) }}">
+    <span class="icon-text">
+      <span class="icon">
+        <i class="fas fa-cube"></i>
+      </span>
+      <span>{{category}}</span>
+    </span>
+  </a>
+  {% endfor %}
+</p>
+{% endmacro %}
+
+{% macro render_tags(tags) %}
+<p>
+  Tags:
+  {% for tag in tags %}
+  <a class="has-text-info-dark has-text-weight-semibold" href="{{ get_taxonomy_url(kind='tags', name=tag) }}">
+    <span class="icon-text">
+      <span class="icon">
+        <i class="fas fa-tag"></i>
+      </span>
+      <span>{{tag}}</span>
+    </span>
+  </a>
+  {% endfor %}
+</p>
+{% endmacro %}

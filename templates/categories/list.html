@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="section">
+  <div class="container">
+    <div class="has-text-centered">
+      <h1 class="title is-2">
+        <span class="icon">
+          <i class="fas fa-cubes"></i>
+        </span>
+        Categories
+      </h1>
+      <p class='subtitle is-4'>{{ terms | length }} categories in total</p>
+      <p>
+        {% for category in terms %}
+        <a href="{{ get_taxonomy_url(kind='categories', name=category.name) }}" class="mr-4">
+          <span class="icon">
+            <i class="fas fa-cube"></i>
+          </span>
+          <span>{{category.name}} <sup>{{ category.pages | length }}</sup></span>
+        </a>
+        {% endfor %}
+      </p>
+    </div>
+  </div>
+</section>
+{% endblock content %}
