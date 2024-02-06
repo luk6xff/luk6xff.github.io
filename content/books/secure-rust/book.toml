@@ -1,0 +1,7 @@
+[book]
+title = "Secure Coding with Rust"
+authors = ["Lukasz Uszko"]
+language = "en"
+
+[build]
+build-dir = "book"
