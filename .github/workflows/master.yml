@@ -1,18 +1,24 @@
+name: build_and_deploy_luk6xff's_blog_on_github_pages
+
 # On every push this script is executed
-on: push
-name: Build and deploy luk6xff blog on github pages
+on: 
+ push:
+  branches:
+   - main
+
 jobs:
   build:
+    name: publish_site
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
     steps:
-      - name: checkout
+      - name: checkout_master
         uses: actions/checkout@v4
       - name: build_and_deploy
-        uses: shalzz/zola-deploy-action@v0.17.2
+        uses: shalzz/zola-deploy-action@v0.18.0
         env:
           # Target branch
           PAGES_BRANCH: master
           # Provide personal access token, or it's not needed if publishing to the same repo, use the automatic token
           TOKEN: ${{ secrets.TOKEN }}
           REPOSITORY: luk6xff/luk6xff.github.io
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
