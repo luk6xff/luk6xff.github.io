@@ -4,7 +4,7 @@ name: build_and_deploy_luk6xff's_blog_on_github_pages
 on: 
  push:
   branches:
-   - main
+   - master
 
 jobs:
   build:
