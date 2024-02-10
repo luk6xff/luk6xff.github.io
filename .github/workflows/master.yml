@@ -1,7 +1,7 @@
 name: build_and_deploy_luk6xff's_blog_on_github_pages
 
 # On every push this script is executed
-on: 
+on:
  push:
   branches:
    - master
@@ -17,7 +17,7 @@ jobs:
         uses: shalzz/zola-deploy-action@v0.18.0
         env:
           # Target branch
-          PAGES_BRANCH: master
+          PAGES_BRANCH: gh-pages
           # Provide personal access token, or it's not needed if publishing to the same repo, use the automatic token
           TOKEN: ${{ secrets.TOKEN }}
           REPOSITORY: luk6xff/luk6xff.github.io
