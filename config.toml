@@ -26,8 +26,7 @@ minify_html = false
 # copied over to the `public` directory.
 # Example:
 #     ignored_content = ["*.{graphml,xlsx}", "temp.*"]
-#ignored_content = ["content/books/*"
-ignored_content = ["books/**/, *.md"]
+ignored_content = ["**/content/books/*"]
 
 # When set to "true", a feed is automatically generated.
 generate_feed = true
