@@ -14,7 +14,8 @@ Welcome to my blog dedicated to exploring the cutting-edge of software engineeri
 ## An idea
 The blog is about sharing knowledge, from technical tutorials and programming insights to industry trends and security practices. Whether you're in the tech industry, a coding enthusiast, or curious about the digital transformation of automotive systems, this blog offers a concise look into the technologies shaping our future.
 
-Join me as we navigate the complexities of software development, uncover the potential of IoT, and tackle the challenges of cybersecurity together. Let's drive innovation, one line of code at a time.
+Join me as we navigate the complexities of software development, uncover the potential of IoT, and tackle the challenges of cybersecurity together. Let's drive innovation, one line of code at a time :)
 
-This streamlined version maintains the essence of your blog's focus and intent, while keeping the language direct and to the point.
+Happy coding!
+Lukasz
 

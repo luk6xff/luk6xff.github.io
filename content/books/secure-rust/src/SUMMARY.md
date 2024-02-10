@@ -1,6 +1,6 @@
 # Summary
 
-- [Introduction to Rust](./chapter_1.md)
+- [Short Introduction to Rust](./chapter_1.md)
 - [Memory Safety Without Garbage Collection](./chapter_2.md)
 - [Type Safety and Error Handling](./chapter_3.md)
 - [Concurrency Without Data Races](./chapter_4.md)
