@@ -23,7 +23,7 @@ Rust is a modern systems programming language, developed by mozilla and first re
 Rust presents a compelling alternative to C/C++ for systems programming, offering unparalleled memory safety, concurrency features, and modern tooling, all without sacrificing performance. While Rust's learning curve may be steeper due to its strict compiler and unique concepts like ownership and borrowing, the benefits in terms of safety and productivity are considerable. For new projects, especially those where safety and concurrency are critical, Rust is an excellent choice.
 
 
-## Rust features example
+## Rust syntax overview
 ```rust,editable
 use std::fmt::{self, Display, Formatter};
 
