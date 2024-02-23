@@ -2,7 +2,7 @@
 
 
 
-### Example 1: Buffer Overflow
+### Example 1
 * CPP - A classic buffer overflow using an array. This code compiles, but accessing arr[5] is undefined behavior,leading to a potential security vulnerability.
 ```cpp
 #include <iostream>
@@ -28,7 +28,7 @@ fn main() {
 ```
 
 
-### Example 2: Buffer Overflow
+### Example 2
 * C
 ```c
 #include <stdio.h>
@@ -52,89 +52,6 @@ fn main() {
 ```
 
 
-### Example 3: Null Pointer Dereference
-* CPP
-```cpp
-#include <stdio.h>
-
-void process(int* ptr) {
-    // Unsafe: dereferencing a null pointer leads to undefined behavior.
-    printf("%d\n", *ptr);
-}
-
-int main() {
-    int* ptr = NULL;
-    process(ptr);
-    return 0;
-}
-```
-* RUST
-```rust,editable
-fn process(ptr: Option<&i32>) {
-    match ptr {
-        Some(val) => println!("{}", val),
-        None => println!("Received a null pointer."),
-    }
-}
-
-fn main() {
-    let ptr: Option<&i32> = None;
-    process(ptr);
-}
-```
 
 
-### Example 4: Use After Free
-* CPP - This code compiles but leads to undefined behavior by accessing memory that has been freed.
-```cpp
-#include <iostream>
 
-int main() {
-    int *ptr = new int(10);
-    delete ptr;
-    // Undefined behavior: use after free
-    std::cout << *ptr << std::endl;
-    return 0;
-}
-```
-* RUST
-```rust,editable
-fn main() {
-    let ptr = Box::new(10);
-    // Memory is automatically cleaned up when `ptr` goes out of scope
-    // Attempting to use `ptr` after this point would result in a compile-time error
-    println!("{}", ptr);
-    // Rust's ownership system prevents "use after free" by design
-}
-```
-
-
-### Example 5: Dangling Pointer LU_TODO!!!!!!!!
-* CPP
-```cpp
-#include <stdio.h>
-#include <stdlib.h>
-
-int* dangling_pointer() {
-    int value = 42;
-    return &value; // Returning address of the local variable, which will be deallocated
-}
-
-int main() {
-    int* ptr = dangling_pointer();
-    printf("%d\n", *ptr); // Undefined behavior: accessing a deallocated stack frame
-    return 0;
-}
-```
-* RUST
-```rust,editable
-fn dangling_pointer() -> i32 {
-    let value = 42;
-    value // Rust allows returning the value directly, avoiding dangling pointers.
-}
-
-fn main() {
-    let val = dangling_pointer();
-    println!("{}", val); // Safe: `val` owns the data directly.
-}
-```
