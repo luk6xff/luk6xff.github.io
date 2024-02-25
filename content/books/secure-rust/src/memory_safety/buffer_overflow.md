@@ -29,29 +29,63 @@ fn main() {
 
 
 ### Example 2
-* C
-```c
-#include <stdio.h>
-#include <string.h>
+* CPP
+```cpp
+#include <iostream>
+#include <cstring>
+#include <array>
 
 int main() {
-    char buf[10];.
-    strcpy(buf, "This is way too long for the buffer");
-    printf("%s\n", buf);
+    std::array<char, 10> buf;
+    const char* input = "This is way too long for the buffer";
+
+    strncpy(buf.data(), source, strlen(source));
+    std::cout << buf.data() << std::endl;
+
     return 0;
 }
+
 ```
 * RUST
 ```rust,editable
 fn main() {
     let mut buf = [0u8; 10];
     let input = "This is way too long for the buffer".as_bytes();
-    buf.copy_from_slice(&input[0..buf.len()]); // Truncates safely
+
+    buf.copy_from_slice(&input[..input.len()]);
     println!("{:?}", &buf);
 }
 ```
 
 
+### Example 2 - Memory overrides
+* CPP
+```cpp
+#include <iostream>
+#include <cstring>
+#include <array>
+
+int main() {
+    std::array<char, 10> buf;
+    const char* input = "This is way too long for the buffer";
+
+    strncpy(buf.data(), source, strlen(source));
+    std::cout << buf.data() << std::endl;
+
+    return 0;
+}
+
+```
+* RUST
+```rust,editable
+fn main() {
+    let mut buf = [0u8; 10];
+    let input = "This is way too long for the buffer".as_bytes();
+
+    buf.copy_from_slice(&input[..input.len()]);
+    println!("{:?}", &buf);
+}
+```
 
 
 
