@@ -62,7 +62,7 @@ fn main() {
 ```
 
 
-### Example 3: Dangling pointer as a class member
+### Example 3: Dangling pointers
 * CPP
 ```cpp
 #include <iostream>
@@ -75,6 +75,7 @@ public:
 
     // Destructor to prevent memory leaks
     ~DynamicArray() {
+        std:: cout << "DTOR called"
         delete[] data;
     }
 
@@ -88,10 +89,11 @@ public:
     DynamicArray& operator=(const DynamicArray& other) {
         if (this != &other) {
             //%// First problem: Previous data is not deleted, leading to a memory leak
-            //%// Correct approach would be to delete[] data; here
-
+            //%// delete[] data;
             size = other.size;
-            data = new int[other.size];
+            data = other.data; // Problem: This leads to sharing the same data pointer
+            //%// Second problem: Previous data is not deleted, leading to a memory leak
+            //%// data = new int[other.size];
             std::memcpy(data, other.data, size * sizeof(int));
         }
         return *this;
@@ -147,14 +149,13 @@ int main() {
 
     DynamicArray arr2(5);
     arr2 = arr1; // Uses the copy assignment operator
-
-    arr1.fillWith(2); // Modifies arr1 after it has been assigned to arr2
-    arr2.print(); // Expected to print values from arr1, but may lead to undefined behavior
+    arr1.fillWith(99); // Modifies arr1 after it has been assigned to arr2
+    arr1.fillWith(33); // Modifies arr1 after it has been assigned to arr2
+    arr2.print(); // Expected to print values from arr2
 
 
     return 0;
 }
-
 ```
 
 * RUST
@@ -175,6 +176,12 @@ impl DynamicArray {
             *item = value;
         }
     }
+
+    fn print(&self) {
+        for value in self.data.iter() {
+            println!("{}", value);
+        }
+    }
 }
 
 fn main() {
@@ -187,8 +194,6 @@ fn main() {
     // arr.fill_with(0); // Uncommenting this line will not compile
 
     // arr_copy is safely used
-    for value in arr_copy.data.iter() {
-        println!("{}", value);
-    }
+    arr_copy.print();
 }
 ```
