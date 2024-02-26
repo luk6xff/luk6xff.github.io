@@ -1,4 +1,35 @@
-### Example 1: Null Pointer Dereference
+### Example 1: Dangling Pointer
+* CPP
+```cpp
+#include <iostream>
+
+int main() {
+    int* a = nullptr;
+    {
+        int b = 5;
+        a = &b;
+    }
+    // At this point, b goes out of scope, but the memory allocated to it does not
+    std::cout << "a: " << *a << std::endl;
+
+    return 0;
+}
+```
+
+
+```rust,editable
+fn main() {
+    let a;
+    {
+        let b = 5;
+        a = &b;
+    }
+    println!("a: {}", r);
+}
+```
+
+
+### Example 2: Null Pointer Dereference
 * CPP
 ```cpp
 #include <stdio.h>
@@ -31,7 +62,7 @@ fn main() {
 
 
 
-### Example 2: Dangling Pointer
+### Example 3: Dangling Pointer
 * CPP
 ```cpp
 #include <cstdio>

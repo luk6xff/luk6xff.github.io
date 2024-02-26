@@ -28,40 +28,37 @@ fn main() {
 #include <iostream>
 #include <cstring>
 #include <cstdint>
+#include <string>
+#include <functional>
 
-class MyPrivateEncryptionKey {
-public:
-    MyPrivateEncryptionKey() {
-        std::cout << "MyPrivateEncryptionKey constructor\n";
-        memset(data, 42, sizeof(data));
-    }
-
-    ~MyPrivateEncryptionKey() {
-        std::cout << "MyPrivateEncryptionKey destructor\n";
-        // Zeroize the memory to ensure sensitive data is wiped
-        //memset(data, 0, sizeof(data));
-    }
-
-    void printData() {
-        for (size_t i = 0; i < sizeof(data); ++i) {
-            std::cout << (int)data[i] << " ";
-        }
-        std::cout << "\n";
-    }
-
-private:
-    uint8_t data[8];
+struct PrivateData
+{
+  size_t hash;
+  char password[100];
 };
 
-int main() {
-    {
-        MyPrivateEncryptionKey key;
-        key.printData();
-    } // key goes out of scope here, and destructor is called with memory zeroization
+bool validatePassword(PrivateData& data)
+{
+  std::string s(data.pswd);
+  std::hash<std::string> hash_fn;
+  data.hash = hash_fn(s);
+  // Cimpare with database
+  return true;
+}
 
-    std::cout << "MyPrivateEncryptionKey object is destroyed, and memory is securely wiped.\n";
+void processPassword()
+{
+  PrivateData* data = new PrivateData();
+  std::cin >> data->m_pswd;
+  validatePassword(*data);
+  memset(data, 0, sizeof(PrivateData));
+  delete data;
+}
 
-    return 0;
+int main()
+{
+  processPassword();
+  return 0;
 }
 
 ```
