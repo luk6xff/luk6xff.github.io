@@ -1,10 +1,10 @@
-# Summary
+# Safe and Secure Coding in Rust: A Comparative Analysis of Rust and C++
 --
 * [Quick Introduction to Rust](./introduction.md)
 * [Memory Safety in Rust](./memory_safety/index.md)
     * [Buffer Overflow](./memory_safety/buffer_overflow.md)
     * [Use After Free](./memory_safety/use_after_free.md)
-    * [Dangling Pointer](./memory_safety/dangling_pointer.md)
+    * [Pointers](./memory_safety/pointers.md)
     * [Memory Leaks](./memory_safety/memory_leaks.md)
     * [Double Free](./memory_safety/double_free.md)
     * [Format String](./memory_safety/format_string.md)

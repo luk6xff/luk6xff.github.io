@@ -58,7 +58,7 @@ int main() {
     }
 }
 ```
-* RUST - `Result` and `Option`
+* RUST - `Result`
 ```rust,editable
 fn might_go_wrong() -> Result<(), String> {
     Err(String::from("Something went wrong"))
@@ -68,6 +68,39 @@ fn main() {
     match might_go_wrong() {
         Ok(_) => println!("It worked!"),
         Err(e) => println!("Error: {}", e),
+    }
+}
+```
+
+### Example 2: Result
+-> RUST
+```rust,editable
+#[derive(Debug)]
+enum CopyError {
+    LengthMismatch { src_len: usize, dst_len: usize },
+}
+
+fn safe_copy_from_slice(dst: &mut [u8], src: &[u8]) -> Result<(), CopyError> {
+    if dst.len() != src.len() {
+        Err(CopyError::LengthMismatch {
+            src_len: src.len(),
+            dst_len: dst.len()
+        })
+    } else {
+        dst.copy_from_slice(src);
+        Ok(())
+    }
+}
+
+fn main() {
+    let input = "This is way too long for the buffer".as_bytes();
+    let mut buf = [0u8; 10];
+
+    match safe_copy_from_slice(&mut buf, &input[0..buf.len()]) {
+        Ok(()) => println!("Copy successful: {:?}", &buf),
+        Err(CopyError::LengthMismatch { src_len, dst_len }) => {
+            println!("Failed to copy: source length ({}) does not match destination length ({}).", src_len, dst_len);
+        }
     }
 }
 ```
