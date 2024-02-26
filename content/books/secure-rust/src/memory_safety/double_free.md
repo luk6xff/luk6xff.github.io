@@ -2,7 +2,8 @@
 
 
 
-### Example 1: Classic double free
+### Example 1: Classic double free problem
+`https://godbolt.org/z/8Wxnxhf34`
 * CPP
 ```cpp
 #include <iostream>
@@ -10,23 +11,29 @@
 void cause_double_free() {
     int* ptr = new int(10); // Allocate memory on the heap
     delete ptr; // Correctly free memory
+    *ptr = 11;
+    std:: cout << "ptr = " << *ptr << std::endl;
     delete ptr; // Double free error: undefined behavior
+    *ptr = 12;
+    std:: cout << "ptr = " << *ptr << std::endl;
 }
 
 int main() {
     cause_double_free();
     return 0;
 }
-
 ```
+
 * RUST
 ```rust,editable
 fn cause_double_free() {
-    let ptr = Box::new(10); // Allocate memory on the heap
+    let mut ptr = Box::new(10); // Allocate memory on the heap
+    *ptr = 11;
+    println!("ptr = {}", *ptr);
     // Memory is automatically freed when `ptr` goes out of scope
 }
 
-fn main() {
+pub fn main() {
     cause_double_free();
     println!("No double free error occurred.");
 }
@@ -35,21 +42,21 @@ fn main() {
 
 
 ### Example 2: Double frre because of the manual memory management implementation issue
+`https://godbolt.org/z/fW7jvjf8e`
 * CPP
 ```cpp
 #include <iostream>
-#include <algorithm> // For std::copy
+#include <algorithm>
+#include <cstring>
 
 class DynamicArray {
 public:
-    int* data;
-    size_t size;
-
     DynamicArray(size_t size)
     : size(size)
     , data(new int[size]) {}
 
     ~DynamicArray() {
+        std::cout << "DTOR called on data: " << std::hex << data << std::endl;
         delete[] data;
     }
 
@@ -85,10 +92,34 @@ public:
         std::cout << "\n";
     }
 
-private:
+//private:
     int* data;
     size_t size;
 };
+
+
+//%// class DynamicArray {
+//%// public:
+//%//     std::vector<int> data;
+
+//%//     // Constructor initializes the vector to a specific size with a default value
+//%//     DynamicArray(size_t size, int initialValue = 0) : data(size, initialValue) {}
+
+//%//     // Method to fill the vector with a specific value
+//%//     void fillWith(int value) {
+//%//         std::fill(data.begin(), data.end(), value);
+//%//     }
+
+//%//     // Method to print the contents of the vector
+//%//     void print() const {
+//%//         for (int item : data) {
+//%//             std::cout << item << " ";
+//%//         }
+//%//         std::cout << "\n";
+//%//     }
+//%// };
+
+
 
 void cause_double_free() {
     DynamicArray arr1(10);
@@ -96,20 +127,26 @@ void cause_double_free() {
 
     DynamicArray arr2 = arr1; // Copy constructor - deep copy
     arr2.fillWith(22); // Modifies arr1 after it has been assigned to arr2
+    std::cout << "arr1: "; arr1.print(); // Expected to print values from arr1
+    std::cout << "arr2: "; arr2.print(); // Expected to print values from arr2
+
     DynamicArray arr3(5);
-    arr3 = arr2; // Uses the copy assignment operator
+    arr3 = arr2; // Copy assignment operator
     //%// Both arr1 and arr2 now share the same `data` pointer.
     arr3.fillWith(33); // Modifies arr1 after it has been assigned to arr2
-    arr2.print(); // Expected to print values from arr2
-    arr3.print(); // Expected to print values from arr3
+
+    std::cout << "Adresses:" << std::hex << " arr1:" << arr1.data << " arr2:" << arr2.data << " arr3:" << arr3.data  <<  std::endl;
+    std::cout << "arr1: "; arr1.print(); // Expected to print values from arr1
+    std::cout << "arr2: "; arr2.print(); // Expected to print values from arr2
+    std::cout << "arr3: "; arr3.print(); // Expected to print values from arr3
 }
 
 int main() {
-    cause_double_free(); // This will lead to a double free error when arr1 and arr2 are destructed.
+    cause_double_free(); // This will lead to a double free error when arr2 and arr3 are destructed.
     return 0;
 }
-
 ```
+
 * RUST
 ```rust,editable
 struct DynamicArray {
@@ -130,22 +167,20 @@ impl DynamicArray {
     }
 
     fn print(&self) {
-        for value in self.data.iter() {
-            println!("{}", value);
-        }
+        println!("{:?}", self.data);
     }
 }
 
-fn main() {
-    let mut arr = DynamicArray::new(10);
-    arr.fill_with(11);
+pub fn main() {
+    let mut arr1 = DynamicArray::new(10);
+    arr1.fill_with(11);
 
-    let arr_copy = arr; // Ownership is moved to arr_copy, arr is no longer valid
+    let arr2 = arr1; // Ownership is moved to arr2, arr1 is no longer valid
 
-    // Trying to use `arr` here would result in a compile-time error
-    // arr.fill_with(0); // Uncommenting this line will not compile
+    // Trying to use `arr1` here would result in a compile-time error
+    //arr1.fill_with(0); // Uncommenting this line will not compile
 
-    // arr_copy is safely used
-    arr_copy.print();
+    // arr2 is safely used
+    arr2.print();
 }
 ```
