@@ -1,3 +1,13 @@
++++
+title="GEF - A better GDB"
+date=2023-10-18
+
+[taxonomies]
+categories = ["tools","cybersecurity"]
+tags = ["tools","cybersecurity"]
++++
+
+
 # A Simple Guide to Using GEF for Debugging
 
 Debugging is like being a detective for software, where you hunt for clues to fix problems in code. GEF makes this detective work easier and more effective, especially when you're dealing with tricky bugs or trying to understand how a program really works. Let's break down how GEF can help you and how to get started with it.

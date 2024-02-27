@@ -23,7 +23,6 @@ presentation/
     ├── chapter_4.md
     ├── chapter_5.md
     ├── chapter_6.md
-    ├── chapter_7.md
     ├── SUMMARY.md
     └── conclusion.md
 ```
@@ -32,7 +31,7 @@ presentation/
 This file contains metadata about your book. For simplicity, here's a basic example:
 ```toml
 [book]
-title = "Secure Coding with Rust"
+title = "Your mdBook name"
 authors = ["Your Name"]
 language = "en"
 
@@ -45,30 +44,29 @@ This file outlines the structure of your book. It links all chapters together.
 ```md
 # Summary
 
-- [Introduction to Rust](./chapter_1.md)
-- [Memory Safety Without Garbage Collection](./chapter_2.md)
-- [Type Safety and Error Handling](./chapter_3.md)
-- [Concurrency Without Data Races](./chapter_4.md)
-- [Zero-Cost Abstractions](./chapter_5.md)
-- [Safe Abstraction of Unsafe Code](./chapter_6.md)
-- [Ecosystem and Community Support](./chapter_7.md)
+- [Intro](./chapter_1.md)
+- [How to program in C](./chapter_2.md)
+- [How to program in C++](./chapter_3.md)
+- [How to program in Java](./chapter_4.md)
+- [How to program in Rust](./chapter_5.md)
+- [How to program in Python](./chapter_6.md)
 - [Conclusion](./conclusion.md)
 ```
 
 ### Step 3: Chapter Files
-Each chapter file (chapter_1.md, chapter_2.md, etc.) will contain the content for that section of the presentation. Here's an example for the first chapter:
+Each chapter file (chapter_1.md, chapter_2.md, etc.) will contain the markdown content for that section of the presentation. Here's an example for the first chapter:
 ```md
-# Introduction to Rust
+# Intro
 
-Rust is a modern systems programming language focusing on safety, speed, and concurrency. It aims to provide memory safety without garbage collection, and concurrency without data races. Rust achieves these goals through a set of ownership rules, checked at compile time, without sacrificing performance.
+Hey It's my book written in `markdown`.
 
 ## Background and Motivation
 
-Developed by Mozilla and first released in 2010, Rust has grown rapidly in popularity, offering a viable alternative to traditional systems programming languages like C and C++. Its design eliminates common bugs found in these languages, such as null pointer dereferences, buffer overflows, and memory leaks.
+I was very motivated to create markdown stuff.
 
-## Comparison with C/C++
+## Conclussion
 
-Unlike C and C++, Rust enforces memory safety at compile time. This means many of the common vulnerabilities in C/C++ programs, such as use-after-free errors and data races, are caught before the code is even run. This drastically reduces the potential for security vulnerabilities in Rust programs.
+All is fine in my **book**.
 
 ```
 Continue creating Markdown files for each chapter following the outline, filling in the content as necessary.
@@ -92,4 +90,4 @@ mdbook serve
 This command starts a local web server. You can view your book by visiting http://localhost:3000 in your web browser.
 
 ## Summary
-This setup gives you a solid foundation to create a comprehensive mdBook for your presentation on Rust :)
+This setup gives you a solid foundation to create a comprehensive mdBook for your presentation :)
