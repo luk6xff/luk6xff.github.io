@@ -40,11 +40,11 @@ int main() {
     char entered_username[MAX_PASSWD_LENGTH];
     char entered_password[MAX_PASSWD_LENGTH];
 
-    printf("Enter username: ");
+    printf("Enter username:");
     fgets(entered_username, sizeof(entered_username), stdin);
     printf("Hello dear user: %c...\n", entered_username);
 
-    printf("Enter password: ");
+    printf("Enter password:");
     fgets(entered_password, sizeof(entered_password), stdin);
     entered_password[strcspn(entered_password, "\n")] = '\0'; // Remove newline character
     // Simulate reading from database ...
