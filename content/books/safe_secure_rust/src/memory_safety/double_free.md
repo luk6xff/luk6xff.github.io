@@ -1,9 +1,9 @@
-# Buffer Overflow
+# Double Free
 
 
 
 ### Example 1: Classic double free problem
-`https://godbolt.org/z/8Wxnxhf34`
+[GODBOLT](https://godbolt.org/z/8Wxnxhf34)
 * CPP
 ```cpp
 #include <iostream>
@@ -41,8 +41,8 @@ pub fn main() {
 
 
 
-### Example 2: Double frre because of the manual memory management implementation issue
-`https://godbolt.org/z/fW7jvjf8e`
+### Example 2: Double free because of the manual memory management implementation issue
+[GODBOLT](https://godbolt.org/z/fW7jvjf8e)
 * CPP
 ```cpp
 #include <iostream>

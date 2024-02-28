@@ -10,7 +10,7 @@ Rust is a modern systems programming language, developed by mozilla and first re
 - **Ecosystem and Tooling:** Rust offers a growing ecosystem with Cargo, its package manager and build system, and Crates.io, a repository of libraries (crates) that extend Rust's capabilities. Rust's tooling also includes robust documentation, format, and linting tools, making development in Rust productive and enjoyable.
 - **Memory Safety Without Garbage Collection:** Rust achieves memory safety without needing a garbage collector, making it suitable for performance-critical applications where controlling resource use is essential.
 
-### Comparison with C/C++
+## Comparison with C/C++
 
 - **Memory Safety:** Unlike C and C++, Rust enforces memory safety at compile time. This means many of the common vulnerabilities in C/C++ programs, such as use-after-free errors and data races, are caught before the code is even run. Rust's compiler enforces ownership and borrowing rules that prevent use-after-free, double-free, and null dereference errors that are common in C/C++. This drastically reduces the potential for security vulnerabilities in Rust programs.
 - **Concurrency:** Rust's approach to concurrency is safer and more straightforward, thanks to its ownership model, which prevents data races at compile time. In contrast, C/C++ requires developers to manage synchronization primitives manually, which is error-prone.
@@ -19,7 +19,7 @@ Rust is a modern systems programming language, developed by mozilla and first re
 - **Runtime Performance:** Rust and C/C++ offer comparable runtime performance. Rust's zero-cost abstractions mean that, in theory, anything written in C/C++ could be written in Rust without sacrificing speed.
 - **Community and Ecosystem:** C/C++ has been around for decades, leading to a vast ecosystem and a wide range of applications, from operating systems to game development. Rust is newer but has seen rapid growth in its community and ecosystem, with increasing adoption in systems programming, web assembly, and embedded systems.
 
-### Conclusion
+## Conclusion
 Rust presents a compelling alternative to C/C++ for systems programming, offering unparalleled memory safety, concurrency features, and modern tooling, all without sacrificing performance. While Rust's learning curve may be steeper due to its strict compiler and unique concepts like ownership and borrowing, the benefits in terms of safety and productivity are considerable. For new projects, especially those where safety and concurrency are critical, Rust is an excellent choice.
 
 

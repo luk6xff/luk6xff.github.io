@@ -29,7 +29,7 @@ fn main() {
 
 
 ### Example 2
-`https://godbolt.org/z/3x8arhnad`
+[GODBOLT](https://godbolt.org/z/3x8arhnad)
 
 * CPP
 ```cpp
