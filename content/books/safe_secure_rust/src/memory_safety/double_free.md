@@ -73,8 +73,7 @@ public:
             //%// First problem: Previous data is not deleted, leading to a memory leak
             //%// delete[] data;
             size = other.size;
-            data = other.data; // Problem: This leads to sharing the same data pointer
-            //%// Second problem: Previous data is not deleted, leading to a memory leak
+            data = other.data; //%// Second problem: This leads to sharing the same data pointer
             //%// data = new int[other.size];
             std::memcpy(data, other.data, size * sizeof(int));
         }
