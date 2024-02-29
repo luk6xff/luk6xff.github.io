@@ -28,7 +28,7 @@ fn main() {
 ```
 
 
-### Example 2
+### Example 2 - strncpy overflow
 [GODBOLT](https://godbolt.org/z/3x8arhnad)
 
 * CPP
@@ -60,32 +60,53 @@ fn main() {
 ```
 
 
-### Example 2 - Memory overrides
+
+### Example 3 - Buffer overflow- undefined behavior
+[GODBOLT](https://godbolt.org/z/bPYveYdTz)
+
 * CPP
 ```cpp
 #include <iostream>
 #include <cstring>
 #include <array>
 
-int main() {
-    std::array<char, 10> buf;
-    const char* input = "This is way too long for the buffer";
+constexpr size_t k_bufSize = 5;
+const std::array<char, k_bufSize> buf = {'A', 'B', 'C', 'D', 'E'};
 
-    strncpy(buf.data(), source, strlen(source));
-    std::cout << buf.data() << std::endl;
+bool exists_in_buffer(char v)
+{
+    // return true in one of the first 4 iterations or UB due to out-of-bounds access
+    for (auto i = 0; i <= k_bufSize; ++i) {
+        if (buf[i] == v)
+            return true;
+    }
 
-    return 0;
+    return false;
 }
 
+int main() {
+    std::cout << exists_in_buffer('\0') << std::endl;
+    return 0;
+}
 ```
+
 * RUST
 ```rust,editable
-fn main() {
-    let mut buf = [0u8; 10];
-    let input = "This is way too long for the buffer".as_bytes();
+const K_BUF_SIZE: usize = 5;
+const BUF: [char; K_BUF_SIZE] = ['A', 'B', 'C', 'D', 'E'];
 
-    buf.copy_from_slice(&input[..input.len()]);
-    println!("{:?}", &buf);
+fn exists_in_buffer(v: char) -> bool {
+    // Iterate over each element in the buffer
+    for i in 0..K_BUF_SIZE+1 {
+        if BUF[i] == v {
+            return true;
+        }
+    }
+    false
+}
+
+pub fn main() {
+    println!("{}", exists_in_buffer('\0'));
 }
 ```
 
