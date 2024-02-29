@@ -16,7 +16,9 @@ std::mutex mtx; // mutex for critical section
 
 void print_block(int n, char c) {
     mtx.lock();
-    for (int i = 0; i < n; ++i) { std::cout << c; }
+    for (int i = 0; i < n; ++i) {
+        std::cout << c;
+    }
     std::cout << '\n';
     mtx.unlock();
 }
@@ -24,31 +26,42 @@ void print_block(int n, char c) {
 int main() {
     std::vector<std::thread> threads;
     for (int i = 0; i < 5; ++i) {
-        threads.push_back(std::thread(print_block, 50, '*'));
+        threads.push_back(std::thread(print_block, 10, '*'+i));
     }
-    for (auto& th : threads) th.join();
+    for (auto& th : threads) {
+        th.join();
+    }
 }
 ```
+
 * RUST - Compile-Time Thread Safety
 ```rust,editable
 use std::sync::{Mutex, Arc};
 use std::thread;
 
-fn main() {
-    let counter = Arc::new(Mutex::new(0));
-    let mut handles = vec![];
+fn print_block(n: u32, c: char, mtx: Arc<Mutex<()>>) {
+    let _guard = mtx.lock().unwrap(); // Lock the mutex
 
-    for _ in 0..5 {
-        let counter = Arc::clone(&counter);
-        let handle = thread::spawn(move || {
-            let mut num = counter.lock().unwrap();
-            *num += 1;
-        });
-        handles.push(handle);
+    for _ in 0..n {
+        print!("{}", c);
+    }
+    println!();
+} // Mutex is automatically released when _guard goes out of scope
+
+fn main() {
+    let mtx = Arc::new(Mutex::new(())); // Create a Mutex
+
+    let mut threads = vec![];
+    for i in 0..5 {
+        let c = (b'*' + i) as char; // Calculate the character based on ASCII value
+        let mtx_clone = Arc::clone(&mtx); // Create a clone of the Mutex for each thread
+        threads.push(thread::spawn(move || {
+            print_block(10, c, mtx_clone); // Pass the cloned Mutex to the thread
+        }));
     }
 
-    for handle in handles {
-        handle.join().unwrap();
+    for th in threads {
+        th.join().unwrap();
     }
 }
 ```
