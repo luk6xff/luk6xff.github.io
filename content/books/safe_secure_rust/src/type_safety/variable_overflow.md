@@ -1,7 +1,7 @@
 # Variable Overflow
 
-### Example 1: Simple overflow
-[GODBOLT](https://godbolt.org/z/bbW69EG8x)
+### Example 1:
+[GODBOLT](https://godbolt.org/z/MdKh7seP4)
 * CPP
 ```cpp
 #include <iostream>
@@ -24,6 +24,7 @@ pub fn main() {
     let a: u8 = 200;
     let b: u8 = 100;
     let c: u8 = a + b;
+    #//let c: u8 = a.wrapping_add(b)
     println!("c: {}", c);
 }
 ```
