@@ -1,1 +1,0 @@
-# Ecosystem and Community Support
