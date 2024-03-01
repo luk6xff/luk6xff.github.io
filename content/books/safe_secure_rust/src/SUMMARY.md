@@ -15,7 +15,6 @@
     * [variable_overflow](./type_safety/variable_overflow.md)
 * [Concurrency Without Data Races](./concurrency/index.md)
     * [Threads](./concurrency/threads.md)
-* [Zero-Cost Abstractions](./chapter_5.md)
 * [Safe Abstraction of Unsafe Code](./chapter_6.md)
 * [Security Features](./security_features.md)
 * [Cybersecurity Utilities](./cybersecurity_utils/index.md)
