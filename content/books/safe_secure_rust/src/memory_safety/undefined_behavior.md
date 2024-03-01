@@ -57,6 +57,7 @@ pub fn main() {
 
 
 ### Example 2 - Lambdas - Dangling Reference
+[GODBOLT](https://godbolt.org/z/fqWr4coff)
 * CPP
     - Capturing local variables by reference in a lambda that outlives the scope of those variables typically leads to a dangling reference. Accessing a dangling reference is undefined behavior because the variable it refers to no longer exists.
 ```cpp
