@@ -53,3 +53,52 @@ pub fn main() {
     println!("{:?}", res);
 }
 ```
+
+
+
+### Example 2 - Lambdas - Dangling Reference
+* CPP
+    - Capturing local variables by reference in a lambda that outlives the scope of those variables typically leads to a dangling reference. Accessing a dangling reference is undefined behavior because the variable it refers to no longer exists.
+```cpp
+#include <iostream>
+
+auto f() {
+    int v = 42;
+    return [&]() {
+    //%//return [=]() mutable {
+        v += 100;
+        return v;
+    };
+}
+
+int main() {
+    auto res = f();
+    std::cout << res() << std::endl;
+    return 0;
+}
+```
+
+* RUST
+    - Rust's design inherently prevents the creation of dangling references or captures by ensuring that any captured variables live as long as the closure itself. This is achieved through Rust's ownership and borrowing rules, which enforce compile-time checks for lifetimes and ownership.
+```rust,editable
+fn f() -> impl Fn() -> i32 {
+    let v = 42;
+    || {
+        // This will not compile because `v` does not live long enough
+        v + 100
+    }
+}
+
+#// Rust forces us to use Captured Variables by Value
+#// fn f() -> impl Fn() -> i32 {
+#//     let v = 42;
+#//     {
+#//         v + 100
+#//     }
+#// }
+
+pub fn main() {
+    let res = f();
+    println!("{}", res());
+}
+```
