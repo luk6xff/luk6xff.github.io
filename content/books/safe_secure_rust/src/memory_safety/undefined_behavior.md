@@ -103,3 +103,36 @@ pub fn main() {
     println!("{}", res());
 }
 ```
+
+
+### Example 3 - Maybe not undefined but weird std::map operator [] behavior
+[GODBOLT](https://godbolt.org/z/3cs69Tfjj)
+* CPP
+    - When you use the indexing operator ([]) on a std::map in C++ to access an element by its key, and if that key does not exist in the map, a new element with that key will be automatically created and initialized to its default value.
+```cpp
+#include <iostream>
+#include <map>
+#include <string>
+
+int main() {
+    std::map<std::string, int> ids_map;
+    ids_map["id1"] = 12;
+    std::cout << ids_map["id2"] << std::endl;
+    return 0;
+}
+```
+
+* RUST
+    - If "id2" does not exist in ids_map, it will be inserted with a default value of 0, and then the value is printed. This approach is idiomatic in Rust and provides a safe and explicit way to handle potential missing keys in HashMaps.
+```rust,editable
+use std::collections::HashMap;
+
+pub fn main() {
+    let mut ids_map = HashMap::new();
+    ids_map.insert("id1".to_string(), 12);
+
+    // Using entry() and or_insert() to insert a default value for "id2" if it doesn't exist
+    let id2_value = ids_map.entry("id2".to_string()).or_insert(0);
+    println!("{}", id2_value);
+}
+```
