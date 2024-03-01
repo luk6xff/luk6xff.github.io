@@ -2,6 +2,7 @@
 --
 * [Quick Introduction to Rust](./introduction.md)
 * [Memory Safety in Rust](./memory_safety/index.md)
+    * [Undefined Behavior](./memory_safety/undefined_behavior.md)
     * [Buffer Overflow](./memory_safety/buffer_overflow.md)
     * [Use After Free](./memory_safety/use_after_free.md)
     * [Pointers](./memory_safety/pointers.md)
