@@ -106,7 +106,7 @@ pub fn main() {
 
 
 ### Example 3 - Maybe not undefined but weird std::map operator [] behavior
-[GODBOLT](https://godbolt.org/z/3cs69Tfjj)
+[GODBOLT](https://godbolt.org/z/vnajbza4z)
 * CPP
     - When you use the indexing operator ([]) on a std::map in C++ to access an element by its key, and if that key does not exist in the map, a new element with that key will be automatically created and initialized to its default value.
 ```cpp
@@ -114,10 +114,30 @@ pub fn main() {
 #include <map>
 #include <string>
 
+//%// using EngineConfigMap = std::map<std::string, int>;
+
+//%// class EngineController {
+
+//%// public:
+//%//     EngineController(const EngineConfigMap& config)
+//%//     : m_config(config)
+//%//     {
+//%//         std::cout << "Initializing with default config: \n"
+//%//                 << "max_temp: " << m_config["timeout"] << std::endl
+//%//                 << "max_rpm: " << m_config["max_rpm"] << std::endl;
+//%//     }
+//%// private:
+//%//     EngineConfigMap m_config;
+//%// };
+
 int main() {
     std::map<std::string, int> ids_map;
     ids_map["id1"] = 12;
     std::cout << ids_map["id2"] << std::endl;
+
+    //%// EngineConfigMap empty_config;
+    //%// EngineController ec(empty_config);
+
     return 0;
 }
 ```

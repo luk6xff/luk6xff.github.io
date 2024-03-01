@@ -1,7 +1,8 @@
 # Uninitialized Variables
 
 ### Example 1
-[GODBOLT](https://godbolt.org/z/K4Mn3fzGf)
+    - [AR, Rule 9.1] The value of an object shouldn't be read if it hasn't been written
+[GODBOLT](https://godbolt.org/z/dbP1br3eP)
 
 * CPP
 ```cpp
@@ -13,7 +14,7 @@ bool foo() {
     if (var > 0) {
         return true;
     }
-    return 0;
+    return false;
 }
 
 int main() {
@@ -23,18 +24,16 @@ int main() {
 
 * RUST
 ```rust,editable
-fn foo() -> isize {
+fn foo() -> bool {
     let var: isize;
 
     if var > 0 {
-        return 1;
+        return true;
     }
-    return 0;
+    return false;
 }
 
 pub fn main() {
     println!("{}\n", foo());
 }
 ```
-
-* [AR, Rule 9.1] The value of an object shouldn't be read if it hasn't been written
