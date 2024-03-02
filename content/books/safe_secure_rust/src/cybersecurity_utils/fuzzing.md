@@ -25,17 +25,34 @@ rustup default stable
 
 
 
-### 2. **honggfuzz-rs**
+### 2. **afl.rs**
+- [DEMO](https://github.com/luk6xff/luk6xff.github.io/tree/master/content/books/safe_secure_rust/src/cybersecurity_utils/fuzzing/fuzz_afl)
+- **GitHub:** [https://github.com/rust-fuzz/afl.rs](https://github.com/rust-fuzz/afl.rs)
+- **Description:** `afl.rs` is a Rust wrapper around American Fuzzy Lop (AFL), one of the most popular fuzzers available. AFL is known for its efficiency in generating test cases that uncover deeply hidden bugs. `afl.rs` makes AFL's capabilities available to Rust projects, enabling developers to leverage AFL's fuzzing techniques to improve the security and reliability of their Rust code.
+- **Usage:**
+```sh
+cd fuzzing
+# Install cargo-afl
+cargo install cargo-afl
+cargo new --bin wc-tool-fuzz-afl-target
+cd wc-tool-fuzz-afl-target
+# Modify `fuzzing/wc-tool-fuzz-afl-target/Cargo.toml` by adding:
+# [dependencies]
+# afl = "*"
+# url = "*"
+
+# Modify `fuzzing/wc-tool-fuzz-afl-target/src/main.rs`
+# Build project
+cargo afl build
+# Start fuzzing
+cargo afl fuzz -i in -o out target/debug/wc-tool-fuzz-afl-target
+```
+
+
+### 3. **honggfuzz-rs**
 
 - **GitHub:** [https://github.com/rust-fuzz/honggfuzz-rs](https://github.com/rust-fuzz/honggfuzz-rs)
 - **Description:** `honggfuzz-rs` allows Rust developers to use `honggfuzz`, a security-oriented fuzzer with powerful analysis options, to fuzz their Rust code. It provides features like automatic crash detection, memory leak detection, and coverage-guided fuzzing to help identify vulnerabilities. `honggfuzz-rs` integrates with Rust projects to make the fuzzing process as straightforward as possible.
-
-
-### 3. **afl.rs**
-
-- **GitHub:** [https://github.com/rust-fuzz/afl.rs](https://github.com/rust-fuzz/afl.rs)
-- **Description:** `afl.rs` is a Rust wrapper around American Fuzzy Lop (AFL), one of the most popular fuzzers available. AFL is known for its efficiency in generating test cases that uncover deeply hidden bugs. `afl.rs` makes AFL's capabilities available to Rust projects, enabling developers to leverage AFL's fuzzing techniques to improve the security and reliability of their Rust code.
-
 
 ### 4. **proptest**
 
