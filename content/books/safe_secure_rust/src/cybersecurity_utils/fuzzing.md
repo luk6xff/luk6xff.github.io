@@ -8,6 +8,7 @@ Fuzz testing, or fuzzing, is a powerful automated software testing technique tha
 - **GitHub:** [https://github.com/rust-fuzz/cargo-fuzz](https://github.com/rust-fuzz/cargo-fuzz)
 - **Description:** `cargo-fuzz` is a command-line tool for fuzzing Rust code. It is built on top of `libFuzzer`, which is a library for in-process, coverage-guided evolutionary fuzzing of other libraries. `cargo-fuzz` makes it easy to start fuzzing a Rust project by integrating with Cargo, Rust's package manager and build system. It automatically sets up the fuzzing target and provides a straightforward way to run the fuzzer on your code. This project requires the nightly compiler since it uses the -Z compiler flag (`-Zsanitizer=address`) to provide address sanitization.
 - **Usage:**
+Based on: https://rust-fuzz.github.io/book/introduction.html
 ```sh
 cd fuzzing
 # Set up rust nightly version
@@ -30,6 +31,7 @@ rustup default stable
 - **GitHub:** [https://github.com/rust-fuzz/afl.rs](https://github.com/rust-fuzz/afl.rs)
 - **Description:** `afl.rs` is a Rust wrapper around American Fuzzy Lop (AFL), one of the most popular fuzzers available. AFL is known for its efficiency in generating test cases that uncover deeply hidden bugs. `afl.rs` makes AFL's capabilities available to Rust projects, enabling developers to leverage AFL's fuzzing techniques to improve the security and reliability of their Rust code.
 - **Usage:**
+Based on: https://rust-fuzz.github.io/book/introduction.html
 ```sh
 cd fuzzing
 # Install cargo-afl
