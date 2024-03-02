@@ -16,6 +16,7 @@
     * [variable_overflow](./type_safety/variable_overflow.md)
 * [Concurrency Without Data Races](./concurrency/index.md)
     * [Threads](./concurrency/threads.md)
+    * [Message Passing](./concurrency/message_passing.md)
     * [Is SharedPtr thread safe](./concurrency/is_shared_pointer_thread_safe.md)
 * [Safe Abstraction of Unsafe Code](./unsafe/index.md)
     * [Unsafe usage examples](./unsafe/unsafe_examples.md)

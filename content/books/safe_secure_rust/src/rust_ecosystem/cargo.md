@@ -1,7 +1,7 @@
-### Cargo (`rust_ecosystem/cargo.md`)
+# Cargo
 
 ---
-
+[DEMO](https://github.com/luk6xff/luk6xff.github.io/tree/master/content/books/safe_secure_rust/src/rust_ecosystem/)
 **Cargo** is Rust's build system and package manager. It handles downloading libraries, compiling packages, and more.
 
 **Creating a New Project:**
@@ -75,12 +75,6 @@ cargo publish
 (Note: You'll need to create an account on crates.io and obtain an API token first.)
 
 ---
-Certainly! Here's an expansion of the Cargo section to include `cargo test`, `cargo clippy`, `cargo fix`, and `cargo fmt`, which are essential tools for writing clean, efficient, and error-free Rust code.
-
-### Expanded Cargo (`rust_ecosystem/cargo.md`)
-
----
-
 **Testing with Cargo:**
 
 `cargo test` runs all unit tests, integration tests, and documentation tests in your Rust project. Rust makes it easy to write tests by annotating functions with `#[test]`, and `cargo test` automatically finds and executes these tests.
@@ -94,7 +88,6 @@ This command compiles your code in test mode and runs the specified tests. To ru
 ```sh
 cargo test test_name
 ```
-LU_TODO -> PROVIDE simple project with EXAMPLES!
 
 **Linting with Clippy:**
 
