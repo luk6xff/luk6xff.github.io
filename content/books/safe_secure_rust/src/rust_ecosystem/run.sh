@@ -26,7 +26,8 @@ case $SUBCOMMAND in
         ;;
     fix)
         echo "Running cargo fix..."
-        cargo fix --broken-code --allow-dirty --all-targets
+        #cargo fix --broken-code --allow-dirty --all-targets
+        cargo clippy --fix
         ;;
     fmt)
         echo "Running rustfmt..."
