@@ -1,0 +1,11 @@
+[package]
+name = "wc_tool"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "wc_tool_lib"
+path = "src/lib.rs"
+
+[dependencies]
+cargo-fuzz = "0.12.0"

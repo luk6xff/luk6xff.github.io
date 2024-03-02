@@ -1,0 +1,28 @@
+[package]
+name = "wc_tool-fuzz"
+version = "0.0.0"
+publish = false
+edition = "2021"
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+libfuzzer-sys = "0.4"
+
+[dependencies.wc_tool]
+path = ".."
+
+[[bin]]
+name = "fuzz_target_1"
+path = "fuzz_targets/fuzz_target_1.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "fuzz_wc_tool"
+path = "fuzz_targets/fuzz_wc_tool.rs"
+test = false
+doc = true
+bench = false
