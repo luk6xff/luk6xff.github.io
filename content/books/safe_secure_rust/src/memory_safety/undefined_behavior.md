@@ -105,7 +105,71 @@ pub fn main() {
 ```
 
 
-### Example 3 - Maybe not undefined but weird std::map operator [] behavior
+### Example 3 - Dangling iterators
+[GODBOLT](https://godbolt.org/z/vnajbza4z)
+* CPP
+    - Erasing elements from a container (e.g., using erase method) invalidates iterators pointing to the erased elements and potentially beyond, depending on the container type.
+```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+
+int main() {
+    std::vector<int> v = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    auto it_beg = v.begin();
+    auto it = v.begin() + 4;
+    auto it_last = v.end();
+    v.erase(it);                  // 'it' is invalidated
+    std::cout << "1) it_beg: "<< *it_beg << " it: " << *it << " it_last: " << *it_last << std::endl;  // Accessing 'it_s' now leads to undefined behavior
+    v.erase(it_beg);
+    std::cout << "2) it_beg: "<< *it_beg << " it: " << *it << " it_last: " << *it_last << std::endl;  // Accessing 'it_s' now leads to undefined behavior
+    v.erase(it);
+    std::cout << "3) it_beg: "<< *it_beg << " it: " << *it << " it_last: " << *it_last << std::endl;  // Accessing 'it_s' now leads to undefined behavior
+    // v.erase(it);
+    // std::cout << "4) it_beg: "<< *it_beg << " it: " << *it << " it_last: " << *it_last << std::endl;  // Accessing 'it_s' now leads to undefined behavior
+    // v.erase(it);
+    // std::cout << "5) it_beg: "<< *it_beg << " it: " << *it << " it_last: " << *it_last << std::endl;  // Accessing 'it_s' now leads to undefined behavior
+    // v.erase(it);
+    // std::cout << "6) it_beg: "<< *it_beg << " it: " << *it << " it_last: " << *it_last << std::endl;  // Accessing 'it_s' now leads to undefined behavior
+    // v.erase(it);
+    // std::cout << "7) it_beg: "<< *it_beg << " it: " << *it << " it_last: " << *it_last << std::endl;  // Accessing 'it_s' now leads to undefined behavior
+    return 0;
+}
+```
+
+* RUST
+```rust,editable
+pub fn main() {
+    let mut v = vec![0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+    v.remove(4); // This is analogous to v.erase(it) in C++
+
+    // Safe accesses using `get`
+    println!("1) it_beg: {:?}, it: {:?}, it_last: {:?}", v.get(0), v.get(4), v.get(v.len()));
+
+    v.remove(0); // Removes the first element, shifting all others left
+    println!("2) it_beg: {:?}, it: {:?}, it_last: {:?}", v.get(0), v.get(4), v.get(v.len()));
+
+    // Attempt to remove an element at a now-invalid index (handled safely)
+    // This line would panic if we directly indexed, but with `get` we can see it returns `None`
+    match v.get(4) {
+        Some(&element) => {
+            v.remove(4); // Safe if element exists
+            println!("Element at index 4 removed");
+        },
+        None => println!("No element at index 4, cannot remove"),
+    }
+
+    println!("3) it_beg: {:?}, it: {:?}, it_last: {:?}", v.get(0), v.get(4), v.get(v.len()));
+
+    #//v.remove(9); // Removes the first element, shifting all others left
+}
+```
+
+
+
+
+### Example 4 - Maybe not undefined but weird std::map operator [] behavior
 [GODBOLT](https://godbolt.org/z/vnajbza4z)
 * CPP
     - When you use the indexing operator ([]) on a std::map in C++ to access an element by its key, and if that key does not exist in the map, a new element with that key will be automatically created and initialized to its default value.
