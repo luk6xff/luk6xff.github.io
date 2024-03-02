@@ -8,3 +8,8 @@
 
 - **GitHub:** [https://github.com/BurntSushi/ripgrep](https://github.com/BurntSushi/ripgrep)
 - **Description:** While not a cybersecurity tool per se, ripgrep is a line-oriented search tool that recursively searches the current directory for a regex pattern. It's incredibly fast and respects your `.gitignore` files. Security professionals often use tools like ripgrep for searching through codebases, logs, or configurations for sensitive data leaks or patterns indicative of security issues.
+- **Demo:**
+```sh
+time grep -R "main" ~/
+time rg "main" ~/
+```
