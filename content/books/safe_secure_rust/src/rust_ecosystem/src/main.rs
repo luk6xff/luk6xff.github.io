@@ -41,8 +41,7 @@ impl Car {
         self.distance += distance;
     }
 
-    pub fn get_distance(&self) -> u32
-    {
+    pub fn get_distance(&self) -> u32 {
         self.distance
     }
 
@@ -59,7 +58,10 @@ fn main() {
     car.accelerate(20);
     car.update_fuel_used(5.0);
     car.update_distance(100);
-    println!("Fuel efficiency: {:.2} litres per 100 km", car.calculate_fuelEfficiency());
+    println!(
+        "Fuel efficiency: {:.2} litres per 100 km",
+        car.calculate_fuelEfficiency()
+    );
 }
 
 #[cfg(test)]

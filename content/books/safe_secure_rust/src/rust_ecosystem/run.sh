@@ -5,7 +5,7 @@ set -e
 
 # Check for subcommand
 if [ "$#" -ne 1 ]; then
-    echo "Usage: ./run.sh [run|test|lint|fix|format]"
+    echo "Usage: ./run.sh [run|test|lint|fix|fmt]"
     exit 1
 fi
 
@@ -26,15 +26,15 @@ case $SUBCOMMAND in
         ;;
     fix)
         echo "Running cargo fix..."
-        cargo fix --allow-dirty
+        cargo fix
         ;;
-    format)
+    fmt)
         echo "Running rustfmt..."
         cargo fmt
         ;;
     *)
         echo "Invalid subcommand: $SUBCOMMAND"
-        echo "Usage: ./run.sh [test|lint|fix|format]"
+        echo "Usage: ./run.sh [test|lint|fix|fmt]"
         exit 1
         ;;
 esac
