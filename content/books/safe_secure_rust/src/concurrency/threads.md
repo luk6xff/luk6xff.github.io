@@ -82,16 +82,18 @@ pub fn main() {
 #include <memory>
 
 int main() {
-    auto counter = std::make_shared<std::pair<std::mutex, int>>(std::mutex{}, 0); // Pair of mutex and int for safe concurrent access
+    auto counter = 0;
+    //%//auto counter = std::make_shared<int>(0); // Shared counter
+    std::mutex mutex;
+
     std::vector<std::thread> handles;
 
     for (int i = 0; i < 2; ++i) {
-        // Copy of the shared pointer to ensure the lifetime of the counter across threads
-        auto counter_copy = counter;
-        std::thread handle([counter_copy]() {
+        //%//auto counter_copy = counter;
+        std::thread handle([&counter, &mutex]() {
             for (int j = 0; j < 1000000; ++j) {
-                std::lock_guard<std::mutex> lock(counter_copy->first); // Lock the mutex
-                counter_copy->second += 1;
+                //%//std::lock_guard<std::mutex> lock(mutex); // Lock the mutex
+                counter += 1;
             }
         });
         handles.push_back(std::move(handle)); // Store the thread handle
@@ -103,10 +105,8 @@ int main() {
     }
 
     // Safely access the counter one last time to print the final value
-    {
-        std::lock_guard<std::mutex> lock(counter->first);
-        std::cout << "Final counter value: " << counter->second << std::endl;
-    }
+    std::lock_guard<std::mutex> lock(mutex);
+    std::cout << "Final counter value: " << counter << std::endl;
 
     return 0;
 }
@@ -143,10 +143,6 @@ pub fn main() {
     println!("Final counter value: {}", counter);
 }
 ```
-
-
-
-&lt;
 
 
 
