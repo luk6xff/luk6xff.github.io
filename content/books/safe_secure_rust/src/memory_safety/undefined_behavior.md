@@ -106,7 +106,7 @@ pub fn main() {
 
 
 ### Example 3 - Dangling iterators
-[GODBOLT](https://godbolt.org/z/vnajbza4z)
+[GODBOLT](https://godbolt.org/z/c7rsTj7cP)
 * CPP
     - Erasing elements from a container (e.g., using erase method) invalidates iterators pointing to the erased elements and potentially beyond, depending on the container type.
 ```cpp
