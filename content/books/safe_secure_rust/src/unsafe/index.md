@@ -3,6 +3,7 @@
 ## Introduction
 
 Writing safe abstractions over unsafe code is a common pattern in systems programming, where performance and control over low-level details are critical. Both C++ and Rust allow programmers to write such code, but they approach safety, unsafety, and abstraction differently. C++ offers a lot of freedom with implicit trust in the programmer, while Rust provides a more structured approach, making unsafe operations explicit and encapsulating them within safe abstractions.
+Rust is designed to be safe by default, it acknowledges that unsafe operations are sometimes necessary for low-level systems programming. Rust requires that such operations be explicitly marked with the `unsafe keyword`, isolating unsafe code and making it easier to review and audit.
 
 ## C++: Managing Safety Manually
 

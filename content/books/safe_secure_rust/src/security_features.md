@@ -1,4 +1,4 @@
-# Rust Security Features
+# Rust Compiler Security Features
 
 Rust utilizes compiler and operating system security features such as:
 * Stack canaries
