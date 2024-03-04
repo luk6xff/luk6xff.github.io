@@ -1,4 +1,4 @@
-# Safe and Secure Coding in Rust: A Comparative Analysis of Rust and C++
+# Safe and Secure Coding in Rust: A Comparative Analysis of Rust and C/C++
 --
 * [Quick Introduction to Rust](./intro/index.md)
     * [Rsut Safety Features](./intro/safety_features_overview.md)
