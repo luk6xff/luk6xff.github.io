@@ -5,7 +5,7 @@ set -e
 
 # Check for subcommand
 if [ "$#" -ne 1 ]; then
-    echo "Usage: ./run.sh [run|test|lint|fix|fmt]"
+    echo "Usage: ./run.sh [run|test|lint|fix|fmt|audit|auditable]"
     exit 1
 fi
 
@@ -36,10 +36,17 @@ case $SUBCOMMAND in
     audit)
         echo "Auditing dependencies..."
         cargo audit
+        #cargo audit --fix
+        ;;
+    auditable)
+        echo "Make Auditable binaries dependencies..."
+        cargo install cargo-auditable
+        cargo auditable build --release
+        cargo audit bin target/release/car_project
         ;;
     *)
         echo "Invalid subcommand: $SUBCOMMAND"
-        echo "Usage: ./run.sh [test|lint|fix|fmt|audit]"
+        echo "Usage: ./run.sh [run|test|lint|fix|fmt|audit|auditable]"
         exit 1
         ;;
 esac
