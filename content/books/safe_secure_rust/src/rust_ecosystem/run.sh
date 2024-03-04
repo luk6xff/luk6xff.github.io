@@ -33,9 +33,13 @@ case $SUBCOMMAND in
         echo "Running rustfmt..."
         cargo fmt
         ;;
+    audit)
+        echo "Auditing dependencies..."
+        cargo audit
+        ;;
     *)
         echo "Invalid subcommand: $SUBCOMMAND"
-        echo "Usage: ./run.sh [test|lint|fix|fmt]"
+        echo "Usage: ./run.sh [test|lint|fix|fmt|audit]"
         exit 1
         ;;
 esac
