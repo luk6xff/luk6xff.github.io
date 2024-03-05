@@ -29,15 +29,12 @@ cargo audit bin target/release/car_project
 # Check for the `dep-v0` section
 readelf -S target/release/car_project
 readelf -p .dep-v0 target/release/car_project
-# Decompress zlib content
+# Decompress zlib section content
 objdump -s -j .dep-v0 target/release/car_project | grep '^ ' | cut -c7-42 | xxd -r -p | python3 -c "import sys, zlib; sys.stdout.buffer.write(zlib.decompress(sys.stdin.buffer.read()))"
-
 ```
 
 
-
-
-## Compiler
+### Compiler
 Rust utilizes compiler and operating system security features such as:
 * Stack canaries
 * Address Space Layout Randomization (ASLR)

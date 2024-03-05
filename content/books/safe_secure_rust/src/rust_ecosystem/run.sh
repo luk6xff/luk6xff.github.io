@@ -35,8 +35,9 @@ case $SUBCOMMAND in
         ;;
     audit)
         echo "Auditing dependencies..."
+        cargo install cargo-audit --features=fix
         cargo audit
-        #cargo audit --fix
+        cargo audit fix --dry-run
         ;;
     auditable)
         echo "Make Auditable binaries dependencies..."
