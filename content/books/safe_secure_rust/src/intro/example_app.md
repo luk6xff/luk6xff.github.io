@@ -174,7 +174,7 @@ fn main() {
                 break;
             }
             factor = factor * 2;
-            thread::sleep(Duration::from_millis(100)); // Simulate data sent every 00ms
+            thread::sleep(Duration::from_millis(100)); // Simulate data sent every 100ms
         }
     });
 
