@@ -8,33 +8,59 @@ Rust's compiler is designed with safety as a primary goal, employing several key
 
 Rust's unique approach to memory management is enforced at compile time through its ownership and borrowing system, which eliminates a wide array of bugs related to memory usage, such as dangling pointers, double frees, and memory leaks.
 
-### Example: Ownership
-
+### Example: Ownership 1
+[GODBOLT](https://godbolt.org/z/89PPW7oT6)
 ```rust,editable
 fn main() {
-    let s1 = String::from("hello");
-    let s2 = s1; // s1's ownership is moved to s2
-    // println!("{}, world!", s1); // This line would cause a compile-time error
+    let a: String = String::from("Hello");
+    let b = a; // a's ownership is moved to b
+    println!("{}", b);
+    // println!("{}", a); // This line would cause a compile-time error
 }
 ```
 
-In this example, the ownership of the string `s1` is moved to `s2`. Attempting to use `s1` after this point results in a compile-time error, preventing use-after-move bugs.
+### Example: Ownership 2
+```rust,editable
+fn greet(name: String) {
+    println!("Hello {name}")
+}
 
-### Example: Borrowing
+fn main() {
+    let name = String::from("Tom");
+    greet(name);
+    // greet(name);
+}
+```
 
+In this example, the ownership of the string `a` is moved to `b`. Attempting to use `a` after this point results in a compile-time error, preventing use-after-move bugs.
+
+### Example: Borrowing 1
 ```rust,editable
 fn main() {
-    let s1 = String::from("hello");
-    let len = calculate_length(&s1); // s1 is borrowed
-    println!("The length of '{}' is {}.", s1, len); // s1 can still be used here
+    let a = String::from("Hello");
+    let len = calculate_length(&a); // a is borrowed
+    println!("The length of '{}' is {}.", a, len); // a can still be used here
 }
 
 fn calculate_length(s: &String) -> usize {
     s.len()
 }
 ```
+Here, `a` is borrowed by `calculate_length`, allowing `a` to be used afterward because it wasn't moved but merely borrowed.
 
-Here, `s1` is borrowed by `calculate_length`, allowing `s1` to be used afterward because it wasn't moved but merely borrowed.
+### Example: Borrowing 2
+```rust,editable
+fn main() {
+    let a = String::from("Hello");
+    let len = calculate_length(&a); // a is borrowed
+    println!("The length of '{}' is {}.", a, len); // a can still be used here
+}
+
+fn calculate_length(s: &String) -> usize {
+    s.len()
+}
+```
+Here, `a` is borrowed by `calculate_length`, allowing `a` to be used afterward because it wasn't moved but merely borrowed.
 
 
 
@@ -88,18 +114,18 @@ Rust's ownership and type system ensure safe concurrency, preventing data races 
 ### Example: Safe Concurrency
 
 ```rust,editable
+use std::sync::{Arc, atomic::{AtomicUsize, Ordering}};
 use std::thread;
-use std::sync::Arc;
 
 fn main() {
-    let counter = Arc::new(0);
+    let counter = Arc::new(AtomicUsize::new(0));
     let mut handles = vec![];
 
     for _ in 0..10 {
-        let counter = Arc::clone(&counter);
+        let counter_clone = Arc::clone(&counter);
         let handle = thread::spawn(move || {
-            let val = *counter; // Safe access to shared state
-            // Update counter safely (omitted for brevity)
+            // Safely increment the counter
+            counter_clone.fetch_add(1, Ordering::Relaxed);
         });
         handles.push(handle);
     }
@@ -107,9 +133,10 @@ fn main() {
     for handle in handles {
         handle.join().unwrap();
     }
+
+    println!("Counter: {}", counter.load(Ordering::Relaxed));
 }
 ```
-
 This example uses `Arc` (Atomic Reference Counting) to safely share and access data across threads.
 
 
