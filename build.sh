@@ -16,11 +16,11 @@ while getopts ":bs" opt; do
     b)
       echo "Start building the blog site..." 1>&2
       # Build the static other directories
-      mdbook build /app/content/books/safe_secure_rust || { echo "Error: Failed to build safe_secure_rust mdbook" 1>&2; exit 1; }
-      cp -r /app/content/books/safe_secure_rust/book /app/static/other/safe_secure_rust_book
+      SECURE_RUST_BOOK_NAME="safe_secure_rust_book"
+      mdbook build /app/content/other/${SECURE_RUST_BOOK_NAME} || { echo "Error: Failed to build ${SECURE_RUST_BOOK_NAME} mdbook" 1>&2; exit 1; }
+      cp -r /app/content/other/${SECURE_RUST_BOOK_NAME}/book /app/static/other/${SECURE_RUST_BOOK_NAME}
       # Build the blog site
       zola build || { echo "Error: Failed to build blog site." 1>&2; exit 1; }
-
       ;;
     s)
       echo "Start serving the blog site..." 1>&2

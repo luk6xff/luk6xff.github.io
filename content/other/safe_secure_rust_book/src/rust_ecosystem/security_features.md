@@ -5,7 +5,7 @@
 The Rust compiler, combined with Cargo, Rust's package manager, provides tools for auditing dependencies for known vulnerabilities. This is crucial for maintaining the security of Rust applications, given the extensive use of external crates.
 
 #### cargo audit
-- DEMO: Run `run.sh audit` in [DEMO](https://github.com/luk6xff/luk6xff.github.io/tree/master/content/books/safe_secure_rust/examples/rust_ecosystem/)
+- DEMO: Run `run.sh audit` in [DEMO](https://github.com/luk6xff/luk6xff.github.io/tree/master/content/other/safe_secure_rust_book/examples/rust_ecosystem/cargo)
 The `cargo audit` command checks your Cargo.lock file against the [RustSec Advisory Database](https://rustsec.org/advisories/) to find vulnerable package versions, helping you keep dependencies up-to-date and secure.
 ```sh
 # Install
@@ -16,7 +16,7 @@ cargo audit fix
 ```
 
 #### cargo auditable
-- DEMO: Run `run.sh auditable` in [DEMO](https://github.com/luk6xff/luk6xff.github.io/tree/master/content/books/safe_secure_rust/examples/rust_ecosystem/)
+- DEMO: Run `run.sh auditable` in [DEMO](https://github.com/luk6xff/luk6xff.github.io/tree/master/content/other/safe_secure_rust_book/examples/rust_ecosystem/cargo)
 `cargo auditable` - is a Rust tool that enhances security by embedding dependency information directly into compiled binaries. This allows for auditing Rust binaries for known vulnerabilities without needing the original source code or Cargo.lock file. By including auditable as a dependency in your Cargo.toml, the compilation process automatically incorporates a summary of all project dependencies into the resulting binary. This works by embedding data about the dependency tree in JSON format into a dedicated linker section of the compiled executable (`.dep-v0`). Linux, Windows and Mac OS are officially supported.
 ```sh
 # Install
@@ -34,10 +34,10 @@ objdump -s -j .dep-v0 target/release/car_project | grep '^ ' | cut -c7-42 | xxd 
 ```
 
 
-### Compiler
+## Compiler
 
-#### Sanitizers
-- DEMO: Run `run.sh` in [DEMO](https://github.com/luk6xff/luk6xff.github.io/tree/master/content/books/safe_secure_rust/examples/rust_ecosystem/compiler_flags)
+### Sanitizers
+- DEMO: Run `run.sh` in [DEMO](https://github.com/luk6xff/luk6xff.github.io/tree/master/content/other/safe_secure_rust_book/examples/rust_ecosystem/compiler_flags)
 Rust compiler supports use of one of following sanitizers:
 
 - **AddressSanitizer**: A memory error detector. It can detect the following types of bugs:
@@ -94,19 +94,16 @@ cargo run -Zbuild-std --target x86_64-unknown-linux-gnu
 ```
 
 
-#### Rust Compiler and Operating System Security Features
+### Rust Compiler exploit mitigations
+The Rust programming language offers memory and thread safety through features like ownership, references, borrowing, and slices. However, Unsafe Rust introduces constructs such as unsafe blocks, functions, methods, traits, and types, which bypass Rust's safety guarantees.
 
-Rust, leveraging the power of LLVM for its backend, also introduces several compiler and operating system security features, enhancing the safety and robustness of Rust applications:
+Certain parts of the Rust standard library are built on top of unsafe code, potentially leading to memory corruption vulnerabilities. Moreover, Rust encourages creating safe abstractions over unsafe code, which may give a false sense of security if the unsafe code isn't thoroughly reviewed and tested.
 
-- **Ownership and Borrowing**: At its core, Rust's ownership model, combined with borrowing rules, ensures memory safety and prevents data races, making many classes of bugs at compile time rather than runtime.
-
-- **Stack Canaries, ASLR (Address Space Layout Randomization), and DEP (Data Execution Prevention)**: Rust utilizes these operating system mechanisms to harden applications against common attack vectors like buffer overflows and execution of malicious payloads.
-
-- **Type System and Match Statements**: Rust's strict type system and exhaustive match statements reduce errors related to uninitialized variables and unhandled cases, further contributing to the overall security of Rust applications.
+Unsafe Rust introduces features that lack memory and thread safety guarantees, making programs or libraries susceptible to memory corruption (CWE-119) and concurrency issues (CWE-557). To address this, Rust compiler needs to support exploit mitigations similar to those found in modern C and C++ compilers. This part details these exploit mitigations and their application in Rust.
 
 
 
-By integrating these LLVM-based tools and Rust-specific features, developers can achieve a high level of security and reliability in their applications, from low-level system components to high-level application logic. Rust's emphasis on safety, combined with the advanced security features provided by LLVM, offers a comprehensive toolkit for building secure software.
-* Stack canaries
-* Address Space Layout Randomization (ASLR)
-* Data Execution Prevention (DEP) to make exploiting buffer overflows more difficult.
+
+
+
+

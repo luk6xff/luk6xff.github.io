@@ -2,7 +2,7 @@
 
 ### Example 1:
 - [GODBOLT](https://godbolt.org/z/dnEv48hnh)
-- [DEMO](https://github.com/luk6xff/luk6xff.github.io/tree/master/content/books/safe_secure_rust/examples/concurrency/is_shared_pointer_thread_safe)
+- [DEMO](https://github.com/luk6xff/luk6xff.github.io/tree/master/content/other/safe_secure_rust_book/examples/concurrency/is_shared_pointer_thread_safe)
 * CPP
     - Thread Safety of std::shared_ptr: The std::shared_ptr named counter is passed safely to multiple threads, demonstrating the thread-safe nature of creating and destroying std::shared_ptr copies. The reference count is managed correctly, ensuring the Counter object's lifetime is managed safely across threads.
     - Lack of Thread Safety in Object Access: The Counter::increment method is called concurrently by multiple threads without synchronization. Since incrementing the value member variable is not an atomic operation, this leads to a race condition, and the final value of counter is likely to be less than the expected 100,000 due to missed increments.

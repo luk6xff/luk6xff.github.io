@@ -1,7 +1,7 @@
 # Cargo
 
 ---
-- [DEMO](https://github.com/luk6xff/luk6xff.github.io/tree/master/content/books/safe_secure_rust/examples/rust_ecosystem/)
+- [DEMO](https://github.com/luk6xff/luk6xff.github.io/tree/master/content/other/safe_secure_rust_book/examples/rust_ecosystem/cargo)
 **Cargo** is Rust's build system and package manager. It handles downloading libraries, compiling packages, and more.
 
 **Creating a New Project:**
@@ -110,7 +110,7 @@ cargo clippy
 `cargo fix` automatically applies fixes to your code for warnings or errors identified by the Rust compiler. This tool is incredibly useful for automatically resolving certain types of compiler warnings and for easing the transition when upgrading to a new Rust edition.
 
 To run `cargo fix`:
-
+cargo
 ```sh
 cargo fix
 ```
