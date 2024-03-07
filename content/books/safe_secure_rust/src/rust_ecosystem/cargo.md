@@ -1,7 +1,7 @@
 # Cargo
 
 ---
-[DEMO](https://github.com/luk6xff/luk6xff.github.io/tree/master/content/books/safe_secure_rust/src/rust_ecosystem/)
+- [DEMO](https://github.com/luk6xff/luk6xff.github.io/tree/master/content/books/safe_secure_rust/examples/rust_ecosystem/)
 **Cargo** is Rust's build system and package manager. It handles downloading libraries, compiling packages, and more.
 
 **Creating a New Project:**

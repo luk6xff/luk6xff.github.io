@@ -1,6 +1,6 @@
 ### Example 1: Simple Memory Leak
 - [GODBOLT](https://godbolt.org/z/beGf1Mn9a)
-- [DEMO](https://github.com/luk6xff/luk6xff.github.io/tree/master/content/books/safe_secure_rust/src/memory_safety/memory_leaks)
+- [DEMO](https://github.com/luk6xff/luk6xff.github.io/tree/master/content/books/safe_secure_rust/examples/memory_safety/memory_leaks)
 * CPP
 ```cpp
 #include <iostream>

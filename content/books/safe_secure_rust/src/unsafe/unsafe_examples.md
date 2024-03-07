@@ -10,7 +10,7 @@ fn main() {
     let raw_pointer: *const u32 = &42;
 
     unsafe {
-        assert!(*raw_p == 42);
+        println!("*raw_p = {}", *raw_p);
     }
 }
 ```
