@@ -101,8 +101,16 @@ Certain parts of the Rust standard library are built on top of unsafe code, pote
 
 Unsafe Rust introduces features that lack memory and thread safety guarantees, making programs or libraries susceptible to memory corruption (CWE-119) and concurrency issues (CWE-557). To address this, Rust compiler needs to support exploit mitigations similar to those found in modern C and C++ compilers. This part details these exploit mitigations and their application in Rust.
 
-
-
+Summary of exploit mitigations supported by the Rust compiler:
+- Position-independent executable (enabled by default)
+- Integer overflow checks
+- Non-executable memory regions
+- Stack clashing protection
+- Read-only relocations and immediate binding
+- Heap corruption protection
+- Stack smashing protection
+- Forward-edge control flow protection
+- Backward-edge control flow protection (e.g., shadow and safe stack)
 
 
 
