@@ -77,6 +77,7 @@ I have a following code simulating buffer overflow issue:
 #include <iostream>
 #include <string>
 #include <cstring>
+#include <limits>
 
 void admin_panel() {
     std::cout << "<<< Setting up Admin Panel >>>" << std::endl;
@@ -90,25 +91,21 @@ void store_credentials_into_db(const char* buf, size_t buf_len) {
     // Store data ...
 }
 
-bool process_credentials() {
-    std::cout << "> ";
+void process_credentials() {
+    std::cout << ">";
     std::flush(std::cout);
 
     char buffer[128];
-    std::string input;
-    if (std::getline(std::cin, input)) {
-        std::strncpy(buffer, input.c_str(), input.size());
-        buffer[sizeof(buffer) - 1] = '\0';
-        store_credentials_into_db(buffer, sizeof(buffer));
-    }
+    std::cin >> buffer;
+    buffer[sizeof(buffer) - 1] = '\0';
+    store_credentials_into_db(buffer, sizeof(buffer));
+}
+
+int main() {
+    process_credentials();
     return 0;
 }
 
-int main(int argc, char** argv) {
-    process_credentials();
-    // Do more here ...
-    return 0;
-}
 ```
 Debugging the provided C++ code with GEF (GDB Enhanced Features) will allow you to understand the execution flow, examine variables, and potentially identify vulnerabilities or logical errors. Below are steps on how to debug this C++ program using GEF, focusing on key points like setting breakpoints, stepping through the code, and inspecting the memory and variables.
 
@@ -129,11 +126,11 @@ gdb -q ./build/credentials_demo
 - Check the binary security flags by `checksec`:
 ```gdb
 checksec
-    Canary                        : ✓ (value: 0xfbed5f409ca75900)
-    NX                            : ✓
-    PIE                           : ✓
+    Canary                        : ✘
+    NX                            : ✘
+    PIE                           : ✘
     Fortify                       : ✘
-    RelRO                         : Full
+    RelRO                         : Partial
 elf-info
     Magic                 : 7f 45 4c 46
     Class                 : 0x2 - ELF_64_BITS
@@ -172,7 +169,7 @@ r
 When brakpoint is reached, print the address of the stack pointer which contain the return address of `process_credentials` function. It will be used to overrite it with `admin_panel` address.
 ```gdb
 i r $rsp
-    rsp            0x7fffffffd828      0x7fffffffd828
+    rsp            0x7fffffffd838      0x7fffffffd838
 ```
 
 #### Step 6: Step Through the Code
@@ -181,10 +178,9 @@ Use the `next` or `n` command to step through the code line by line. If you want
 
 #### Step 6: Inspect Variables and Memory
 
-As you reach the `std::getline` and subsequent `std::strncpy` calls, you can inspect the contents of `buffer` and other variables:
-
-- To print the value of `input`: `print input`
-- Find the memory address of the `buffer` array: `p &buffer[0]`
+As you reach the `std::cin` call, you can inspect the contents of `buffer` and other variables:
+- If you want to dereference all the stack entries inside a function context (on a 64bit architecture): `p ($rbp - $rsp)/8`
+- Find the memory address of the `buffer` array: `p &buffer[0]`= 0x7fffffffd7b0
 - To examine the content of `buffer`: `x/128c buffer`
 
 #### Step 7: Continue Execution
@@ -197,13 +193,11 @@ continue
 
 #### Step 8: Experiment with Inputs
 
-If you're analyzing the program for vulnerabilities, you might try inputs that could potentially overflow `buffer` or otherwise manipulate the program's flow. Since the `std::strncpy` does not automatically null-terminate the string when the source size is equal to the destination size, it might lead to unexpected behavior if `input.size()` is greater than or equal to `128`. However, this code null-terminates the buffer explicitly, so a classic buffer overflow might not be directly exploitable.
+If you're analyzing the program for vulnerabilities, you might try inputs that could potentially overflow `buffer` or otherwise manipulate the program's flow. Run
 
 #### Step 9: Utilize GEF Commands for Deeper Analysis
 
 GEF provides commands that are particularly useful for security analysis:
-
-- `checksec` to check the binary's security properties.
 - `pattern create` and `pattern search` to test for buffer overflows.
 - `heap bins` to inspect the heap state if dynamic memory allocation is used elsewhere in the program.
 
@@ -211,11 +205,13 @@ GEF provides commands that are particularly useful for security analysis:
 
 Once you're done debugging, you can quit GEF with the `quit` command.
 
-### Note
+### More commands
+All the available GEF commands available [here](https://hugsy.github.io/gef-extras/commands/assemble/).
 
-While this guide provides a generic walkthrough of debugging with GEF, the specific paths you take and the insights you gain will depend on the program's complexity, the nature of the bugs or vulnerabilities you're looking for, and the particularities of your debugging session. Remember that effective debugging and vulnerability analysis often require a mixture of automated tools, manual inspection, and creative thinking.
+### Bonus
+I've also developed an exploit for the provided code using insights from gef. You can locate it [here](https://github.com/luk6xff/luk6xff.github.io/tree/master/content/other/code/gef_tool/exploit_cpp.py). Please remember to customize the addresses, specifically process_credentials_ret_addr and buffer_addr, to match those on your system."
 
 ## Conclusion
+GEF is like a supercharged version of GDB that makes debugging less of a headache. It's packed with features that give you a clearer view of your program and help you find and fix bugs more efficiently. Whether you're a new developer or have been coding for years, GEF is a valuable tool to add to your software debugging toolkit.
 
-GEF is like a supercharged version of GDB that makes debugging less of a headache. It's packed with features that give you a clearer view of your program and help you find and fix bugs more efficiently. Whether you're a new developer or have been coding for years, GEF is a valuable tool to add to your software debugging toolkit. Give it a try, and see how it can help you become a better software detective.
-
+Happy hacking!
