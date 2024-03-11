@@ -15,7 +15,8 @@ while getopts ":bs" opt; do
   case ${opt} in
     b)
       echo "Start building the blog site..." 1>&2
-      # Build the static other directories
+      # Build the static other directory
+      # Build the safe and secure rust book
       SECURE_RUST_BOOK_NAME="safe_secure_rust_book"
       mdbook build /app/content/other/${SECURE_RUST_BOOK_NAME} || { echo "Error: Failed to build ${SECURE_RUST_BOOK_NAME} mdbook" 1>&2; exit 1; }
       cp -r /app/content/other/${SECURE_RUST_BOOK_NAME}/book /app/static/other/${SECURE_RUST_BOOK_NAME}

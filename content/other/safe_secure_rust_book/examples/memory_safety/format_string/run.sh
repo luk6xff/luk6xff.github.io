@@ -14,9 +14,10 @@ make
 # GDB
 #https://github.com/hugsy/gef-legacy/blob/master/docs/commands.md
 # gdb -q format_string_debug
-# #---
-# disassemble main
-# b *main +46
+# b *(&authenticate_admin)
+# c
+# i r $rsp           # print stack pointer, it will contain authenticate_admin return address
+# p &entered_name[0] # entered name buffer addr
 # r
 
 
