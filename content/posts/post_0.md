@@ -4,7 +4,7 @@ date=2020-03-13
 
 [taxonomies]
 categories = ["Hello Post"]
-tags = ["cpp", "rust"]
+tags = []
 +++
 
 
