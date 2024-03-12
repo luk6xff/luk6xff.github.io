@@ -8,8 +8,8 @@ tags = ["esp32","arduino", "hw"]
 +++
 
 # A Supercharged LED Clock
-Today, we're diving into one of my latest projects that's perfect for anyone who loves building and coding. It's an LED clock, but not your average timekeeper. This one boasts features like weather updates, automatic time adjustments, and even a web interface for tweaking things on the fly. Let's break down what makes this clock tick (literally).
-Note: All the pictures, videos and schematics to be found in the [project's GitHub repository](https://github.com/luk6xff/led-clock/tree/master).
+Today, we're diving into one of my latest small projects that's perfect for anyone who loves building and coding. It's an LED clock, but not your average timekeeper. This one offers features like weather updates, automatic time adjustments, and even a web interface for tweaking things on the fly. Let's break down what makes this clock tick (literally).
+Note: All the pictures, videos and schematics to be found in the [project's GitHub repository](https://github.com/luk6xff/led-clock/tree/master)
 
 ## Tech Toolbox
 * **ESP32 Microcontroller:** The ESP32 boasts dual cores and real-time operating system (FreeRTOS) capabilities, allowing for smoother multitasking and handling complex tasks efficiently.
