@@ -8,7 +8,7 @@ tags = []
 +++
 
 
-# The Zeroth post
+## The Zeroth post
 Welcome to my blog dedicated to exploring the cutting-edge of software engineering within the realms of automotive systems, the Internet of Things (IoT), and cybersecurity. As a software engineer deeply embedded in the automotive industry, I've carved out a niche at the intersection of technology and motion, leveraging the power of programming languages like C++, Rust, Python, and Go to drive innovation and secure the future of mobility.
 
 ## An idea

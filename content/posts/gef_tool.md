@@ -8,7 +8,7 @@ tags = ["tools","cybersecurity"]
 +++
 
 
-# A Simple Guide to Using GEF for Debugging
+## A Quick Guide to Using GEF for Debugging
 
 Debugging is like being a detective for software, where you hunt for clues to fix problems in code. GEF makes this detective work easier and more effective, especially when you're dealing with tricky bugs or trying to understand how a program really works. Let's break down how GEF can help you and how to get started with it.
 
@@ -124,7 +124,7 @@ cd gef_tool && ./build.sh
 gdb -q ./build/credentials_demo
 ```
 - Check the binary security flags by `checksec`:
-```gdb
+```sh
 checksec
     Canary                        : ✘
     NX                            : ✘
@@ -153,22 +153,22 @@ elf-info
 
 Set breakpoints at key functions to inspect their behavior. For instance, you might want to break at `process_credentials` to observe how input is handled and at `admin_panel` to see if it's possible to reach that function.
 
-```gdb
-b *(&process_credentials)
-b *(&admin_panel)
+```sh
+(gef) b *(&process_credentials)
+(gef) b *(&admin_panel)
 ```
 
 #### Step 4: Run the Program
 
 Start the program within GEF by typing `r` or `run`. The program will start and stop at the first breakpoint.
-```gdb
+```sh
 r
 ```
 
 ### Step 5: Find the `ret` address of the `process_credentials` function
 When brakpoint is reached, print the address of the stack pointer which contain the return address of `process_credentials` function. It will be used to overrite it with `admin_panel` address.
-```gdb
-i r $rsp
+```sh
+(gef) i r $rsp
     rsp            0x7fffffffd838      0x7fffffffd838
 ```
 
@@ -187,8 +187,8 @@ As you reach the `std::cin` call, you can inspect the contents of `buffer` and o
 
 After inspecting the variables at the first breakpoint, continue execution to see if the second breakpoint (`admin_panel`) is hit.
 
-```gdb
-continue
+```sh
+(gef) continue
 ```
 
 #### Step 8: Experiment with Inputs

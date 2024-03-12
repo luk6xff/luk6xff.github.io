@@ -8,7 +8,7 @@ tags = ["rust"]
 +++
 
 
-# How to create a presentation using mdBook
+## How to create a presentation using mdBook
 Creating an mdBook for your presentation involves organizing the content into Markdown files structured in a way that mdBook can compile into a book format.
 
 ## A book format
