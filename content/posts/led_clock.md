@@ -1,10 +1,10 @@
 +++
-title="Led clock"
+title="Led Clock"
 date=2021-07-18
 
 [taxonomies]
 categories = ["electronics"]
-tags = ["esp32","arduino", "hw"]
+tags = ["esp32","arduino", "hw", "cpp", "rtos"]
 +++
 
 ## A Supercharged LED Clock
