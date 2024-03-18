@@ -22,6 +22,8 @@ bool is_limit_reached(int speed_limit) {
         //%// delete ptr; // Correct way to deallocate memory
         return true;
     }
+
+    delete ptr;
     return false;
 }
 
