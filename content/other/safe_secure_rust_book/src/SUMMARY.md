@@ -1,6 +1,7 @@
 # Safe and Secure Coding in Rust: A Comparative Analysis of Rust and C/C++
 --
 * [Quick Introduction to Rust](./intro/index.md)
+    * [Short Rust Overview](./intro/rust_overview.md)
     * [Rust Safety Features](./intro/safety_features_overview.md)
     * [Example Application](./intro/example_app.md)
 * [Memory Safety in Rust](./memory_safety/index.md)
