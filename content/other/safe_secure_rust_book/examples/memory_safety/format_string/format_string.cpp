@@ -80,7 +80,6 @@ bool authenticate_admin() {
 
     printf("Enter username:\n");
     fgets(entered_name, sizeof(entered_name), stdin);
-    //entered_name[strcspn(entered_name, "\n")] = '\0'; // Remove newline character
 
     printf("Enter password:\n");
     fgets(entered_password, sizeof(entered_password), stdin);
