@@ -1,14 +1,10 @@
-// https://ir0nstone.gitbook.io/notes/types/stack/format-string
-// https://lockpin010.medium.com/uncontrolled-format-string-ctf-dec7a9aea747
-
-
 #include <cstdio>
 #include <cstring>
 #include <cstdlib>
 
 
-#define MAX_USERNAME_LENGTH 64
-#define MAX_PASSWORD_LENGTH 64
+#define MAX_USERNAME_LENGTH 32
+#define MAX_PASSWORD_LENGTH 32
 #define BCRYPT_HASHSIZE 61
 
 namespace {
@@ -26,9 +22,8 @@ struct User {
 
 // Example users array. In a real application, you would dynamically query a secure database.
 struct User database[] = {
-    // Placeholder users and hashes
-    {"admin", "hashed_adminPass"},
-    {"tom", "hashed_tomPass"},
+    {"admin", "aaaaaaaa"},
+    {"lukas", "hashed_lukasPass"},
     {"greg", "hashed_gregPass"}
 };
 
@@ -48,13 +43,14 @@ bool verify_user_password(const char* username, const char* password) {
         return false; // Check for valid input length
     }
 
+    // Simulate querying a database for the user
     for (size_t i = 0; i < sizeof(database) / sizeof(database[0]); ++i) {
-        if (strncmp(database[i].username, username, MAX_USERNAME_LENGTH) == 0) {
+        if (strncmp(database[i].username, username, strlen(database[i].username)) == 0) {
             // Simulating using bcrypt to compare the password with the stored hash
             if (bcrypt_checkpw(password, database[i].hashed_password) == 0) {
                 return true; // Password matches
             } else {
-                return false; // Password does not match
+                return false;
             }
         }
     }
@@ -79,20 +75,25 @@ void admin_panel() {
 bool authenticate_admin() {
     char entered_name[MAX_USERNAME_LENGTH];
     char entered_password[MAX_PASSWORD_LENGTH];
+    secure_zeroize(entered_name, sizeof(entered_name));
+    secure_zeroize(entered_password, sizeof(entered_password));
 
-    printf("Enter username:");
+    printf("Enter username:\n");
     fgets(entered_name, sizeof(entered_name), stdin);
-    printf("Hello dear user: %c...\n", entered_name);
+    //entered_name[strcspn(entered_name, "\n")] = '\0'; // Remove newline character
 
-    printf("Enter password:");
+    printf("Enter password:\n");
     fgets(entered_password, sizeof(entered_password), stdin);
     entered_password[strcspn(entered_password, "\n")] = '\0'; // Remove newline character
 
     if (verify_user_password(entered_name, entered_password)){
-        printf("Password matched, Authenticated succesfully!\n");
+        printf("\n------------------------------------------------------------\n");
+        printf("Password matched, Authenticated succesfully for the user:");
+        printf(entered_name);
+        printf("\n------------------------------------------------------------\n");
         return true;
     }
-    printf("Password mismatch!\n");
+    printf("Password mismatch for the user: %s\n", entered_name);
     return false;
 }
 
