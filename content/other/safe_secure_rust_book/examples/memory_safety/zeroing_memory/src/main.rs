@@ -1,7 +1,7 @@
 use std::ptr::write_volatile;
 use zeroize::Zeroize;
 
-static mut ptr: *const u8 = std::ptr::null();
+static mut PTR: *const u8 = std::ptr::null();
 
 struct SensitiveData {
     password: [u8; 32], // Sensitive data
@@ -29,23 +29,23 @@ impl Drop for SensitiveData {
 fn process_password(pwd: &[u8]) {
     let mut data = SensitiveData::new(pwd);
     unsafe {
-        ptr = data.password.as_ptr();
+        PTR = data.password.as_ptr();
     }
     // Simulate operations on the sensitive data
     println!("Processing sensitive data...");
     data.password[0] = '0' as u8;
     println!("{}", std::str::from_utf8(&data.password).unwrap());
     unsafe {
-        println!("1) Pointer memory address: {:p}", ptr);
-        println!("1) SensitiveDataMemory: {:x?}", core::slice::from_raw_parts(ptr, 32));
+        println!("1) Pointer memory address: {:p}", PTR);
+        println!("1) SensitiveDataMemory: {:x?}", core::slice::from_raw_parts(PTR, 32));
     }
 }
 
 fn do_other_work() {
     println!("Doing other work...");
     unsafe {
-        println!("2) Pointer memory address: {:p}", ptr);
-        println!("2) SensitiveDataMemory: {:x?}", core::slice::from_raw_parts(ptr, 32));
+        println!("2) Pointer memory address: {:p}", PTR);
+        println!("2) SensitiveDataMemory: {:x?}", core::slice::from_raw_parts(PTR, 32));
     }
 }
 
