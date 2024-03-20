@@ -22,34 +22,34 @@ impl Display for SensorStatus {
 }
 
 // A struct representing a vehicle temperature sensor.
-struct TemperatureSensor<'a> {
+struct TemperatureSensor {
     name: &'static str,
     value: i32,
 }
 
-impl<'a> TemperatureSensor<'a> {
+impl TemperatureSensor {
     const MIN_TEMP: i32 = -30;
     const MAX_TEMP: i32 = 150;
 }
 
 // A struct representing a vehicle speed sensor.
-struct SpeedSensor<'a> {
-    name: &'a str,
+struct SpeedSensor {
+    name: &'static str,
     value: u32,
 }
 
-impl<'a> SpeedSensor<'a> {
+impl SpeedSensor {
     const MAX_SPEED_LIMIT: u32 = 180;
 }
 
 // Implement the Display trait for Sensors, enabling descriptive output.
-impl<'a> Display for TemperatureSensor<'a> {
+impl Display for TemperatureSensor {
     fn fmt(&self, f: &mut Formatter) -> fmt::Result {
         write!(f, "[{}] TemperatureSensor: {}", self.name, self.value)
     }
 }
 
-impl<'a> Display for SpeedSensor<'a> {
+impl Display for SpeedSensor {
     fn fmt(&self, f: &mut Formatter) -> fmt::Result {
         write!(f, "[{}] SpeedSensor: {}", self.name, self.value)
     }
@@ -61,7 +61,7 @@ trait DiagnosticTool {
 }
 
 // Implement the DiagnosticTool trait for Sensors, showcasing trait implementations.
-impl<'a> DiagnosticTool for TemperatureSensor<'a> {
+impl DiagnosticTool for TemperatureSensor {
     fn diagnose(&self) -> SensorStatus {
         if self.value > TemperatureSensor::MAX_TEMP {
             SensorStatus::Error(format!("{} sensor exceeds max limit:{} over {} [C]!", self.name, self.value, (self.value - TemperatureSensor::MAX_TEMP)))
@@ -73,7 +73,7 @@ impl<'a> DiagnosticTool for TemperatureSensor<'a> {
     }
 }
 
-impl<'a> DiagnosticTool for SpeedSensor<'a> {
+impl DiagnosticTool for SpeedSensor {
     fn diagnose(&self) -> SensorStatus {
         if self.value > SpeedSensor::MAX_SPEED_LIMIT {
             SensorStatus::Error(format!("[{}] sensor exceeds max limit:{} over {} [km/h]!", self.name, self.value, (self.value - SpeedSensor::MAX_SPEED_LIMIT)))
@@ -142,11 +142,11 @@ where
 
 fn main() {
     // Simulate a sensor that continuously sends data for 10 seconds.
-    let (tx_temp, rx_temp): (mpsc::Sender<TemperatureSensor<'static>>, Receiver<TemperatureSensor<'static>>) = mpsc::channel();
-    let (tx_speed, rx_speed): (mpsc::Sender<SpeedSensor<'static>>, Receiver<SpeedSensor<'static>>) = mpsc::channel();
+    let (tx_temp, rx_temp): (mpsc::Sender<TemperatureSensor>, Receiver<TemperatureSensor>) = mpsc::channel();
+    let (tx_speed, rx_speed): (mpsc::Sender<SpeedSensor>, Receiver<SpeedSensor>) = mpsc::channel();
     // Spawn a thread for the temp_sensor
     let tx_temp_clone = tx_temp.clone();
-    thread::spawn(move || {
+    let temp_handle = thread::spawn(move || {
         let start = Instant::now();
         while start.elapsed() < Duration::new(5, 0) {
             let value = (start.elapsed().as_secs() * 10) as i32; // Simulate increasing temp
@@ -160,7 +160,7 @@ fn main() {
     });
     // Spawn a thread for the car_speed_sensor
     let tx_speed_clone = tx_speed.clone();
-    thread::spawn(move || {
+    let speed_handle = thread::spawn(move || {
         let start = Instant::now();
         let mut factor: u64 = 1;
         while start.elapsed() < Duration::new(5, 0) {
@@ -170,7 +170,7 @@ fn main() {
                 eprintln!("Error sending car speed data: {}", e);
                 break;
             }
-            factor = factor * 2;
+            factor = factor + 1;
             thread::sleep(Duration::from_millis(100)); // Simulate data sent every 100ms
         }
     });
@@ -201,6 +201,15 @@ fn main() {
     // Use a closure to adjust the brightness of the image data.
     adjust_brightness(|data| format!("{} + brightness adjusted", data), &mut camera_processor);
     println!("After adjustment: {}", camera_processor.read());
+
+    // Join threads here
+    if let Err(e) = temp_handle.join() {
+        eprintln!("Error joining temperature sensor thread: {:?}", e);
+    }
+
+    if let Err(e) = speed_handle.join() {
+        eprintln!("Error joining speed sensor thread: {:?}", e);
+    }
 
     println!("Simulation completed.");
 }
