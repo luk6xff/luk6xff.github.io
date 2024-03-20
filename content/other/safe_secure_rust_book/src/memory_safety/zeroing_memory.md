@@ -1,6 +1,8 @@
-# Zero out memory of sensitive data after use
-Variables containing sensitive data must be zeroed out after use, using functions that
-will not be removed by the compiler optimizations.
+# Securely Erasing Sensitive Data from Memory
+When developing applications that handle sensitive information—such as passwords, cryptographic keys, or personal data—it is crucial to ensure that this data is securely erased from memory once it is no longer needed. Simply overwriting variables or deallocating memory is often insufficient due to the risk of data remnants persisting in memory locations, which could potentially be accessed by unauthorized parties or through malicious exploits.
+
+### The Challenge of Compiler Optimizations
+One significant challenge in securely erasing sensitive data from memory is the impact of compiler optimizations. Modern compilers are designed to improve the efficiency and performance of code, which may include optimizing away seemingly redundant operations such as overwriting a memory region that is about to be deallocated. Consequently, attempts to zero out memory containing sensitive data can be inadvertently removed during the compilation process, leaving the data vulnerable.
 
 ### Example 1:
 [GODBOLT](https://godbolt.org/z/fW7jvjf8e)
