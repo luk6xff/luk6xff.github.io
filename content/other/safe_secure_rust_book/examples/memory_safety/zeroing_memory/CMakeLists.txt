@@ -6,5 +6,4 @@ project(zeroing_memory)
 add_executable(zeroing_memory zeroing_memory.cpp)
 
 # Set the C++ compiler flags to use optimization level O3
-# Note: CMAKE_CXX_FLAGS_RELEASE is used to ensure that O3 is applied only when building in release mode
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3")
