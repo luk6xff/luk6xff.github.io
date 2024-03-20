@@ -1,7 +1,13 @@
-use std::ptr::write_volatile;
 use zeroize::Zeroize;
 
 static mut PTR: *const u8 = std::ptr::null();
+
+fn print_ptr_memory_address(label: u8) {
+    unsafe {
+        println!("{label}) Pointer memory address: {:p}", PTR);
+        println!("{label}) SensitiveDataMemory: {:x?}", core::slice::from_raw_parts(PTR, 32));
+    }
+}
 
 struct SensitiveData {
     password: [u8; 32], // Sensitive data
@@ -19,37 +25,27 @@ impl SensitiveData {
 impl Drop for SensitiveData {
     fn drop(&mut self) {
         println!("Zeroing memory");
-        // #unsafe {
-        // #    write_volatile(&mut self.password, [0u8; 32]);
-        // #}
-        //self.password.zeroize()
+        self.password.zeroize()
     }
 }
 
 fn process_password(pwd: &[u8]) {
-    let mut data = SensitiveData::new(pwd);
+    let data = SensitiveData::new(pwd);
     unsafe {
         PTR = data.password.as_ptr();
     }
     // Simulate operations on the sensitive data
     println!("Processing sensitive data...");
-    data.password[0] = '0' as u8;
-    println!("{}", std::str::from_utf8(&data.password).unwrap());
-    unsafe {
-        println!("1) Pointer memory address: {:p}", PTR);
-        println!("1) SensitiveDataMemory: {:x?}", core::slice::from_raw_parts(PTR, 32));
-    }
+    print_ptr_memory_address(1);
 }
 
 fn do_other_work() {
     println!("Doing other work...");
-    unsafe {
-        println!("2) Pointer memory address: {:p}", PTR);
-        println!("2) SensitiveDataMemory: {:x?}", core::slice::from_raw_parts(PTR, 32));
-    }
+    print_ptr_memory_address(3);
 }
 
 pub fn main() {
   process_password(b"abcdefghijklmnopqrstuvwxyz123456");
+  print_ptr_memory_address(2);
   do_other_work();
 }

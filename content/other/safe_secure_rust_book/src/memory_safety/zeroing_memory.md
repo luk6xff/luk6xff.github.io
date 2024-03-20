@@ -1,15 +1,23 @@
 # Zero out memory of sensitive data after use
-Variables containing sensitive data must be zeroed out aer use, using functions that
-will not be removed by the compiler optimizations, like std::ptr::write_volatile
-or the zeroize crate.
+Variables containing sensitive data must be zeroed out after use, using functions that
+will not be removed by the compiler optimizations.
 
 ### Example 1:
 [GODBOLT](https://godbolt.org/z/fW7jvjf8e)
 
 * RUST
 ```rust,editable
-use std::ptr::write_volatile;
+#// use std::ptr::write_volatile;
 use zeroize::Zeroize;
+
+static mut PTR: *const u8 = std::ptr::null();
+
+fn print_ptr_memory_address(label: u8) {
+    unsafe {
+        println!("{label}) Pointer memory address: {:p}", PTR);
+        println!("{label}) SensitiveDataMemory: {:x?}", core::slice::from_raw_parts(PTR, 32));
+    }
+}
 
 struct SensitiveData {
     password: [u8; 32], // Sensitive data
@@ -27,21 +35,32 @@ impl SensitiveData {
 impl Drop for SensitiveData {
     fn drop(&mut self) {
         println!("Zeroing memory");
-        // #unsafe {
-        // #    write_volatile(&mut self.password, [0u8; 32]);
-        // #}
+        #// unsafe {
+        #//    write_volatile(&mut self.password, [0u8; 32]);
+        #// }
         self.password.zeroize()
     }
 }
 
 fn process_password(pwd: &[u8]) {
     let data = SensitiveData::new(pwd);
+    unsafe {
+        PTR = data.password.as_ptr();
+    }
     // Simulate operations on the sensitive data
-    println!("Processing sensitive data");
+    println!("Processing sensitive data...");
+    print_ptr_memory_address(1);
+}
+
+fn do_other_work() {
+    println!("Doing other work...");
+    print_ptr_memory_address(3);
 }
 
 pub fn main() {
-  process_password(b"supersecret")
+  process_password(b"abcdefghijklmnopqrstuvwxyz123456");
+  print_ptr_memory_address(2);
+  do_other_work();
 }
 ```
 
@@ -50,7 +69,19 @@ pub fn main() {
 #include <iostream>
 #include <cstring>
 #include <cstdint>
+#include <cstdio>
 #include <functional>
+
+static uint8_t* ptr = nullptr;
+
+void print_ptr_memory_address(uint8_t label) {
+    printf("%d) Pointer memory address: %p\n", label, ptr);
+    printf("%d) SensitiveDataMemory: [", label);
+    for (size_t i = 0; i < 32; ++i) {
+        printf("%02x ", ptr[i]);
+    }
+    printf("]\n");
+}
 
 struct SensitiveData {
     char password[32]; // Sensitive data
@@ -63,21 +94,32 @@ struct SensitiveData {
     ~SensitiveData() {
         std::cout << "Zeroing memory" << std::endl;
         memset(password, 0, sizeof(password));
-        //%volatile char *p = password;
-        //%for (size_t i = 0; i < sizeof(password); i++) {
-        //%    *(p + i) = 0;
-        //%}
+
+        //% volatile char *p = password;
+        //% for (size_t i = 0; i < sizeof(password); i++) {
+        //%     *(p + i) = 0;
+        //% }
     }
 };
 
 void process_password(const char* pwd) {
     SensitiveData data(pwd);
+    ptr = reinterpret_cast<uint8_t*>(data.password);
     // Simulate operations on the sensitive data
-    std::cout << "Processing sensitive data" << std::endl;
+    std::cout << "Processing sensitive data..." << std::endl;
+    print_ptr_memory_address(1);
+
+}
+
+void do_other_work() {
+    std::cout << "Doing other work..." << std::endl;
+    print_ptr_memory_address(3);
 }
 
 int main() {
-    process_password("supersecret");
+    process_password("abcdefghijklmnopqrstuvwxyz123456");
+    print_ptr_memory_address(2);
+    do_other_work();
     return 0;
 }
 ```

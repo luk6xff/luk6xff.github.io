@@ -7,3 +7,6 @@ edition = "2021"
 
 [dependencies]
 zeroize = "1.7.0"
+
+[profile.dev]
+opt-level = 3
