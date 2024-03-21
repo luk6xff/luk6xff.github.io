@@ -41,39 +41,97 @@ In Rust, error handling is designed to be both **explicit** and **flexible**. It
 
 
 ### Example 1: Exception Handling
-* CPP - C++ uses exceptions for error handling, which can lead to performance overhead and unexpected control flow.
+* CPP - In C++, exceptions provide a way to react to exceptional circumstances (like runtime errors) in programs by transferring control to special functions called handlers.
 ```cpp
 #include <iostream>
 #include <stdexcept>
 
-void might_go_wrong() {
-    throw std::runtime_error("Something went wrong");
+void riskyFunction() {
+    bool errorOccurred = true; // Simulate an error
+    if (errorOccurred) {
+        throw std::runtime_error("Failed to execute risky operation");
+    }
 }
 
 int main() {
     try {
-        might_go_wrong();
-    } catch (const std::runtime_error& e) {
-        std::cout << e.what() << std::endl;
+        riskyFunction();
+    } catch (const std::runtime_error& err) {
+        std::cout << "Caught an error: " << err.what() << std::endl;
     }
+    return 0;
 }
 ```
-* RUST - `Result`
+
+* RUST - Rust uses the `Result` type for error handling, which can either be `Ok`, indicating success, or `Err`, indicating an error.
 ```rust,editable
-fn might_go_wrong() -> Result<(), String> {
-    Err(String::from("Something went wrong"))
+fn risky_operation() -> Result<(), &'static str> {
+    let error_occurred = true; // Simulate an error
+    if error_occurred {
+        return Err("Failed to execute risky operation");
+    }
+    Ok(())
 }
 
 fn main() {
-    match might_go_wrong() {
-        Ok(_) => println!("It worked!"),
-        Err(e) => println!("Error: {}", e),
+    match risky_operation() {
+        Ok(_) => println!("Operation succeeded."),
+        Err(e) => println!("Caught an error: {}", e),
     }
 }
 ```
 
-### Example 2: Result
--> RUST
+### Example 2: Exception Handling for File I/O
+[GODBOLT](https://godbolt.org/z/dTEss91jK)
+* CPP
+```cpp
+#include <iostream>
+#include <fstream>
+#include <stdexcept>
+
+void readFile(const std::string& filePath) {
+    std::ifstream file(filePath);
+    if (!file) {
+        throw std::runtime_error("Unable to open file");
+    }
+    std::cout << "File opened successfully" << std::endl;
+    // Read file contents...
+}
+
+int main() {
+    try {
+        readFile("example.txt");
+    } catch (const std::runtime_error& err) {
+        std::cout << "Caught an error: " << err.what() << std::endl;
+    }
+    return 0;
+}
+```
+There is a similar mechanism to rust `Result` available since C++23: [std::unexpected](https://en.cppreference.com/w/cpp/utility/expected).
+
+* RUST
+```rust,editable
+use std::fs::File;
+use std::io::{self, Read};
+
+fn read_file(file_path: &str) -> Result<String, io::Error> {
+    let mut file = File::open(file_path)?;
+    let mut contents = String::new();
+    file.read_to_string(&mut contents)?;
+    Ok(contents)
+}
+
+fn main() {
+    match read_file("example.txt") {
+        Ok(contents) => println!("File contents: {}", contents),
+        Err(e) => println!("Caught an error: {}", e),
+    }
+}
+```
+
+
+### Example 3: Result
+* RUST
 ```rust,editable
 #[derive(Debug)]
 enum CopyError {
@@ -106,15 +164,88 @@ fn main() {
 ```
 
 
+### Example 4: Option
+The Option type in Rust and its equivalent pattern in C++ are used to represent the possibility of absence of a value
+* CPP
+```cpp
+#include <iostream>
+#include <optional>
 
-### Example 2: Option
--> RUST
+std::optional<double> divide(double numerator, double denominator) {
+    if (denominator == 0.0) {
+        return std::nullopt;
+    } else {
+        return numerator / denominator;
+    }
+}
+
+int main() {
+    auto result = divide(10.0, 2.0);
+    if (result.has_value()) {
+        std::cout << "Result: " << result.value() << std::endl;
+    } else {
+        std::cout << "Cannot divide by zero" << std::endl;
+    }
+}
+```
+* RUST
 ```rust,editable
 fn divide(numerator: f64, denominator: f64) -> Option<f64> {
     if denominator == 0.0 {
         None
     } else {
         Some(numerator / denominator)
+    }
+}
+
+fn main() {
+    let result = divide(10.0, 2.0);
+    match result {
+        Some(value) => println!("Result: {}", value),
+        None => println!("Cannot divide by zero"),
+    }
+}
+```
+
+
+### Example 5: Option - Fetching a Config Value
+* CPP
+```cpp
+#include <iostream>
+#include <optional>
+#include <string>
+
+std::optional<std::string> get_config_value(const std::string& key) {
+    if (key == "timeout") {
+        return "100";
+    } else {
+        return std::nullopt;
+    }
+}
+
+int main() {
+    auto timeout = get_config_value("timeout");
+    if (timeout.has_value()) {
+        std::cout << "Timeout is set to " << timeout.value() << std::endl;
+    } else {
+        std::cout << "Timeout not specified" << std::endl;
+    }
+}
+```
+* RUST
+```rust,editable
+fn get_config_value(key: &str) -> Option<String> {
+    match key {
+        "timeout" => Some("100".to_string()),
+        _ => None,
+    }
+}
+
+fn main() {
+    let timeout = get_config_value("timeout");
+    match timeout {
+        Some(value) => println!("Timeout is set to {}", value),
+        None => println!("Timeout not specified"),
     }
 }
 ```

@@ -6,5 +6,8 @@ language = "en"
 [build]
 build-dir = "book"
 
+[output.html.playground]
+editable = true
+
 [output.html.code.hidelines]
 cpp = "//%"
