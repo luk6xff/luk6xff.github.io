@@ -26,3 +26,11 @@ jobs:
           publish_dir: ./public
           publish_branch: gh-pages
           force_orphan: true
+
+permissions:
+  actions: read|write|none
+  contents: read|write|none
+  deployments: read|write|none
+  id-token: read|write|none
+  pages: read|write|none
+  pull-requests: read|write|none
