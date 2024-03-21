@@ -22,6 +22,7 @@ jobs:
         run: |
           chmod +x run.sh
           ./run.sh -b
+          ls -la public
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
