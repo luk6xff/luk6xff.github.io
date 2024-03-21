@@ -7,19 +7,20 @@ Rust's `unsafe` keyword permits operations that could potentially lead to undefi
 Raw pointers (*) and references (&T) in Rust serve similar purposes, but references are inherently safe due to Rust's borrow checker ensuring they always point to valid data. In contrast, dereferencing raw pointers requires an unsafe block, acknowledging potential risks of accessing potentially invalid data.
 ```rust,editable
 fn main() {
-    let raw_pointer: *const u32 = &42;
+    let num = 42;
+    let raw_pointer: *const u32 = &num;
 
     unsafe {
-        println!("*raw_p = {}", *raw_p);
+        println!("*raw_pointer = {}", *raw_pointer);
     }
 }
 ```
 
 
 ### Example 1: Calling an Unsafe C Function from Rust
+[DEMO](https://github.com/luk6xff/luk6xff.github.io/tree/master/content/other/safe_secure_rust_book/examples/unsafe/ffi_example)
 
 Suppose you have a C library with the following function:
-
 ```c
 // In a file `library.c`
 #include <stdio.h>
@@ -31,7 +32,7 @@ void print_hello_from_c() {
 
 You can call this function from Rust, safely encapsulating the unsafe foreign function interface (FFI) call:
 
-```rust,editable
+```rust
 // Assuming you have linked the C library appropriately
 extern "C" {
     fn print_hello_from_c();
@@ -47,13 +48,39 @@ fn main() {
     safe_print_hello(); // Safe to call
 }
 ```
-
 This example demonstrates how Rust can interact with C code. The unsafe block is necessary because calling foreign code can't be checked by Rust's safety guarantees, but wrapping it in a safe function allows you to control where and how these interactions occur.
 
 
+### Example 2: Calling an Unsafe System Library (libcrypt) C Function from Rust
+[DEMO](https://github.com/luk6xff/luk6xff.github.io/tree/master/content/other/safe_secure_rust_book/examples/unsafe/ffi_example)
+
+```rust
+extern "C" {
+    pub fn crypt(phrase: *const c_char, setting: *const c_char) -> *mut c_char;
+}
+
+fn safe_crypt(input: &str, salt: &str) -> String {
+    let c_input = std::ffi::CString::new(input).expect("CString::new failed for input");
+    let c_salt = std::ffi::CString::new(salt).expect("CString::new failed for salt");
+
+    let result_ptr = unsafe { crypt(c_input.as_ptr(), c_salt.as_ptr()) };
+
+    assert!(!result_ptr.is_null(), "crypt returned a null pointer");
+
+    let result_cstr = unsafe { std::ffi::CStr::from_ptr(result_ptr) };
+    result_cstr.to_string_lossy().into_owned()
+}
+
+fn main() {
+    let input = "hello world";
+    let salt = "somesalt"; // Example for SHA-512 based on Linux's glibc
+    let encrypted = safe_crypt(input, salt);
+    println!("Encrypted: {}", encrypted);
+}
+```
 
 
-### Example 2: Safe Wrapper for a Raw Pointer
+### Example 3: Safe Wrapper for a Raw Pointer
 
 Raw pointers (`*const T` and `*mut T`) are often used in Rust for low-level memory manipulation, but they are inherently unsafe to dereference. Here's an example of a simple safe wrapper around a raw pointer:
 

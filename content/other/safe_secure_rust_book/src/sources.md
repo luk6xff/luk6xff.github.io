@@ -8,3 +8,4 @@
 - [The Rustonomicon](https://doc.rust-lang.org/nomicon/)
 - [The Rust Reference](https://doc.rust-lang.org/reference/)
 - [Rust for C++ Programmers](https://github.com/nrc/r4cppp)
+- [The Cargo Book](https://doc.rust-lang.org/cargo/index.html)
