@@ -24,6 +24,8 @@ while getopts ":bs" opt; do
       cp -r /app/content/other/${SECURE_RUST_BOOK_NAME}/book /app/static/other/${SECURE_RUST_BOOK_NAME}
       # Build the blog site
       zola build || { echo "Error: Failed to build blog site." 1>&2; exit 1; }
+      # Cleanup public output directory
+      rm -rf /app/public/other/.gitignore
       ;;
     s)
       echo "Start serving the blog site..." 1>&2
