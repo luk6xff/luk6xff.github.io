@@ -20,12 +20,11 @@ while getopts ":bs" opt; do
       SECURE_RUST_BOOK_NAME="safe_secure_rust_book"
       mdbook build /app/content/other/${SECURE_RUST_BOOK_NAME} || { echo "Error: Failed to build ${SECURE_RUST_BOOK_NAME} mdbook" 1>&2; exit 1; }
       # 2) Copy the book to the static directory
-      mkdir -p /app/static/other/
       cp -r /app/content/other/${SECURE_RUST_BOOK_NAME}/book /app/static/other/${SECURE_RUST_BOOK_NAME}
       # Build the blog site
       zola build || { echo "Error: Failed to build blog site." 1>&2; exit 1; }
       # Cleanup public output directory
-      rm -rf /app/public/other/.gitignore
+      rm -f /app/public/other/.gitignore
       ;;
     s)
       echo "Start serving the blog site..." 1>&2
