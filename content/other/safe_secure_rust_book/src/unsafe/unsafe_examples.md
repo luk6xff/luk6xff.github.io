@@ -117,7 +117,7 @@ In this example, `SafePtr` is a wrapper that provides a safe API to read from an
 
 
 
-### Example 3: Interfacing with Unsafe Code for Performance
+### Example 4: Interfacing with Unsafe Code for Performance
 
 Sometimes, for performance reasons, you might choose to use unsafe code to avoid the overhead of certain safety checks. Here's an example that manipulates a vector in an unsafe manner to avoid bounds checks:
 
@@ -137,33 +137,32 @@ fn main() {
     println!("Sum: {}", sum_elements(&nums));
 }
 ```
-
 `get_unchecked` is an unsafe method because it does not perform bounds checking. If used incorrectly, it could lead to undefined behavior. However, by carefully controlling its use within a safe function, we can leverage its performance benefits while minimizing risk.
 
 These examples illustrate Rust's approach to combining low-level control with high-level safety. By requiring unsafe operations to be explicitly marked and encouraging their encapsulation within safe abstractions, Rust helps prevent many common programming errors related to memory safety and concurrency, fostering the development of robust, efficient software.
 
 
 
-### Example 4: Inline Assembly
+### Example 5: Inline Assembly
+[GODBOLT](https://godbolt.org/z/n7sGh6eba)
 Rust's asm! macro allows embedding custom assembly code directly within Rust programs. This is mainly used for performance-critical tasks or when accessing low-level hardware features, such as in kernel development, where Rust's abstractions may not suffice.
 ```rust,editable
 use std::arch::asm;
 
-fn mul(a: u64, b: u64) -> u128 {
-    let lo: u64;
-    let hi: u64;
+fn main() {
+    let msg = "Hello, world!\n";
+    let len = msg.len();
+    let fd = 1; // File descriptor 1 for stdout
 
     unsafe {
         asm!(
-            // The x86 mul instruction takes rax as an implicit input and writes
-            // the 128-bit result of the multiplication to rax:rdx.
-            "mul {}",
-            in(reg) a,
-            inlateout("rax") b => lo,
-            lateout("rdx") hi
+            "syscall",
+            in("rax") 1,         // syscall number for write
+            in("rdi") fd,        // first argument: file descriptor
+            in("rsi") msg.as_ptr(), // second argument: pointer to message
+            in("rdx") len,       // third argument: message length
+            options(nostack)
         );
     }
-
-    ((hi as u128) << 64) + lo as u128
 }
 ```
