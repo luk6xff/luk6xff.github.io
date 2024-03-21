@@ -13,7 +13,7 @@ permissions: write-all
 
 jobs:
   build:
-    name: publish_site
+    name: builv_and_publish_the_blog
     runs-on: ubuntu-latest
     steps:
       - name: checkout_master

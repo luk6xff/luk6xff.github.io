@@ -36,14 +36,15 @@ Developed with [PlatformIO](https://platformio.org/) for C++ programming on the 
 
 Focused on the TS3USB221 for its USB multiplexing capabilities, this project employs the ESP8266 microcontroller for its balance of cost and performance, streamlined for remote device control. Utilizing the PlatformIO ecosystem for C++ development ensures a streamlined, technically grounded approach to device management and firmware deployment. Further information and visuals will be updated in the project repository.
 
-![Usb Mux Case](https://github.com/luk6xff/luk6xff.github.io/tree/master/content/other/media/usbmux/usb_mux_case.png)
-*Figure 1: USB Mux case ver 1.0.*
+*Figure 1: USB Mux case ver 1.0.*\
+![Usb Mux Case](https://raw.githubusercontent.com/luk6xff/luk6xff.github.io/master/content/other/media/usbmux/usb_mux_case.png)
 
-![Usb Mux Case - Power relays](https://github.com/luk6xff/luk6xff.github.io/tree/master/content/other/media/usbmux/usb_mux_power_relays.png)
-*Figure 2: USB Mux case ver 1.1 - branch power_relays*
+*Figure 2: USB Mux case ver 1.1 - branch power_relays*\
+![Usb Mux Case - Power relays](https://raw.githubusercontent.com/luk6xff/luk6xff.github.io/master/content/other/media/usbmux/usb_mux_power_relays.png)
 
-![Usb Mux Case - UART CLI](https://github.com/luk6xff/luk6xff.github.io/tree/master/content/other/media/usbmux/usb_mux_uart_cli.png)
-*Figure 3: USB Mux UART CLI.*
+*Figure 3: USB Mux UART CLI.*\
+![Usb Mux Case - UART CLI](https://raw.githubusercontent.com/luk6xff/luk6xff.github.io/master/content/other/media/usbmux/usb_mux_uart_cli.png)
 
-![Usb Mux Case - HTTP Server](https://github.com/luk6xff/luk6xff.github.io/tree/master/content/other/media/usbmux/usb_mux_http_server.png)
-*Figure 4: USB Mux HTTP Server.*
+*Figure 4: USB Mux HTTP Server.*\
+![Usb Mux Case - HTTP Server](https://raw.githubusercontent.com/luk6xff/luk6xff.github.io/master/content/other/media/usbmux/usb_mux_http_server.png)
+

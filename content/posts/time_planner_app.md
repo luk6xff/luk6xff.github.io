@@ -8,10 +8,12 @@ tags = ["python","gui","pyside6"]
 +++
 
 ### App Interface Overview
-![Time Planner app](https://github.com/luk6xff/luk6xff.github.io/tree/master/content/other/media/time_planner_app/time_planner_1.png)
+![Time Planner app](https://raw.githubusercontent.com/luk6xff/luk6xff.github.io/master/content/other/media/time_planner_app/time_planner_1.png)\
 *Figure 1: Time Planner app main widget.*
-![Task configuration widget](https://github.com/luk6xff/luk6xff.github.io/tree/master/content/other/media/time_planner_app/time_planner_2.png)
+
+![Task configuration widget](https://raw.githubusercontent.com/luk6xff/luk6xff.github.io/master/content/other/media/time_planner_app/time_planner_2.png)\
 *Figure 2: Task configuration widget.*
+
 
 
 ### Introduction
