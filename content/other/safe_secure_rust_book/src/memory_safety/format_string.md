@@ -1,4 +1,4 @@
-### Example 1: Simple Memory Leak
+### Example 1: Format String Issue
 - [GODBOLT](https://godbolt.org/z/beGf1Mn9a)
 - [DEMO](https://github.com/luk6xff/luk6xff.github.io/tree/master/content/other/safe_secure_rust_book/examples/memory_safety/format_string)
 * C
@@ -114,3 +114,18 @@ int main() {
 }
 
 ```
+The line `printf(entered_name);` in the code is potentially vulnerable to a format string vulnerability. 
+
+In C, `printf` interprets its format string argument (`entered_name` in this case) and expects subsequent arguments to match the placeholders in the format string. If the contents of `entered_name` contain format specifiers (like `%s`, `%d`, etc.) and those are not intended for formatting, but rather as part of the data itself, it can lead to unexpected behavior.
+
+Consequences of a format string vulnerability include:
+
+1. **Information Disclosure**: Attackers can exploit format string vulnerabilities to read arbitrary memory contents, potentially exposing sensitive information like stack values, function return addresses, or other variables in memory.
+
+2. **Arbitrary Memory Modification**: Format string vulnerabilities can also be leveraged to write data to arbitrary memory locations. This can lead to a variety of security issues, including code execution, denial of service, or corruption of critical data.
+
+To mitigate this vulnerability, you should use format specifiers properly with `printf`, ensuring that user-controlled input is not directly used as the format string. Instead, use format specifiers like `%s` to print strings safely. In this specific case, it would be safer to use `printf("%s", entered_name);` to ensure that `entered_name` is treated as a string and not as a format specifier. Additionally, consider validating and sanitizing user input to prevent malicious input from being interpreted as format specifiers.
+
+
+* RUST
+`Format string` vulnerabilities are avoided because Rust's `println!` and `format!` macros do not interpret format strings from user input as format specifiers, preventing attackers from manipulating the program's behavior through format strings.
