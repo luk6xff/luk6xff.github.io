@@ -1,6 +1,6 @@
 # Introduction to "Safe and Secure Coding in Rust: A Comparative Analysis of Rust and C/C++"
 
-In the realm of systems programming, safety and security are paramount. "Safe and Secure Coding in Rust: A Comparative Analysis of Rust and C/C++" is a deep dive into the world of system programming languages, with a spotlight on Rust's capabilities to ensure both safety and security in coding practices. This book primarily explores the potential issues inherent in C++ programming and outlines how Rust's innovative features can prevent these challenges from arising.
+In the realm of systems programming, safety and security are paramount. My "Safe and Secure Coding in Rust: A Comparative Analysis of Rust and C/C++" book is a deep dive into the world of system programming languages, with a spotlight on Rust's capabilities to ensure both safety and security in coding practices. This book primarily explores the potential issues inherent in C++ programming and outlines how Rust's innovative features can prevent these challenges from arising.
 
 
 ## Rust as a Safe and Secure System Language

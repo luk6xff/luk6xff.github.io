@@ -116,3 +116,83 @@ pub fn main() {
     println!("Data:{}", *val); // Safe: `val` owns the data directly.
 }
 ```
+
+### Example 4: `std::unique_ptr`
+[GODBOLT](https://godbolt.org/z/facc59MoM)
+* CPP
+```cpp
+#include <iostream>
+#include <memory>
+
+void process(std::unique_ptr<int> ptr) {
+    std::cout << "1) Data: " << *ptr << std::endl;
+}
+
+int main() {
+    auto ptr = std::make_unique<int>(10);
+    process(std::move(ptr)); // Ownership is transferred to process()
+
+    // ptr is now moved; accessing *ptr would result in undefined behavior
+    std::cout << "2) Data: " << *ptr << std::endl;
+
+    return 0;
+}
+```
+This example demonstrates `std::unique_ptr` for managing dynamic memory and transferring ownership. When `ptr` is passed to `process`, its ownership is moved, preventing `ptr` from being accidentally used after the transfer, which would lead to undefined behavior.
+
+* RUST
+```rust,editable
+fn process(ptr: Box<i32>) {
+    println!("1) Data: {}", ptr);
+}
+
+fn main() {
+    let ptr = Box::new(10);
+    process(ptr); // Ownership is moved to process()
+
+    // Rust's compiler will prevent us from using ptr here since its ownership has been moved
+    // Compile-time error: value borrowed here after move
+    println!("2) Data: {}", ptr);
+}
+```
+Rust naturally avoids these issues through its ownership system. Once a value's ownership is moved, the original variable cannot be used, preventing dangling pointers or undefined behavior. This is enforced at compile time, making Rust programs safer by design.
+
+
+### Example 5: `std::shared_ptr`
+[GODBOLT](https://godbolt.org/z/dKEax8x4o)
+* CPP
+```cpp
+#include <iostream>
+#include <memory>
+
+void process(std::shared_ptr<int> ptr) {
+    std::cout << "Data: " << *ptr << " (count: " << ptr.use_count() << ")" << std::endl;
+}
+
+int main() {
+    auto ptr = std::make_shared<int>(10);
+    process(ptr); // Shared ownership allows ptr to be used after being passed
+
+    std::cout << "Main still owns ptr with data: " << *ptr << " (count: " << ptr.use_count() << ")" << std::endl;
+
+    return 0;
+}
+```
+This example illustrates the use of `std::shared_ptr` for shared ownership scenarios. The reference count mechanism ensures that the memory is only freed when the last owner goes out of scope, avoiding premature deallocation.
+
+* RUST
+```rust,editable
+use std::rc::Rc;
+
+fn process(ptr: Rc<i32>) {
+    println!("Data: {} (count: {})", ptr, Rc::strong_count(&ptr));
+}
+
+fn main() {
+    let ptr = Rc::new(10);
+    process(ptr.clone()); // The Rc type allows for shared ownership through reference counting
+
+    println!("Main still owns ptr with data: {} (count: {})", ptr, Rc::strong_count(&ptr));
+}
+```
+Rust's `Rc<T>` type provides shared ownership with reference counting, similar to `std::shared_ptr`. It ensures that the memory is deallocated only when the last reference goes out of scope. Rust further prevents data races by ensuring `Rc<T>` is only used in single-threaded scenarios, with `Arc<T>` available for multi-threaded contexts.
