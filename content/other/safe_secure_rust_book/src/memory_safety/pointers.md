@@ -196,3 +196,56 @@ fn main() {
 }
 ```
 Rust's `Rc<T>` type provides shared ownership with reference counting, similar to `std::shared_ptr`. It ensures that the memory is deallocated only when the last reference goes out of scope. Rust further prevents data races by ensuring `Rc<T>` is only used in single-threaded scenarios, with `Arc<T>` available for multi-threaded contexts.
+
+
+
+### Example 6: Moving `std::shared_ptr`
+
+[GODBOLT](https://godbolt.org/z/nMxcTx5ns)
+* CPP
+```cpp
+#include <iostream>
+#include <memory>
+
+void process(std::shared_ptr<int> ptr) {
+    std::cout << "Data: " << *ptr << " (count: " << ptr.use_count() << ")" << std::endl;
+}
+
+int main() {
+    auto ptr = std::make_shared<int>(10);
+    process(ptr); // Shared ownership allows ptr to be used after being passed
+
+    std::cout << "Main still owns ptr with data: " << *ptr << " (count: " << ptr.use_count() << ")" << std::endl;
+
+    std::shared_ptr<int> moved = std::move(ptr);
+    std::cout << "Moved use count: " << *moved << " (count: " << moved.use_count() << ")" << std::endl;
+    std::cout << "Original after move: "<< *ptr << " " << ptr.use_count() << std::endl; // ptr is now nullptr, UB
+
+    return 0;
+}
+```
+This example demonstrates moving a `std::shared_ptr` in C++. Moving transfers ownership of the managed object to another `std::shared_ptr`, effectively nullifying the original pointer without altering the reference count. This operation is useful for avoiding unnecessary atomic operations associated with incrementing and decrementing the reference count, improving performance in certain scenarios.
+
+* RUST
+```rust,editable
+use std::rc::Rc;
+
+fn process(ptr: Rc<i32>) {
+    println!("Data: {} (count: {})", *ptr, Rc::strong_count(&ptr));
+}
+
+pub fn main() {
+    let ptr = Rc::new(10);
+    process(Rc::clone(&ptr)); // Simulates shared ownership by increasing the reference count
+
+    println!("Main still owns ptr with data: {} (count: {})", *ptr, Rc::strong_count(&ptr));
+
+    // Note: Direct move in Rust transfers ownership and makes the original variable inaccessible
+    let moved = ptr.clone();
+
+    println!("Moved use count: {} (count: {})", *moved, Rc::strong_count(&moved));
+    // Note: This will NOT compile, ptr is not longer accessible
+    //println!("Original after move: {} (count: {})", *ptr, Rc::strong_count(&ptr));
+}
+```
+In Rust, the concept of moving a `Rc<T>` doesn't directly translate from C++ because Rust's ownership model ensures safety by preventing access to moved values. Cloning an `Rc<T>` increases the reference count, simulating shared ownership similar to `std::shared_ptr`. However, Rust's compile-time checks prevent the use of moved values, avoiding the risk of null pointer dereferences and undefined behavior, showcasing Rust's approach to memory safety.
