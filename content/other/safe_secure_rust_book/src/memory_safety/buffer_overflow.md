@@ -1,8 +1,35 @@
 # Buffer Overflow
 
 
-
 ### Example 1
+[GODBOLT](https://godbolt.org/z/T4jMaPzns)
+
+* CPP - A classic buffer overflow using an array. This code compiles, but accessing arr[10] is undefined behavior,leading to a potential security vulnerability.
+```cpp
+#include <iostream>
+
+int main() {
+    int arr[5] = {1, 2, 3, 4, 5};
+    // Accidental buffer overflow
+    arr[10] = 10;
+    std::cout << arr[10] << std::endl;
+    return 0;
+}
+```
+* RUST - This code will not compile, as the compiler checks array bounds at compile time and prevents out-of-bounds access.
+```rust,editable
+fn main() {
+    let arr = [1, 2, 3, 4, 5];
+    // Compile-time error for out-of-bounds access
+    arr[10] = 10;
+    println!("{}", arr[10]);
+}
+```
+
+
+### Example 2
+[GODBOLT](https://godbolt.org/z/q93soerhh)
+
 * CPP - A classic buffer overflow using an array. This code compiles, but accessing arr[5] is undefined behavior,leading to a potential security vulnerability.
 ```cpp
 #include <iostream>
@@ -16,7 +43,8 @@ int main() {
     return 0;
 }
 ```
-* RUST - This code will not compile, as the compiler checks array bounds at compile time and prevents out-of-bounds access.
+* RUST - Attempting to access `arr[5]` results in a runtime error because the index 5 is out-of-bounds for an array of length 5.
+Rust's safety mechanisms detect this at runtime and cause the program to panic, preventing it from continuing with invalid memory access.
 ```rust,editable
 fn main() {
     let arr = [1, 2, 3, 4, 5];
@@ -27,7 +55,7 @@ fn main() {
 }
 ```
 
-### Example 2 - strncpy overflow
+### Example 3 - strncpy overflow
 [GODBOLT](https://godbolt.org/z/13zGoPsqK)
 
 * CPP
@@ -61,7 +89,7 @@ fn main() {
 
 
 
-### Example 3 - Buffer overflow- undefined behavior
+### Example 4 - Buffer overflow- undefined behavior
 [GODBOLT](https://godbolt.org/z/bPYveYdTz)
 
 * CPP
@@ -105,7 +133,7 @@ pub fn main() {
 This is an example of Rust’s memory safety principles in action. In many low-level languages, this kind of check is not done, and when you provide an incorrect index, invalid memory can be accessed. Rust protects you against this kind of error by immediately exiting instead of allowing the memory access and continuing.
 
 
-### Example 4 - std:io
+### Example 5 - std::io
 [GODBOLT](https://godbolt.org/z/ns394fEjs)
 * CPP
 ```cpp
@@ -141,7 +169,9 @@ fn main() -> io::Result<()> {
 Rust's standard library is designed to prevent from buffer overflow here by ensuring that read only reads up to the buffer's capacity.
 
 
-### Example 5 - DLT deamon case
+### Example 6 - DLT deamon buffer overflow issue
+The use of `fscanf(handle, "%s", str1)` without specifying a limit for the number of characters to read into `str1` and `apid/ctid` arrays poses a risk of buffer overflow. If the file contains a string longer than the buffer size `(DLT_COMMON_BUFFER_LENGTH and DLT_ID_SIZE)`, it will overflow, leading to undefined behavior, which can be exploited.
+
 * CPP
 ```cpp
 DltReturnValue dlt_filter_load(DltFilter *filter, const char *filename, int verbose)

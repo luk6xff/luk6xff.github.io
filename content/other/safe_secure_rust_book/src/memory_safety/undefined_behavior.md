@@ -55,8 +55,96 @@ pub fn main() {
 ```
 
 
+### Example 2 - Object Slicing and Polymorphism
+[GODBOLT](https://godbolt.org/z/E4jefbYYv)
+* CPP
+Object slicing occurs when an object of a derived class is assigned to a base class object, leading to the loss of the derived part of the object. This can be particularly insidious in C++ because it often doesn't prevent compilation, but it can lead to unexpected runtime behavior.
+```cpp
+#include <iostream>
+#include <memory>
+#include <vector>
 
-### Example 2 - Lambdas - Dangling Reference
+class Base {
+public:
+    virtual void print() const {
+        std::cout << "Base class" << std::endl;
+    }
+    virtual ~Base() = default;
+};
+
+class Derived : public Base {
+public:
+    void print() const override {
+        std::cout << "Derived class" << std::endl;
+    }
+};
+
+void process(const Base& obj) {
+    obj.print(); // Polymorphic call
+}
+
+int main() {
+    Derived d;
+    process(d); // Expected polymorphic behavior
+
+    std::vector<Base> vec;
+    vec.push_back(d); // Object slicing here
+    vec.back().print(); // Calls Base::print() instead of Derived::print(), due to object slicing
+
+    //% std::vector<std::unique_ptr<Base>> vec;
+    //% vec.push_back(std::make_unique<Derived>(d)); // No object slicing, polymorphism preserved
+    //% vec.back()->print(); // Calls Derived::print(), preserving polymorphism
+
+    return 0;
+}
+```
+
+* RUST
+In Rust, preventing object slicing and ensuring polymorphism works as expected can be achieved by using trait objects or generics, along with smart pointers like Box, which enable dynamic dispatch
+```rust,editable
+use std::fmt::Debug;
+
+trait Printable: Debug {
+    fn print(&self);
+}
+
+#[derive(Debug)]
+struct Base;
+impl Printable for Base {
+    fn print(&self) {
+        println!("Base struct");
+    }
+}
+
+#[derive(Debug)]
+struct Derived;
+impl Printable for Derived {
+    fn print(&self) {
+        println!("Derived struct");
+    }
+}
+
+fn process(obj: &dyn Printable) {
+    obj.print(); // Polymorphic call
+}
+
+pub fn main() {
+    let d = Derived;
+    process(&d); // Polymorphism in action
+
+    let mut vec: Vec<Box<dyn Printable>> = Vec::new();
+    vec.push(Box::new(d)); // No object slicing, dynamic dispatch works
+
+    vec[0].print(); // Calls Derived::print(), preserving polymorphism
+
+    // Using the debug trait to illustrate that the whole object is preserved
+    println!("{:?}", vec[0]);
+}
+```
+
+
+
+### Example 3 - Lambdas - Dangling Reference
 [GODBOLT](https://godbolt.org/z/fqWr4coff)
 * CPP
     - Capturing local variables by reference in a lambda that outlives the scope of those variables typically leads to a dangling reference. Accessing a dangling reference is undefined behavior because the variable it refers to no longer exists.
@@ -105,7 +193,8 @@ pub fn main() {
 ```
 
 
-### Example 3 - Dangling iterators
+
+### Example 4 - Dangling iterators
 [GODBOLT](https://godbolt.org/z/c7rsTj7cP)
 * CPP
     - Erasing elements from a container (e.g., using erase method) invalidates iterators pointing to the erased elements and potentially beyond, depending on the container type.
@@ -167,9 +256,7 @@ pub fn main() {
 ```
 
 
-
-
-### Example 4 - Maybe not undefined but weird std::map operator [] behavior
+### Example 5 - Maybe not undefined but weird std::map operator [] behavior
 [GODBOLT](https://godbolt.org/z/vnajbza4z)
 * CPP
     - When you use the indexing operator ([]) on a std::map in C++ to access an element by its key, and if that key does not exist in the map, a new element with that key will be automatically created and initialized to its default value.

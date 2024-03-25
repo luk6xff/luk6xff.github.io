@@ -1,7 +1,7 @@
 # Uninitialized Variables
 
 ### Example 1
-    - [AR, Rule 9.1] The value of an object shouldn't be read if it hasn't been written
+[AR, Rule 9.1] The value of an object shouldn't be read if it hasn't been written
 [GODBOLT](https://godbolt.org/z/dbP1br3eP)
 
 * CPP
