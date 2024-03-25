@@ -1,5 +1,8 @@
+## Use After Free types of bugs
+"Use after Free" (UAF) is a memory corruption issue where a program tries to access memory that has already been freed. This typically happens due to programming errors when referencing memory that was deallocated. It can lead to crashes, data corruption, or even security vulnerabilities. Detection is challenging, and mitigation involves proper memory management practices and programming language features that enforce memory safety, such as Rust's ownership system.
+
 ### Example 1: Use After Free
-`https://godbolt.org/z/KG3Whh9dW`
+[GODBOLT](https://godbolt.org/z/KG3Whh9dW)
 * CPP - This code compiles but leads to undefined behavior by accessing memory that has been freed.
 ```cpp
 #include <iostream>
@@ -25,7 +28,7 @@ fn main() {
 
 
 ### Example 2: Memory bounds, dangling pointer or even use after free
-`https://godbolt.org/z/ha887z7oe`
+[GODBOLT](https://godbolt.org/z/ha887z7oe)
 * CPP
 ```cpp
 #include <iostream>
