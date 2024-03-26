@@ -48,7 +48,7 @@ Rust's safety mechanisms detect this at runtime and cause the program to panic, 
 ```rust,editable
 fn main() {
     let arr = [1, 2, 3, 4, 5];
-    // Compile-time error for out-of-bounds access
+    // Causes the program to panic for out-of-bounds access
     for i in 0..=5 {
         println!("{}", arr[i]);
     }
