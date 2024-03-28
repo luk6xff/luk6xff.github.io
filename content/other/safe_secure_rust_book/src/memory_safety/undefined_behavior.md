@@ -49,7 +49,7 @@ fn f(src: &Vec<i32>) -> Vec<i32> {
 
 pub fn main() {
     let src = vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    let res = f(src);
+    let res = f(&src);
     println!("{:?}", res);
 }
 ```
