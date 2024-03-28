@@ -1,7 +1,7 @@
-# Short Rust Overview
+# Quick Rust Overview
 
-## Overview of Rust
-Rust is a modern systems programming language, developed by mozilla and first released in 2010, focusing on safety, speed, and concurrency. It aims to provide memory safety without garbage collection, and concurrency without data races. Rust achieves these goals through a set of ownership rules, checked at compile time, without sacrificing performance. Rust achieves its goals through a set of unique features, including:
+## Brief Overview of Rust
+Rust is a systems programming language, developed by mozilla and first released in 2010, focusing on safety, speed, and concurrency. It aims to provide memory safety without garbage collection, and concurrency without data races. Rust achieves these goals through a set of ownership rules, checked at compile time, without sacrificing performance. Rust achieves its goals through a set of unique features, including:
 
 - **Ownership and Borrowing:** Rust's ownership model enforces rules at compile time that eliminate various classes of bugs found in other systems programming languages, such as dangling pointers, data races, and memory leaks.
 - **Type Safety and Inference:** Rust's type system prevents null pointer dereferences and guarantees thread safety, among other safety checks. Its powerful type inference allows for concise code without sacrificing expressiveness or safety.
