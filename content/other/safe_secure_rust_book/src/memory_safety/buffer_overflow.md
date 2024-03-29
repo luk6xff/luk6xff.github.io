@@ -101,9 +101,17 @@ fn main() {
 constexpr size_t k_bufSize = 5;
 const std::array<char, k_bufSize> buf = {'A', 'B', 'C', 'D', 'E'};
 
-bool exists_in_buffer(char v)*
+bool exists_in_buffer(char v)
+{
+    // return true in one of the first 4 iterations or UB due to out-of-bounds access
+    for (auto i = 0; i <= k_bufSize; ++i) {
+        if (buf[i] == v)
+            return true;
+    }
+
     return false;
 }
+
 
 int main() {
     std::cout << exists_in_buffer('\0') << std::endl;
