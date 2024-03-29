@@ -24,6 +24,7 @@ This book is dedicated to highlighting how Rust addresses safety and security co
 Through a comparative analysis of Rust and C/C++, this book aims to provide readers with a clear understanding of how Rust's safety and security features can mitigate the risks associated with systems programming, offering practical insights and guidelines for adopting safer and more secure coding practices.
 
 ## Contact
-If you have some remarks, questions or ideas how to improve the book, feel free to reach me out at: **lukasz.uszko@gmail.com**
+If you have some remarks, questions or ideas how to improve the book, feel free to open an issue or pull request at [**the book's repository**](https://github.com/luk6xff/luk6xff.github.io/tree/master/content/other/safe_secure_rust_book).
 
 Happy Reading!
+Lukasz
