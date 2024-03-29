@@ -2,20 +2,34 @@
 
 
 ### Example 1:
-[GODBOLT](https://godbolt.org/z/T4jMaPzns)
+[GODBOLT](https://godbolt.org/z/31EE8TWbx)
 
-* CPP - A classic buffer overflow using an array. This code compiles, but accessing arr[10] is undefined behavior,leading to a potential security vulnerability.
+* C - A classic buffer overflow using an array in C language. This code compiles, but accessing arr[10] is undefined behavior,leading to a potential security vulnerability.
+```c
+#include <stdio.h>
+
+int main() {
+    int arr[5] = {1, 2, 3, 4, 5};
+    // Accidental buffer overflow
+    arr[10] = 10;
+    printf("%d\n", arr[10]);
+    return 0;
+}
+```
+
+* CPP - Undefined behavior as well
 ```cpp
 #include <iostream>
 
 int main() {
-    int arr[5] = {1, 2, 3, 4, 5};
+    std::array<int, 5> = {1, 2, 3, 4, 5};
     // Accidental buffer overflow
     arr[10] = 10;
     std::cout << arr[10] << std::endl;
     return 0;
 }
 ```
+
 * RUST - This code will not compile, as the compiler checks array bounds at compile time and prevents out-of-bounds access.
 ```rust,editable
 fn main() {
@@ -28,16 +42,16 @@ fn main() {
 
 
 ### Example 2:
-[GODBOLT](https://godbolt.org/z/q93soerhh)
+[GODBOLT](https://godbolt.org/z/eq43dh8c3)
 
-* CPP - A classic buffer overflow using an array. This code compiles, but accessing arr[5] is undefined behavior,leading to a potential security vulnerability.
+* CPP - Attempting to print 10 elements from a 5-element array. This loop goes beyond the array's bounds, leading to undefined behavior, which could cause crashes or unpredictable outputs.
 ```cpp
 #include <iostream>
+#include <array>
 
 int main() {
-    int arr[5] = {1, 2, 3, 4, 5};
-    // Accidental buffer overflow
-    for (int i = 0; i <= 5; i++) {
+    std::array<int, 5> arr = {1, 2, 3, 4, 5};
+    for (int i = 0; i < 10; i++) {
         std::cout << arr[i] << std::endl;
     }
     return 0;
