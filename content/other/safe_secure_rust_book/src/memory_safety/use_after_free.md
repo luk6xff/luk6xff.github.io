@@ -34,6 +34,7 @@ fn main() {
 #include <iostream>
 #include <vector>
 #include <optional>
+#include <exception>
 
 // Function to modify the vector by adding a new value
 void modify(std::vector<int>& vec, int value) {
@@ -51,8 +52,12 @@ std::optional<int> get(const std::vector<int>& vec, size_t index) {
 }
 
 
-int not_best_get(const std::vector<int>& vec, size_t index) {
+int unsafe_get(const std::vector<int>& vec, size_t index) {
     return vec[index];
+}
+
+int safe_get(const std::vector<int>& vec, size_t index) {
+    return vec.at(index);
 }
 
 int main() {
@@ -82,10 +87,18 @@ int main() {
         std::cout << "No data exists for index: " << index << std::endl;
     }
 
-    // 3) Will this fail ?
-    std::cout << not_best_get(data, index) << std::endl;
+    // 3) Use automatic bounds checked access employing exceptions
+    try {
+        safe_get(data, index);
+    }
+    catch (std::out_of_range &e) {
+        std::cout << "No data exists for index: " << index << std::endl;
+    }
 
-    //%//// 4) Modify the reference
+    // 4) Will this fail ?
+    std::cout << unsafe_get(data, index) << std::endl;
+
+    //%//// 5) Modify the reference
     //%// x = 11;
     //%// std::cout << "x(2) = " << x << ", &data[0] = " << &data[0] << std::endl;
     //%// std::cout << "Modified data once again: ";
