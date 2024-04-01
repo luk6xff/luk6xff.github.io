@@ -4,9 +4,9 @@ Pointers are a powerful feature in programming languages like C and C++, providi
 
 ### Example 1: Dangling Pointer
 [GODBOLT](https://godbolt.org/z/bbW69EG8x)
-* CPP
-```cpp
-#include <iostream>
+* C
+```c
+#include "stdio.h"
 
 int main() {
     int* a = nullptr;
@@ -16,11 +16,32 @@ int main() {
     }
     int c = 10;
     // At this point, b goes out of scope, but the memory allocated to it does not
-    std::cout << "a: " << *a << std::endl;
+    printf("a: %d\n", *a);
 
     return 0;
 }
 ```
+
+* CPP
+```c
+#include <iostream>
+#include <memory>
+
+int main() {
+    std::unique_ptr<int> a;
+    {
+        auto b = std::make_unique<int>(5);
+        a = std::move(b);  // Move the ownership of the unique_ptr<int> from 'b' to 'a'
+    } // 'b' goes out of scope here, but its value is safely stored in 'a'
+
+    int _c = 10;
+    // At this point, 'b' has gone out of scope, but its value is safely stored in 'a'
+    std::cout << *a << std::endl;
+
+    return 0;
+}
+    
+```  
 
 * RUST
 ```rust,editable
@@ -55,9 +76,9 @@ pub fn main() {
 
 ### Example 2: Null Pointer Dereference
 [GODBOLT](https://godbolt.org/z/5EMEsGar8)
-* CPP
-```cpp
-#include <cstdio>
+* C
+```c
+#include "stdio.h"
 
 void process(int* ptr) {
     // Unsafe: dereferencing a null pointer leads to undefined behavior.
@@ -70,6 +91,32 @@ int main() {
     return 0;
 }
 ```
+
+* CPP
+```cpp
+#include <iostream>
+#include <memory>
+#include <optional>
+
+void process1(std::unique_ptr<int> ptr) {
+    std::cout << "ptr = " << *ptr << std::endl;
+}
+
+void process2(std::optional<int> ptr) {
+    std::cout << "ptr = " << *ptr << std::endl;
+}
+
+int main() {
+    std::optional<int> a;
+    process2(a);  // will explicitly "work" with default constructed value (in this case 0)
+
+    std::unique_ptr<int> b;
+    process1(std::move(b)); // will panic.
+
+    return 0;
+}
+
+
 * RUST
 ```rust,editable
 fn process(ptr: Option<&i32>) {
@@ -89,10 +136,10 @@ fn main() {
 
 ### Example 3: Dangling Pointer
 [GODBOLT](https://godbolt.org/z/4efPc787P)
-* CPP
-```cpp
-#include <cstdio>
-#include <cstdlib>
+* C
+```c
+#include "stdio.h"
+#include "stdlib.h"
 
 int* dangling_pointer() {
     int value = 42;
@@ -104,6 +151,22 @@ int main() {
     printf("Data: %d\n", *ptr); // Undefined behavior: accessing a deallocated stack frame
     return 0;
 }
+```
+
+* CPP
+```cpp
+#include <iostream>
+#include <memory>
+
+std::unique_ptr<int> dangling_pointer() {
+    return std::make_unique<int>(42);
+}
+
+int main() {
+    auto val = dangling_pointer();
+    std::cout << "Data: " << *val << std::endl;  // Safe: `val` owns the data directly.
+}
+
 ```
 * RUST
 ```rust,editable
