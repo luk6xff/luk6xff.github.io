@@ -3,13 +3,13 @@ Pointers are a powerful feature in programming languages like C and C++, providi
 
 
 ### Example 1: Dangling Pointer
-[GODBOLT](https://godbolt.org/z/bbW69EG8x)
+[GODBOLT](https://godbolt.org/z/anc5sdbqE)
 * C
 ```c
 #include "stdio.h"
 
 int main() {
-    int* a = nullptr;
+    int* a = NULL;
     {
         int b = 5;
         a = &b;
@@ -135,7 +135,7 @@ fn main() {
 
 
 ### Example 3: Dangling Pointer
-[GODBOLT](https://godbolt.org/z/4efPc787P)
+[GODBOLT](https://godbolt.org/z/Mb5T48azz)
 * C
 ```c
 #include "stdio.h"
