@@ -28,7 +28,7 @@ fn main() {
 
 
 ### Example 2: Memory bounds, dangling pointer or even use after free
-[GODBOLT](https://godbolt.org/z/ha887z7oe)
+[GODBOLT](https://godbolt.org/z/dvGP1f6aa)
 * CPP
 ```cpp
 #include <iostream>
