@@ -83,7 +83,7 @@ int main() {
     }
 
     // 3) Will this fail ?
-    std::cout << not_best_get << std::endl;
+    std::cout << not_best_get(data, index) << std::endl;
 
     //%//// 4) Modify the reference
     //%// x = 11;
