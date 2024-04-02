@@ -97,18 +97,25 @@ int main() {
 #include <iostream>
 #include <memory>
 #include <optional>
+#include <exceptions>
 
 void process1(std::unique_ptr<int> ptr) {
-    std::cout << "ptr = " << *ptr << std::endl;
+    std::cout << "Data: " << *ptr << std::endl;
 }
 
 void process2(std::optional<int> ptr) {
-    std::cout << "ptr = " << *ptr << std::endl;
+    int v = ptr.value();
+    std::cout << "Data: " << v << std::endl;
 }
 
 int main() {
     std::optional<int> a;
-    process2(a);  // will explicitly "work" with default constructed value (in this case 0)
+    try {
+        process2(a);  // will throw an exception
+    }
+    catch (std::bad_optional_access &ex) {
+        std::cout << "Received a null pointer (None value)." << std::endl;
+    }
 
     std::unique_ptr<int> b;
     process1(std::move(b)); // will panic.
