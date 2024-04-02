@@ -108,6 +108,15 @@ void process2(std::optional<int> ptr) {
     std::cout << "Data: " << v << std::endl;
 }
 
+void process3(std::optional<int> ptr) {
+    auto msg = ptr.transform(
+            [](auto p){ return std::format("Data: {}", p); }
+        ).value_or(
+            "No value"
+        );
+    std::cout << msg << std::endl;
+}
+
 int main() {
     std::optional<int> a;
     try {
@@ -116,6 +125,8 @@ int main() {
     catch (std::bad_optional_access &ex) {
         std::cout << "Received a null pointer (None value)." << std::endl;
     }
+
+    process3(a); // will work as expected with no exceptions.
 
     std::unique_ptr<int> b;
     process1(std::move(b)); // will panic.
