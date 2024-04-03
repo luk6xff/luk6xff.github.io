@@ -2,7 +2,7 @@
 
 
 ### Example 1:
-[GODBOLT](https://godbolt.org/z/31EE8TWbx)
+[GODBOLT](https://godbolt.org/z/rcj3Gnd19)
 
 * C - A classic buffer overflow using an array in C language. This code compiles, but accessing arr[10] is undefined behavior,leading to a potential security vulnerability.
 ```c
@@ -20,14 +20,24 @@ int main() {
 * CPP - Undefined behavior as well
 ```cpp
 #include <iostream>
+#include <array>
 
 int main() {
-    std::array<int, 5> = {1, 2, 3, 4, 5};
+    std::array<int, 5> arr = {1, 2, 3, 4, 5};
     // Accidental buffer overflow
     arr[10] = 10;
     std::cout << arr[10] << std::endl;
     return 0;
 }
+
+//% // Compilation error, same behaviour like rust compiler
+//%int main() {
+//%    std::array<int, 5> arr = {1, 2, 3, 4, 5};
+//%    // Compiler error due to out of bounds access
+//%    std::get<10>(arr) = 10;
+//%    std::cout << std::get<10>(arr) << std::endl;
+//%    return 0;
+//%}
 ```
 
 * RUST - This code will not compile, as the compiler checks array bounds at compile time and prevents out-of-bounds access.
@@ -42,7 +52,7 @@ fn main() {
 
 
 ### Example 2:
-[GODBOLT](https://godbolt.org/z/eq43dh8c3)
+[GODBOLT](https://godbolt.org/z/1vEY4zTWf)
 
 * CPP - Attempting to print 10 elements from a 5-element array. This loop goes beyond the array's bounds, leading to undefined behavior, which could cause crashes or unpredictable outputs.
 ```cpp
@@ -56,7 +66,17 @@ int main() {
     }
     return 0;
 }
+
+//% // Runtime error, similar like in rust.
+//% int main() {
+//%     std::array<int, 5> arr = {1, 2, 3, 4, 5};
+//%     // Runtime error due to out of bounds access
+//%     for (auto i = 0; i < 10; i++)
+//%         std::cout << arr.at(i) << std::endl;
+//%     return 0;
+//% }
 ```
+
 * RUST - Attempting to access `arr[5]` results in a runtime error because the index 5 is out-of-bounds for an array of length 5.
 Rust's safety mechanisms detect this at runtime and cause the program to panic, preventing it from continuing with invalid memory access.
 ```rust,editable
