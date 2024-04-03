@@ -3,24 +3,45 @@ Pointers are a powerful feature in programming languages like C and C++, providi
 
 
 ### Example 1: Dangling Pointer
-[GODBOLT](https://godbolt.org/z/bbW69EG8x)
-* CPP
-```cpp
-#include <iostream>
+[GODBOLT](https://godbolt.org/z/anc5sdbqE)
+* C
+```c
+#include "stdio.h"
 
 int main() {
-    int* a = nullptr;
+    int* a = NULL;
     {
         int b = 5;
         a = &b;
     }
     int c = 10;
     // At this point, b goes out of scope, but the memory allocated to it does not
-    std::cout << "a: " << *a << std::endl;
+    printf("a: %d\n", *a);
 
     return 0;
 }
 ```
+
+* CPP
+```c
+#include <iostream>
+#include <memory>
+
+int main() {
+    std::unique_ptr<int> a;
+    {
+        auto b = std::make_unique<int>(5);
+        a = std::move(b);  // Move the ownership of the unique_ptr<int> from 'b' to 'a'
+    } // 'b' goes out of scope here, but its value is safely stored in 'a'
+
+    int _c = 10;
+    // At this point, 'b' has gone out of scope, but its value is safely stored in 'a'
+    std::cout << *a << std::endl;
+
+    return 0;
+}
+    
+```  
 
 * RUST
 ```rust,editable
@@ -55,9 +76,9 @@ pub fn main() {
 
 ### Example 2: Null Pointer Dereference
 [GODBOLT](https://godbolt.org/z/5EMEsGar8)
-* CPP
-```cpp
-#include <cstdio>
+* C
+```c
+#include "stdio.h"
 
 void process(int* ptr) {
     // Unsafe: dereferencing a null pointer leads to undefined behavior.
@@ -70,6 +91,50 @@ int main() {
     return 0;
 }
 ```
+
+* CPP
+```cpp
+#include <iostream>
+#include <memory>
+#include <optional>
+#include <exceptions>
+
+void process1(std::unique_ptr<int> ptr) {
+    std::cout << "Data: " << *ptr << std::endl;
+}
+
+void process2(std::optional<int> ptr) {
+    int v = ptr.value();
+    std::cout << "Data: " << v << std::endl;
+}
+
+void process3(std::optional<int> ptr) {
+    auto msg = ptr.transform(
+            [](auto p){ return std::format("Data: {}", p); }
+        ).value_or(
+            "No value"
+        );
+    std::cout << msg << std::endl;
+}
+
+int main() {
+    std::optional<int> a;
+    try {
+        process2(a);  // will throw an exception
+    }
+    catch (std::bad_optional_access &ex) {
+        std::cout << "Received a null pointer (None value)." << std::endl;
+    }
+
+    process3(a); // will work as expected with no exceptions.
+
+    std::unique_ptr<int> b;
+    process1(std::move(b)); // will panic.
+
+    return 0;
+}
+```
+
 * RUST
 ```rust,editable
 fn process(ptr: Option<&i32>) {
@@ -88,11 +153,11 @@ fn main() {
 
 
 ### Example 3: Dangling Pointer
-[GODBOLT](https://godbolt.org/z/4efPc787P)
-* CPP
-```cpp
-#include <cstdio>
-#include <cstdlib>
+[GODBOLT](https://godbolt.org/z/Mb5T48azz)
+* C
+```c
+#include "stdio.h"
+#include "stdlib.h"
 
 int* dangling_pointer() {
     int value = 42;
@@ -104,6 +169,22 @@ int main() {
     printf("Data: %d\n", *ptr); // Undefined behavior: accessing a deallocated stack frame
     return 0;
 }
+```
+
+* CPP
+```cpp
+#include <iostream>
+#include <memory>
+
+std::unique_ptr<int> dangling_pointer() {
+    return std::make_unique<int>(42);
+}
+
+int main() {
+    auto val = dangling_pointer();
+    std::cout << "Data: " << *val << std::endl;  // Safe: `val` owns the data directly.
+}
+
 ```
 * RUST
 ```rust,editable
