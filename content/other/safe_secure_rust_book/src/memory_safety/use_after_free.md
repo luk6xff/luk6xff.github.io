@@ -2,15 +2,29 @@
 "Use after Free" (UAF) is a memory corruption issue where a program tries to access memory that has already been freed. This typically happens due to programming errors when referencing memory that was deallocated. It can lead to crashes, data corruption, or even security vulnerabilities. Detection is challenging, and mitigation involves proper memory management practices and programming language features that enforce memory safety, such as Rust's ownership system.
 
 ### Example 1: Use After Free
-[GODBOLT](https://godbolt.org/z/KG3Whh9dW)
-* CPP - This code compiles but leads to undefined behavior by accessing memory that has been freed.
-```cpp
+[GODBOLT](https://godbolt.org/z/o6M84n5b8)
+* C - This code compiles but leads to undefined behavior by accessing memory that has been freed.
+```c
 #include <iostream>
 
 int main() {
     int *ptr = new int(10);
     delete ptr;
     // Undefined behavior: use after free
+    std::cout << *ptr << std::endl;
+    return 0;
+}
+```
+* CPP - Usage of std::unique_ptr prevents from UAF
+```cpp
+#include <iostream>
+#include <memory>
+
+int main() {
+    auto ptr = std::make_unique<int>(10);
+    // delete ptr is impossible, so use after free is impossible.
+    std::cout << *ptr << std::endl;
+    *ptr = 11;
     std::cout << *ptr << std::endl;
     return 0;
 }
