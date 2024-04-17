@@ -54,6 +54,48 @@ pub fn main() {
 }
 ```
 
+To prevent the problem in C++, according to the [C++ Core Guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Res-init), one should not declare a variable before initializing it.
+The idiomatic way to write this code in C++23 would be
+
+```cpp
+#include <iostream>
+#include <ranges>
+#include <vector>
+#include <cmath>
+
+using namespace std;
+
+auto f(const std::vector<int>& src) -> std::vector<int> {
+    return src | views::transform([](int v) { return pow(v, 2); }) | ranges::to<std::vector<int>>();
+}
+
+int main() {
+    std::vector<int> vec = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    auto res = f(vec);
+    for (const auto& v : res) {
+        std::cout << v << " ";
+    }
+    std::cout << std::endl;
+    return 0;
+}
+
+```
+
+It's also nicer to write this way in Rust, becuase it doesn't require dst to be mutable, and is shorter and more succint
+
+```rust,editable
+fn f(src: &Vec<i32>) -> Vec<i32> {
+    src.iter().map(|&x| x.pow(2)).collect()
+}
+
+pub fn main() {
+    let src = vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    let res = f(&src);
+    println!("{:?}", res);
+}
+
+```
+
 
 ### Example 2 - Object Slicing and Polymorphism
 [GODBOLT](https://godbolt.org/z/E4jefbYYv)
