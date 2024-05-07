@@ -1,5 +1,5 @@
 +++
-title="My C/C++ project template"
+title="Dockerized C/C++ project build template"
 date=2022-12-19
 
 [taxonomies]
