@@ -165,25 +165,29 @@ Start the program within GEF by typing `r` or `run`. The program will start and 
 r
 ```
 
-### Step 5: Find the `ret` address of the `process_credentials` function
+### Step 5: After reaching breakpoint, analyze gef `context` command
+![Time Planner app](https://raw.githubusercontent.com/luk6xff/luk6xff.github.io/master/content/other/media/gef_tool/gef_context.png)\
+*Figure 1: gef context command - more details here: https://hugsy.github.io/gef/commands/context/*
+
+### Step 6: Find the `ret` address of the `process_credentials` function
 When brakpoint is reached, print the address of the stack pointer which contain the return address of `process_credentials` function. It will be used to overrite it with `admin_panel` address.
 ```sh
 (gef) i r $rsp
     rsp            0x7fffffffd838      0x7fffffffd838
 ```
 
-#### Step 6: Step Through the Code
+#### Step 7: Step Through the Code
 
 Use the `next` or `n` command to step through the code line by line. If you want to step into functions (like `store_credentials_into_db`), use `step` or `s` instead.
 
-#### Step 6: Inspect Variables and Memory
+#### Step 8: Inspect Variables and Memory
 
 As you reach the `std::cin` call, you can inspect the contents of `buffer` and other variables:
 - If you want to dereference all the stack entries inside a function context (on a 64bit architecture): `p ($rbp - $rsp)/8`
 - Find the memory address of the `buffer` array: `p &buffer[0]`= 0x7fffffffd7b0
 - To examine the content of `buffer`: `x/128c buffer`
 
-#### Step 7: Continue Execution
+#### Step 9: Continue Execution
 
 After inspecting the variables at the first breakpoint, continue execution to see if the second breakpoint (`admin_panel`) is hit.
 
@@ -191,17 +195,17 @@ After inspecting the variables at the first breakpoint, continue execution to se
 (gef) continue
 ```
 
-#### Step 8: Experiment with Inputs
+#### Step 10: Experiment with Inputs
 
 If you're analyzing the program for vulnerabilities, you might try inputs that could potentially overflow `buffer` or otherwise manipulate the program's flow. Run
 
-#### Step 9: Utilize GEF Commands for Deeper Analysis
+#### Step 11: Utilize GEF Commands for Deeper Analysis
 
 GEF provides commands that are particularly useful for security analysis:
 - `pattern create` and `pattern search` to test for buffer overflows.
 - `heap bins` to inspect the heap state if dynamic memory allocation is used elsewhere in the program.
 
-#### Step 10: Quit GEF
+#### Step 12: Quit GEF
 
 Once you're done debugging, you can quit GEF with the `quit` command.
 
