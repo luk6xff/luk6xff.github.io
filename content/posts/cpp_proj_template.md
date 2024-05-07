@@ -852,7 +852,7 @@ This table provides a concise comparison between Docker containers and native bu
 
 
 ## Multi architectures builds
-Here's an example of building a simple "Hello, World!" C++ application for different platforms using Docker buildx (Demo: [HERE](https://github.com/luk6xff/luk6xff.github.io/tree/master/content/other/code/cpp_proj_template)):
+This example demonstrates how to build a simple "Hello, World!" C++ application for both amd64 and arm64 architectures using Docker buildx. The resulting Docker image can be run on systems with different CPU architectures without modification, showcasing the versatility and compatibility of Docker multi-architecture builds. (Demo: [HERE](https://github.com/luk6xff/luk6xff.github.io/tree/master/content/other/code/cpp_proj_template)):
 
 1. **Create a C++ source file** (hello.cpp):
    ```cpp
@@ -904,10 +904,101 @@ Here's an example of building a simple "Hello, World!" C++ application for diffe
    docker run hello-world
    ```
 
-This example demonstrates how to build a simple "Hello, World!" C++ application for both amd64 and arm64 architectures using Docker buildx. The resulting Docker image can be run on systems with different CPU architectures without modification, showcasing the versatility and compatibility of Docker multi-architecture builds.
+## Docker container runtime management
+Docker container runtime management involves various tasks to ensure that containers are running efficiently, securely, and in accordance with application requirements. Here are some key commands used for that:
+
+1. **Starting and Stopping Containers**:
+   - `docker start`: Start a stopped container.
+   - `docker stop`: Stop a running container.
+   - `docker restart`: Restart a container.
+
+2. **Viewing Container Logs**:
+   - `docker logs`: View the logs of a running container.
+
+3. **Inspecting Container Details**:
+   - `docker inspect`: View detailed information about a container.
+
+4. **Monitoring Container Performance**:
+   - `docker stats`: Display live performance statistics for running containers.
+
+5. **Managing Container Resources**:
+   - `docker run --cpu`: Limit CPU usage.
+   - `docker run --memory`: Limit memory usage.
+   - `docker run --cpus`: Limit CPU cores.
+   - `docker service update --limit-cpu`: Update CPU limits for a service (Swarm mode).
+   - `docker service update --limit-memory`: Update memory limits for a service (Swarm mode).
+
+6. **Health Checks**:
+   - Docker supports health checks defined in Dockerfiles or using the `HEALTHCHECK` instruction.
+
+7. **Security**:
+   - Docker provides various security features such as user namespaces, seccomp profiles, and container capabilities.
+   - `docker run --security-opt`: Set security options for a container.
+   - `docker container update --security-opt`: Update security options for a container.
+
+8. **Networking**:
+   - `docker network create`: Create a custom network.
+   - `docker network connect`: Connect a container to a network.
+   - `docker network disconnect`: Disconnect a container from a network.
+
+9. **Data Management**:
+   - `docker volume create`: Create a volume for persistent data.
+   - `docker run -v`: Mount a volume inside a container.
+   - `docker run --mount`: Mount a host directory into a container.
+
+10. **Lifecycle Management**:
+    - `docker create`: Create a container without starting it.
+    - `docker rm`: Remove a container.
+    - `docker prune`: Clean up unused resources.
+
+11. **Running Containers as Daemons**:
+    - Use the `-d` or `--detach` flag with `docker run` to run a container in the background as a daemon.
+    - Example: `docker run -d my_image`
+
+12. **Automatic Restart**:
+    - Use the `--restart` option with `docker run` to specify restart policies.
+    - Example: `docker run --restart=unless-stopped my_image`
+
+Docker-compose real case example:
+```yaml
+version: "3"
+
+services:
+
+  hub-frpc:
+    image: energy-hub-manager-amd64:0.1
+    command: /hub/frpc_amd64 -c /var/hub/frpc.ini
+    network_mode: "host"
+    volumes:
+      - /var/hub:/var/hub
+    ports:
+      - 7400:7400
+    restart: unless-stopped
+
+  hub-manager:
+    image: energy-hub-manager-amd64:0.1
+    command: python3 -u /hub/main.py
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /tmp/logs:/tmp/logs
+      - /var/hub:/var/hub
+    network_mode: "host"
+    restart: on-failure
+```
+
 
 ## Conclusion
+In conclusion, Docker containerization offers a powerful solution for simplifying and streamlining the development, testing, and deployment of C/C++ applications. By encapsulating applications and their dependencies into portable containers, Docker enables developers to create consistent and reproducible environments across different platforms.
 
-- Recap of the benefits of Docker for C/C++ development.
-- Encouragement for developers to embrace Docker for simplifying their workflows and enhancing collaboration.
+Throughout this guide, we've explored various aspects of Docker container management, including:
+
+- Setting up Docker for C/C++ development, including installing Docker and creating Dockerfiles.
+- Configuring development environments within Docker containers, including installing compilers, build tools, and debugging utilities.
+- Managing dependencies and incorporating third-party libraries into Docker images.
+- Streamlining build processes using Dockerfile and Docker Compose.
+- Testing and debugging C/C++ applications within Docker containers.
+- Collaboration and deployment strategies for sharing Docker images and deploying applications in production environments.
+- Best practices for optimizing Dockerfiles, managing container resources, and securing Docker containers.
+
+By following these best practices and leveraging Docker's capabilities, C/C++ developers can enhance productivity, improve collaboration, and ensure consistency across development and production environments. With Docker, the process of building, testing, and deploying C/C++ applications becomes more efficient and reliable, ultimately leading to better software quality and faster time-to-market.
 
