@@ -852,7 +852,7 @@ This table provides a concise comparison between Docker containers and native bu
 
 
 ## Multi architectures builds
-Sure, here's an example of building a simple "Hello, World!" C++ application for different platforms using Docker buildx (Demo: [HERE](https://github.com/luk6xff/luk6xff.github.io/tree/master/content/other/code/cpp_proj_template)):
+Here's an example of building a simple "Hello, World!" C++ application for different platforms using Docker buildx (Demo: [HERE](https://github.com/luk6xff/luk6xff.github.io/tree/master/content/other/code/cpp_proj_template)):
 
 1. **Create a C++ source file** (hello.cpp):
    ```cpp
