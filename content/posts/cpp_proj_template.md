@@ -16,6 +16,23 @@ Today I'll explore how Docker facilitates the creation of reproducible and isola
 
 Docker is a platform that uses containerization to package and run applications in isolated environments called containers. These containers are lightweight and portable, containing everything needed to run the application, including code, runtime, system tools, libraries, and settings.They provide an abstraction layer between one or more processes (i.e., an application) and the OS on which they run. A container packages these processes and their underlying dependencies together so that they can be easily implemented on any OS that supports the container infrastructure. Under the hood, Docker leverages several Linux kernel features, such as cgroups (control groups) for resource isolation, namespaces for process isolation, and UnionFS (Union File System) for layering file systems.
 
+**Docker vs Virtual Machine**
+![Docker vs VM](https://raw.githubusercontent.com/luk6xff/luk6xff.github.io/master/content/other/media/cpp_proj_template/docker_vs_vm.png)\
+*Figure 1: docker vs vm - [plant_uml](//www.plantuml.com/plantuml/dpng/dP9FY_8m48Vl_HI3TtbfUdzHTvTTOVy8mbvBh8C6swGagOii_UuR8mcDiTXwgMPuydl2pCoKfb8tLPce0-CrbRI2GbIruCZrMfzA18c5fdnNOfBKj3ZG7SBacvbBj8GFMkmPHvXBywiDs4YSm6y20FwUmT-4ql2rdW1Li3V_Sw7oOnLHfnhbaIaXBw0_Mj2xNnkqQP0wqrNEOlcv_lU-N5ny6yPLNhBDsPZUmkUh5QGMfNMTkdUrFL8oMahwfCH9oJrfDbgQzKap9yr2wVdJcGrCj-A7J_zVJQ5pz4JSuA3YET_T-p4aYY7T638m9ejYCi-v3hIThNuMnG7b8ykyjJT3qkUzy1tZQFaBbwEjXCD-4bnJKvKZzzh91-nszvbjdvqyP1-mvB7TVi8M-lb4dGehdhlTXgZg-Q0FWrF9pTHmALrgcyoGRvkg_0C0)
+
+| **Feature**                                  | **Containers**                                                                 | **Hypervisors**                                                            |
+|----------------------------------------------|-------------------------------------------------------------------------------|----------------------------------------------------------------------------|
+| **Abstraction Layer**                        | Specific processes and their dependencies                                     | Underlying hardware (virtual machines)                                     |
+| **Redeployment**                             | Services and applications to multiple Linux distributions (distros)          | Entire systems: OS, services, applications on a single system              |
+| **Software Integration**                     | Integrated into underlying OS and runs on hardware                           | Managed by hypervisor, but runs directly on hardware                       |
+| **Runtime Separation**                       | Integrated into system during runtime, constrained by container protection   | Separated from other guests and isolated during runtime                    |
+| **Operation**                                | Runs as part of OS system                                                    | Runs as separate, independent systems; protected by hypervisor             |
+| **Flexibility**                              | Containered software can run on “bare metal” or in a hypervisor virtual machine                   | Guest systems can use containers like on “bare metal”                      |
+
+*Table 1: Comparison of Containers and Hypervisors*\
+
+
+
 **Key Components of Docker:**
 
 1. **Docker Daemon (`dockerd`):** This is the persistent background process running on the host machine. It listens for Docker API requests and manages Docker objects such as images, containers, networks, and volumes.
@@ -88,10 +105,10 @@ Key namespaces utilized by Docker include:
 |  +-----------------+
 |    Running instances of Docker images.                |
 +------------------------------------------------------+
-           |
-           |
-           |
-           v
+
+
+
+
 +---------------------+    Docker Daemon
 |  Docker Client      | <--------------------------+
 |  (User Interface)   |                             |
