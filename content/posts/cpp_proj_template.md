@@ -9,11 +9,12 @@ tags = ["cpp","docker"]
 
 
 ## Intro
-Today I'll explore how Docker facilitates the creation of reproducible and isolated Linux environments, accelerating the testing, debugging, and deployment phases of C++ applications. By harnessing the capabilities of Docker, C++ programmers can ensure consistency across development, testing, and production environments, ultimately enhancing productivity and software reliability. My complete environment containing example application available as always on [my github](https://github.com/luk6xff/cpp-project-template).
+Today I'll explore how Docker facilitates the creation of reproducible and isolated Linux environments, accelerating the testing, debugging, and deployment phases of C/C++ applications. By harnessing the capabilities of Docker, C++ programmers can ensure consistency across development, testing, and production environments, ultimately enhancing productivity and software reliability. My complete environment containing example application available as always on [my github](https://github.com/luk6xff/cpp-project-template).
 
+# Part 1 - Docker Overview
 ## Understanding Docker
 
-Docker is a platform that uses containerization to package and run applications in isolated environments called containers. These containers are lightweight and portable, containing everything needed to run the application, including code, runtime, system tools, libraries, and settings. Under the hood, Docker leverages several Linux kernel features, such as cgroups (control groups) for resource isolation, namespaces for process isolation, and UnionFS (Union File System) for layering file systems.
+Docker is a platform that uses containerization to package and run applications in isolated environments called containers. These containers are lightweight and portable, containing everything needed to run the application, including code, runtime, system tools, libraries, and settings.They provide an abstraction layer between one or more processes (i.e., an application) and the OS on which they run. A container packages these processes and their underlying dependencies together so that they can be easily implemented on any OS that supports the container infrastructure. Under the hood, Docker leverages several Linux kernel features, such as cgroups (control groups) for resource isolation, namespaces for process isolation, and UnionFS (Union File System) for layering file systems.
 
 **Key Components of Docker:**
 
@@ -24,6 +25,8 @@ Docker is a platform that uses containerization to package and run applications 
 3. **Docker Images:** Immutable snapshots containing the application, its dependencies, and configurations. These images are built using Dockerfiles and stored in a local registry or a remote repository like Docker Hub.
 
 4. **Docker Containers:** Instances of Docker images that run as isolated processes on the host machine. Each container operates in its own isolated environment, providing security and preventing conflicts between applications and their dependencies.
+
+
 
 **Linux Mechanisms Leveraged by Docker:**
 
@@ -359,185 +362,6 @@ This command builds a Docker image with the tag `my_cpp_image` using the Dockerf
     docker pull IMAGE_NAME@sha256:0a3b2cc81
     ```
 
-
-## Configuring My C/CPP Development Environment
-
-- Installing necessary compilers, build tools, and libraries:
-This Dockerfile is designed to create a C/C++ build environment within a Docker container. Let's elaborate on its structure and functionality:
-
-```Dockerfile
-################################################################################
-# Dockerfile for creating a cpp build environment
-################################################################################
-
-# Set the base image to Ubuntu 22.04
-FROM ubuntu:22.04
-
-# Set docker image info
-LABEL maintainer="Lukasz Uszko <lukasz.uszko@gmail.com>"
-LABEL Description="luk6xff's cpp project template"
-
-# Set non-interactive installation mode
-ENV DEBIAN_FRONTEND=noninteractive
-
-# Create a default user and group
-ARG USERNAME
-ARG USER_UID
-ARG USER_GID
-ENV HOME /home/${USERNAME}
-
-# Create a non-root user to use
-RUN groupadd --gid ${USER_GID} ${USERNAME} \
-    && useradd -s /bin/bash -c ${USERNAME} -d ${HOME} --uid ${USER_UID} --gid ${USER_GID} -m ${USERNAME} \
-    # Add sudo support
-    && apt-get update \
-    && apt-get install -y sudo \
-    && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
-    && chmod 0440 /etc/sudoers.d/$USERNAME \
-    # Cleanup
-    && apt-get autoremove -y \
-    && apt-get clean -y \
-    && rm -rf /var/lib/apt/lists/*
-
-################################################################################
-# Install LUK6xFF mandatory packages
-################################################################################
-RUN apt-get update && apt-get install --no-install-recommends -qy \
-    # Build tools
-    make \
-    autoconf \
-    automake \
-    ninja-build \
-    libtool \
-    m4 \
-    cmake \
-    ccache\
-    # GNU Toolchain
-    gcc \
-    g++ \
-    # LLVM Toolchain
-    clang \
-    clang-tools \
-    clangd \
-    lld \
-    lldb \
-    # C/C++ libraries
-    libboost-all-dev \
-    libgtest-dev \
-    libgmock-dev \
-    libgoogle-glog-dev \
-    libgoogle-perftools-dev \
-    libbenchmark-dev \
-    # Libraries
-    gnupg \
-    unzip \
-    # Python
-    python3 \
-    python3-dev \
-    python3-pip \
-    python3-venv \
-    python3-setuptools \
-    # Networking
-    curl \
-    wget \
-    socat \
-    # Code analysis
-    cppcheck \
-    iwyu \
-    clang-tidy \
-    clang-format \
-    # Debugging/tracing
-    gdb \
-    valgrind \
-    ltrace \
-    strace \
-    # Code coverage
-    lcov \
-    gcovr \
-    # Documentation
-    doxygen \
-    graphviz \
-    doxygen-latex \
-    doxygen-doxyparse\
-    # Version control
-    git \
-    git-flow \
-    # Other tools
-    lsb-release \
-    jq \
-    gawk \
-    ###
-    # clean up
-    && rm -rf /var/lib/apt/lists/*
-
-# Setup python virtual environment
-ENV VIRTUAL_ENV=/opt/venv
-RUN python3 -m venv $VIRTUAL_ENV
-ENV PATH="$VIRTUAL_ENV/bin:$PATH"
-
-# Install cpplint
-RUN pip install cpplint
-
-# Install Infer
-RUN VERSION=1.1.0; \
-curl -sSL "https://github.com/facebook/infer/releases/download/v$VERSION/infer-linux64-v$VERSION.tar.xz" \
-| sudo tar -C /opt -xJ && \
-sudo ln -s "/opt/infer-linux64-v$VERSION/bin/infer" /usr/local/bin/infer
-
-# Install CodeChecker
-ENV CODE_CHECKER_PATH=/opt/CodeChecker
-ENV BUILD_LOGGER_64_BIT_ONLY=YES
-RUN curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-RUN apt-get install -y nodejs
-RUN git clone https://github.com/Ericsson/CodeChecker.git --depth 1 ${CODE_CHECKER_PATH} && \
-    cd ${CODE_CHECKER_PATH} && \
-    make package
-# Set environment variables to include CodeChecker in the PATH
-ENV PATH="${CODE_CHECKER_PATH}/build/CodeChecker/bin:${PATH}"
-ENV CC_REPO_DIR="${CODE_CHECKER_PATH}"
-# Set the report-converter permissions
-RUN chmod +x ${CODE_CHECKER_PATH}/build/CodeChecker/bin/report-converter
-# Expose the default port used by CodeChecker server
-EXPOSE 8999
-
-################################################################################
-# Install additional packages required for your project
-################################################################################
-RUN apt-get update \
-    && apt install --no-install-recommends -qy \
-    libxrandr-dev \
-    libxcursor-dev \
-    libudev-dev \
-    libfreetype-dev \
-    libopenal-dev \
-    libflac-dev \
-    libvorbis-dev \
-    libgl1-mesa-dev \
-    libegl1-mesa-dev
-
-# clean up
-RUN rm -rf /var/lib/apt/lists/*
-
-################################################################################
-# Setup
-################################################################################
-USER ${USERNAME}
-WORKDIR $HOME
-```
-
-My Dockerfile sets up an environment for C/C++ development, including various tools and libraries commonly used in C/C++ projects. Let's break down its components:
-- **Base Image:** The Dockerfile starts with the `FROM ubuntu:22.04` instruction, indicating that it's based on the Ubuntu 22.04 image.
-- **Labels:** The `LABEL` instructions provide metadata about the image, such as the maintainer and description.
-- **Non-Root User:** It creates a non-root user for running the container, enhancing security and avoiding potential permission issues.
-- **Installation of Essential Packages:** It installs various build tools, compilers (GNU and LLVM), libraries (Boost, Google Test, Google Mock, etc.), Python packages, networking utilities, code analysis/debugging tools (cppcheck, gdb, valgrind, etc.), and version control tools (Git, Git Flow).
-- **Python Virtual Environment:** It sets up a Python virtual environment for managing Python dependencies.
-- **Installation of Additional Tools:** It installs additional tools like cpplint, Infer, and CodeChecker, which are used for code analysis, static analysis, and code checking.
-- **Exposure of Default Port:** It exposes the default port used by the CodeChecker server (port 8999).
-- **Additional Packages:** It installs additional packages required for specific project dependencies.
-- **Cleanup:** It removes unnecessary files and packages to reduce the size of the Docker image.
-- **User and Working Directory Setup:** It sets the user and working directory within the container.
-
-
 ## Managing Dependencies
 
 Managing dependencies within your Dockerized C/C++ development environment is crucial for ensuring smooth project builds and executions. This involves:
@@ -651,60 +475,7 @@ In summary, Docker Compose offers a more streamlined and maintainable approach f
        fi
    ```
 
-
-## Debugging CPP apps using GDB
-
-You can use GDB's remote debugging feature to debug your C/C++ applications running inside a Docker container from a host machine. Here's how you can achieve that:
-
-1. **Expose GDB Server Port in Docker Container:**
-   - In your Dockerfile or Docker Compose file, expose a port for GDB server to communicate with the host machine.
-
-   ```yaml
-   # Example of exposing GDB server port in Docker Compose file
-   version: '3'
-   services:
-     my_cpp_app:
-       build:
-         context: .
-         dockerfile: Dockerfile
-       ports:
-         - "1234:1234"  # Expose port for GDB server
-   ```
-
-2. **Run GDB Server in Docker Container:**
-   - Start your Docker container as usual, but ensure that GDB server is running inside the container, listening on the exposed port.
-
-   ```bash
-   # Start Docker container with GDB server
-   docker run --rm -d -p 1234:1234 my_cpp_image gdbserver :1234 my_executable
-   ```
-
-3. **Connect Host GDB to GDB Server:**
-   - On your host machine, use the GDB command-line interface to connect to the GDB server running inside the Docker container.
-
-   ```bash
-   # Connect host GDB to GDB server in Docker container
-   gdb
-   (gdb) target remote <docker_host_ip>:1234
-   ```
-
-4. **Debug C/C++ Application with Host GDB:**
-   - Once connected, you can use GDB commands on your host machine to debug the C/C++ application running inside the Docker container.
-
-   ```bash
-   # Example of setting breakpoints and debugging
-   (gdb) break main
-   (gdb) continue
-   (gdb) ...
-   ```
-
-By setting up GDB server in the Docker container and connecting it to the host GDB, you can effectively debug your C/C++ applications running inside Docker containers from your host machine.
-
-
 ## Collaboration and Deployment
-
-### Collaboration and Deployment
-
 Collaboration and deployment are crucial stages in the software development lifecycle. Docker provides a robust platform for sharing development environments across teams and deploying C/C++ applications consistently in production environments. Here's how you can leverage Docker for collaboration and deployment:
 
 1. **Sharing Docker Images for Consistent Development Environments:**
@@ -839,6 +610,54 @@ Examples:
    # Monitoring container logs
    docker logs my_container
    ```
+
+## Debugging CPP apps using GDB
+
+You can use GDB's remote debugging feature to debug your C/C++ applications running inside a Docker container from a host machine. Here's how you can achieve that:
+
+1. **Expose GDB Server Port in Docker Container:**
+   - In your Dockerfile or Docker Compose file, expose a port for GDB server to communicate with the host machine.
+
+   ```yaml
+   # Example of exposing GDB server port in Docker Compose file
+   version: '3'
+   services:
+     my_cpp_app:
+       build:
+         context: .
+         dockerfile: Dockerfile
+       ports:
+         - "1234:1234"  # Expose port for GDB server
+   ```
+
+2. **Run GDB Server in Docker Container:**
+   - Start your Docker container as usual, but ensure that GDB server is running inside the container, listening on the exposed port.
+
+   ```bash
+   # Start Docker container with GDB server
+   docker run --rm -d -p 1234:1234 my_cpp_image gdbserver :1234 my_executable
+   ```
+
+3. **Connect Host GDB to GDB Server:**
+   - On your host machine, use the GDB command-line interface to connect to the GDB server running inside the Docker container.
+
+   ```bash
+   # Connect host GDB to GDB server in Docker container
+   gdb
+   (gdb) target remote <docker_host_ip>:1234
+   ```
+
+4. **Debug C/C++ Application with Host GDB:**
+   - Once connected, you can use GDB commands on your host machine to debug the C/C++ application running inside the Docker container.
+
+   ```bash
+   # Example of setting breakpoints and debugging
+   (gdb) break main
+   (gdb) continue
+   (gdb) ...
+   ```
+
+By setting up GDB server in the Docker container and connecting it to the host GDB, you can effectively debug your C/C++ applications running inside Docker containers from your host machine.
 
 ## Docker containers vs native builds
 This table provides a concise comparison between Docker containers and native builds across various aspects of performance and functionality.
@@ -984,6 +803,374 @@ services:
       - /var/hub:/var/hub
     network_mode: "host"
     restart: on-failure
+```
+
+
+
+
+# Part 2 - My Dockerized C/CPP environment
+
+## Configuring My C/CPP Development Environment
+This Dockerfile is designed to create a C/C++ build environment within a Docker container. Let's elaborate on its structure and functionality:
+
+```Dockerfile
+################################################################################
+# Dockerfile for creating a cpp build environment
+################################################################################
+
+
+################################################################################
+################################################################################
+## PROJECT BUILD STAGE
+################################################################################
+################################################################################
+#FROM ubuntu:22.04
+FROM debian:bookworm-slim as project-build
+
+# Set docker image info
+LABEL maintainer="Lukasz Uszko <lukasz.uszko@gmail.com>"
+LABEL description="luk6xff's cpp project template"
+
+# Set non-interactive installation mode
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Create a default user and group
+ARG USERNAME
+ARG USER_UID
+ARG USER_GID
+ARG ARCH
+ENV HOME /home/${USERNAME}
+
+# Create a non-root user to use
+RUN groupadd --gid ${USER_GID} ${USERNAME} \
+    && useradd -s /bin/bash -c ${USERNAME} -d ${HOME} --uid ${USER_UID} --gid ${USER_GID} -m ${USERNAME} \
+    # Add sudo support
+    && apt-get update \
+    && apt-get install --no-install-recommends -qy sudo \
+    && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
+    && chmod 0440 /etc/sudoers.d/$USERNAME \
+    # Cleanup
+    && apt-get autoremove -y \
+    && apt-get clean -y \
+    && rm -rf /var/lib/apt/lists/*
+
+################################################################################
+# Install luk6xff mandatory packages
+################################################################################
+RUN apt-get update && apt-get install --no-install-recommends -qy \
+    # Build tools
+    make \
+    autoconf \
+    automake \
+    ninja-build \
+    libtool \
+    m4 \
+    cmake \
+    ccache\
+    # GNU Toolchain
+    gcc \
+    g++ \
+    # LLVM Toolchain
+    clang-15 \
+    clang-tools \
+    clangd-15 \
+    libclang-15-dev \
+    lld \
+    lldb \
+    # C/C++ libraries
+    libgtest-dev \
+    libgmock-dev \
+    # Libraries
+    gnupg \
+    unzip \
+    #gcc-multilib \
+    build-essential \
+    software-properties-common \
+    # Python
+    python3 \
+    python3-pip \
+    python3-venv \
+    python3-dev \
+    python3-setuptools \
+    # Networking
+    curl \
+    # Code analysis
+    cppcheck \
+    iwyu \
+    clang-tidy \
+    clang-format \
+    # Debugging/tracing
+    gdb \
+    gdbserver \
+    valgrind \
+    strace \
+    # Code coverage
+    lcov \
+    gcovr \
+    # Documentation
+    doxygen \
+    graphviz \
+    doxygen-latex \
+    doxygen-doxyparse\
+    # Version control
+    git \
+    # Other tools
+    lsb-release \
+    jq \
+    gawk \
+    # Cleanup
+    && apt-get autoremove -y \
+    && apt-get clean -y \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install GEF
+RUN bash -c "$(curl -fsSL https://gef.blah.cat/sh)"
+
+# Setup python virtual environment
+ENV VIRTUAL_ENV=/opt/venv
+RUN python3 -m venv $VIRTUAL_ENV
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+
+# Set environment variables for static analysis tools
+ENV CODE_CHECKER_PATH=/opt/CodeChecker
+ENV BUILD_LOGGER_64_BIT_ONLY=YES
+ENV PATH="${CODE_CHECKER_PATH}/build/CodeChecker/bin:${PATH}"
+ENV CC_REPO_DIR="${CODE_CHECKER_PATH}"
+# Expose the default port used by CodeChecker server
+EXPOSE 8999
+
+# Install static analysis tools only for x86_64
+RUN if [ "$ARCH" = "-amd64" ]; then \
+        curl -sL https://deb.nodesource.com/setup_16.x | bash - \
+        && apt-get install -y nodejs \
+        && git clone --depth 1 https://github.com/Ericsson/CodeChecker.git ${CODE_CHECKER_PATH} \
+        && cd ${CODE_CHECKER_PATH} \
+        && make package \
+        && chmod +x ${CODE_CHECKER_PATH}/build/CodeChecker/bin/report-converter \
+        && pip install --no-cache-dir cpplint \
+        && VERSION=1.1.0; \
+        curl -sSL "https://github.com/facebook/infer/releases/download/v$VERSION/infer-linux64-v$VERSION.tar.xz" \
+        | tar -xJ -C /opt \
+        && ln -s "/opt/infer-linux64-v$VERSION/bin/infer" /usr/local/bin/infer \
+    ; fi
+
+
+################################################################################
+# Install additional packages required for your project
+################################################################################
+RUN apt-get update \
+    && apt-get install --no-install-recommends -qy \
+    libxrandr-dev \
+    libxcursor-dev \
+    libudev-dev \
+    libx11-dev \
+    libfreetype-dev \
+    libopenal-dev \
+    libflac-dev \
+    libvorbis-dev \
+    libgl1-mesa-dev \
+    libegl1-mesa-dev \
+    # Cleanup
+    && apt-get autoremove -y \
+    && apt-get clean -y \
+    && rm -rf /var/lib/apt/lists/*
+
+################################################################################
+# Setup
+################################################################################
+USER ${USERNAME}
+WORKDIR $HOME
+
+
+
+################################################################################
+################################################################################
+## PROJECT RUNTIME STAGE
+################################################################################
+################################################################################
+#FROM project-build as project-runtime
+FROM debian:bookworm-slim as project-runtime
+RUN apt-get update \
+    && apt-get install --no-install-recommends -qy \
+    libxrandr2 \
+    libxcursor1 \
+    libudev1 \
+    libfreetype6 \
+    libopenal1 \
+    libflac12 \
+    libvorbisfile3 \
+    libgl1 \
+    libegl1 \
+    gdbserver \
+    && apt-get autoremove -y \
+    && apt-get clean -y \
+    && rm -rf /var/lib/apt/lists/*
+COPY ../app/build/bin /app
+#CMD ["/app/my_project"]
+CMD ["gdbserver", ":2345", "/app/my_project"]
+```
+
+My Dockerfile sets up a comprehensive development and runtime environment tailored for C++ projects, using Debian Bookworm as the base image. It's structured into two stages: **build stage** and **runtime stage**. Here's a detailed breakdown of what's happening:
+
+### Build Stage
+
+1. **Base Image and Metadata**:
+   - Starts from `debian:bookworm-slim` as the base.
+   - Sets labels for the maintainer and a description of the Docker image.
+
+2. **Environment Configuration**:
+   - Sets `DEBIAN_FRONTEND` to `noninteractive` to avoid prompts during package installations.
+   - Uses `ARG` to accept variables like `USERNAME`, `USER_UID`, `USER_GID`, and `ARCH` from the build command, setting up a flexible user environment.
+   - Defines `HOME` directory based on the `USERNAME`.
+
+3. **User Setup**:
+   - Creates a non-root user with the specified UID and GID, adds them to a group, and gives them sudo access without a password. This step also performs a cleanup of the package lists.
+
+4. **Package Installation**:
+   - Installs a variety of packages crucial for C++ development, including build tools (like `cmake`, `gcc`, `clang-15`), debugging tools (`gdb`, `valgrind`), static analysis tools (`cppcheck`, `clang-tidy`), and documentation tools (`doxygen`).
+   - It also handles installation and cleanup to keep the image size down.
+
+5. **GEF Installation**:
+   - Installs GEF (GDB Enhanced Features), a script that supercharges the GDB debugger with additional features.
+
+6. **Python Environment Setup**:
+   - Sets up a Python virtual environment and updates the `PATH` to use tools from this virtual environment.
+
+7. **CodeChecker Installation**:
+   - Conditionally installs CodeChecker, a static analysis tool, if the architecture is AMD64. It includes installation of Node.js, compilation of CodeChecker, and linking of its binaries.
+
+8. **Project-Specific Libraries**:
+   - Installs libraries that might be required for specific projects involving GUI, audio, or other multimedia components.
+
+### Runtime Stage
+
+1. **Base Image**:
+   - Starts anew from `debian:bookworm-slim` as the base for the runtime environment.
+
+2. **Minimal Package Installation**:
+   - Installs only the runtime libraries that are necessary for the application developed during the build stage. This includes libraries like `libxrandr2`, `libxcursor1`, etc., and excludes the development headers and tools, reducing the image size and improving security.
+
+3. **Copy Application**:
+   - Copies the compiled binaries from a presumed location (`../app/build/bin`) into the Docker image.
+
+4. **Command Specification**:
+   - Sets the default command to run the application using `gdbserver` on a specific port, allowing for remote debugging.
+
+
+## Features and Usage
+
+### Build images and apps for different architectures
+* Release app build
+```sh
+./run.sh -a -amd64
+./run.sh -a -arm64
+```
+
+* Debug app build
+```sh
+# Debug app build
+./run.sh -ad -amd64
+./run.sh -ad -arm64
+```
+
+* Production image build
+```sh
+# Debug app build
+./run.sh -pb -amd64
+./run.sh -pb -arm64
+```
+
+### Running the container
+* Run Debug/Release app
+```sh
+./run.sh -ri -amd64
+./run.sh -ri -arm64
+```
+
+* Run Debug/Release app under GDB server
+```sh
+# Debug app build
+./run.sh -rig -amd64
+./run.sh -rig -arm64
+
+# To connect to the server please run:
+gdb app/build/bin/my_project
+(gdb) target remote localhost:2345
+(gdb) c
+
+# Demo:
+# Stop execution
+CTRL+C
+# Set breakpoint
+(gdb) break Game::updateStatusTextView
+(gdb) set var m_score = 9999999
+```
+
+* Run production container
+```sh
+./run.sh -pr -amd64
+./run.sh -pr -arm64
+```
+
+* Enter the dev container
+```sh
+./run.sh -s -amd64
+./run.sh -s -arm64
+```
+
+### Static Code analysis
+```sh
+./run.sh -ca -amd64
+
+# For CodeChecker server
+./run.sh -s -amd64
+# Inside the container
+cmake --build build -t codechecker
+# Goto http://localhost:8999/Default/runs
+```
+
+### Unitests
+```sh
+./run.sh -u -amd64
+# UnitTests Report
+firefox ~/Projects/cpp-project-template/app/build/test/unit/report/unit_tests_report.html
+# Coverage Report
+firefox ~/Projects/cpp-project-template/app/build/test/unit/report/coverage-report/index.html
+
+# Run valgrind for the specific testcase
+# Enter the container
+./run.sh -s -amd64
+# Inside the container
+cmake --build build -t valgrind-ConfigReaderTest
+```
+
+### Memcheck (Valgrind)
+```sh
+# Build the app
+./run.sh -ad -amd64
+# Enter the container
+./run.sh -s -amd64
+# Inside the container
+cmake --build build -t memcheck-my_project
+# Memcheck  Report
+firefox ~/Projects/cpp-project-template/app/build/memcheck_report/index.html
+```
+
+### Scanning the image and Linting the Dockerfile
+```sh
+./run.sh -sc
+```
+
+### Profiling
+```sh
+# Build the app in Debug mode
+./run.sh -ad -amd64
+
+# Run the app
+./run.sh -ri -amd64
+
+# Run the profiler client app and connect to port 28077
+~/Projects/cpp-project-template/app/thirdparty/EasyProfiler/client_tools/easy_profiler-v2.1.0-linux/run_easy_profiler.sh
 ```
 
 
