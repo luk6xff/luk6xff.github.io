@@ -8,7 +8,6 @@ tags = ["cpp","docker"]
 +++
 
 # Table of Contents
-
 1. [Intro](#intro)
 2. [Part 1 - Docker Overview](#part-1---docker-overview)
    1. [Understanding Docker](#understanding-docker)
@@ -55,7 +54,8 @@ tags = ["cpp","docker"]
 
 
 
-## Intro
+
+# Intro
 Today I'll explore how Docker facilitates the creation of reproducible and isolated Linux environments, accelerating the testing, debugging, and deployment phases of C/C++ applications. By harnessing the capabilities of Docker, C++ programmers can ensure consistency across development, testing, and production environments, ultimately enhancing productivity and software reliability. My complete environment containing example application available as always on [my github](https://github.com/luk6xff/cpp-project-template).
 
 # Part 1 - Docker Overview
@@ -1275,7 +1275,7 @@ firefox ~/Projects/cpp-project-template/app/build/memcheck_report/index.html
 ```
 
 
-## Conclusion
+# Conclusion
 In conclusion, Docker containerization offers a powerful solution for simplifying and streamlining the development, testing, and deployment of C/C++ applications. By encapsulating applications and their dependencies into portable containers, Docker enables developers to create consistent and reproducible environments across different platforms.
 
 Throughout this guide, we've explored various aspects of Docker container management, including:
