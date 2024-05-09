@@ -8,41 +8,40 @@ tags = ["cpp","docker"]
 +++
 
 # Table of Contents
-```
 1. [Intro](#intro)
-2. [Part 1 - Docker Overview](#part-1---docker-overview)
+2. [Part 1 - Docker Overview](#part-1-docker-overview)
    1. [Understanding Docker](#understanding-docker)
       - [Docker vs Virtual Machine](#docker-vs-virtual-machine)
       - [Key Components of Docker](#key-components-of-docker)
       - [Linux Mechanisms Leveraged by Docker](#linux-mechanisms-leveraged-by-docker)
       - [Diagrams of Docker Environment on Linux](#diagrams-of-docker-environment-on-linux)
-   2. [Understanding Differences between Container Technologies - Docker, LXC, and OCI](#understanding-differences-between-container-technologies---docker-lxc-and-oci)
+   2. [Understanding Differences between Container Technologies - Docker, LXC, and OCI](#understanding-differences-between-container-technologies-docker-lxc-and-oci)
       - [Docker](#docker)
       - [LXC (Linux Containers)](#lxc-linux-containers)
       - [OCI (Open Container Initiative)](#oci-open-container-initiative)
       - [Comparison Table: Docker, LXC, and OCI](#comparison-table-docker-lxc-and-oci)
-   3. [Setting Up Docker for C/C++ Development](#setting-up-docker-for-cc-development)
-      1. [Installing Docker on Your Development Machine](#installing-docker-on-your-development-machine)
-      2. [Basics of Dockerfile](#basics-of-dockerfile)
-      3. [Creating a Docker Image for C/C++ Development](#creating-a-docker-image-for-cc-development)
+   3. [Setting Up Docker for C/CPP Development](#setting-up-docker-for-c-cpp-development)
+      - [Installing Docker on Your Development Machine](#installing-docker-on-your-development-machine)
+      - [Basics of Dockerfile](#basics-of-dockerfile)
+      - [Creating a Docker Image for C/CPP Development](#creating-a-docker-image-for-c-cpp-development)
    4. [Useful Docker Client Commands](#useful-docker-client-commands)
    5. [Managing Dependencies](#managing-dependencies)
    6. [Streamlining Build Processes](#streamlining-build-processes)
-      1. [Automating the Build Process using Dockerfile and Docker Compose](#automating-the-build-process-using-dockerfile-and-docker-compose)
-      2. [Handling Different Build Configurations within Docker](#handling-different-build-configurations-within-docker)
+      - [Automating the Build Process using Dockerfile and Docker Compose](#automating-the-build-process-using-dockerfile-and-docker-compose)
+      - [Handling Different Build Configurations within Docker](#handling-different-build-configurations-within-docker)
    7. [Collaboration and Deployment](#collaboration-and-deployment)
-      1. [Sharing Docker Images for Consistent Development Environments](#sharing-docker-images-for-consistent-development-environments)
-      2. [Deploying C/C++ Applications using Docker Containers in Production Environments](#deploying-cc-applications-using-docker-containers-in-production-environments)
+      - [Sharing Docker Images for Consistent Development Environments](#sharing-docker-images-for-consistent-development-environments)
+      - [Deploying C/CPP Applications using Docker Containers in Production Environments](#deploying-c-cpp-applications-using-docker-containers-in-production-environments)
    8. [Best Practices and Tips](#best-practices-and-tips)
-      1. [Optimizing Dockerfiles for Efficiency](#optimizing-dockerfiles-for-efficiency)
-      2. [Managing Container Resources Effectively](#managing-container-resources-effectively)
-      3. [Securing Docker Containers for C/C++ Projects](#securing-docker-containers-for-cc-projects)
-   9. [Debugging C/C++ Applications using GDB](#debugging-cc-applications-using-gdb)
+      - [Optimizing Dockerfiles for Efficiency](#optimizing-dockerfiles-for-efficiency)
+      - [Managing Container Resources Effectively](#managing-container-resources-effectively)
+      - [Securing Docker Containers for C/CPP Projects](#securing-docker-containers-for-c-cpp-projects)
+   9. [Debugging C/CPP Applications using GDB](#debugging-c-cpp-applications-using-gdb)
    10. [Docker Containers vs Native Builds](#docker-containers-vs-native-builds)
    11. [Multi-Architecture Builds](#multi-architecture-builds)
    12. [Docker Container Runtime Management](#docker-container-runtime-management)
-3. [Part 2 - My Dockerized C/CPP Environment](#part-2---my-dockerized-ccpp-environment)
-    1. [Configuring My C/CPP Development Environment](#configuring-my-ccpp-development-environment)
+3. [Part 2 - My Dockerized C/CPP Environment](#part-2-my-dockerized-c-cpp-environment)
+    1. [Configuring My C/CPP Development Environment](#configuring-my-c-cpp-development-environment)
     2. [Features and Usage](#features-and-usage)
         - [Build Images and Apps for Different Architectures](#build-images-and-apps-for-different-architectures)
         - [Running the Container](#running-the-container)
@@ -52,8 +51,6 @@ tags = ["cpp","docker"]
         - [Scanning the Image and Linting the Dockerfile](#scanning-the-image-and-linting-the-dockerfile)
         - [Profiling](#profiling)
 4. [Conclusion](#conclusion)
-```
-
 
 
 # Intro
@@ -262,11 +259,11 @@ To better understand the distinctions and similarities between Docker, LXC, and 
 *Table 1: Comparison of Docker, LXC, and OCI*
 
 
-## Setting Up Docker for C/C++ Development
+## Setting Up Docker for C/CPP Development
 
-Setting up Docker for C/C++ development involves installing Docker on your development machine, understanding the basics of Dockerfile for defining the development environment, and creating a Docker image tailored for C/C++ development.
+Setting Up Docker for C/CPP Development involves installing Docker on your development machine, understanding the basics of Dockerfile for defining the development environment, and creating a Docker image tailored for C/C++ development.
 
-**Installing Docker on Your Development Machine:**
+### Installing Docker on Your Development Machine
 
 First, you need to install Docker on your development machine. There are different ways to install Docker, depending on your operating system.
 
@@ -278,7 +275,7 @@ First, you need to install Docker on your development machine. There are differe
 
   Follow the instructions provided on the [Docker Engine website](https://docs.docker.com/engine/install/) to install Docker Engine on your Linux distribution.
 
-**Basics of Dockerfile:**
+### Basics of Dockerfile
 
 Create a new directory for your C/C++ project and navigate into it:
 
@@ -325,7 +322,7 @@ In this Dockerfile:
 - `WORKDIR`: Sets the working directory within the container.
 - `COPY`: Copies the local project files into the container.
 
-**Creating a Docker Image for C/C++ Development:**
+### Creating a Docker Image for C/CPP Development
 
 Once you've created the Dockerfile, you can build the Docker image using the `docker build` command. Run the following command in your project directory:
 
@@ -503,7 +500,7 @@ By managing dependencies effectively and specifying precise versions within your
 
 ## Streamlining Build Processes
 
-1. **Automating the Build Process using Dockerfile and Docker Compose:**
+### Automating the Build Process using Dockerfile and Docker Compose
 Docker Compose can be employed for orchestrating multi-container applications and defining complex build configurations.
 Let's consider a scenario where you have a C/C++ project consisting of multiple services, such as a web server and a database. We'll compare how you would use Docker Compose and Docker run commands to manage these services.
 
@@ -561,7 +558,7 @@ In this example:
 
 In summary, Docker Compose offers a more streamlined and maintainable approach for managing multi-container applications, while Docker run commands are suitable for simpler scenarios or quick ad-hoc deployments.
 
-2. **Handling Different Build Configurations within Docker:**
+## Handling Different Build Configurations within Docker
    - Use environment variables or build arguments in Dockerfile to handle different build configurations (e.g., Debug vs. Release).
    - Customize build commands based on the selected configuration.
 
@@ -580,7 +577,7 @@ In summary, Docker Compose offers a more streamlined and maintainable approach f
 ## Collaboration and Deployment
 Collaboration and deployment are crucial stages in the software development lifecycle. Docker provides a robust platform for sharing development environments across teams and deploying C/C++ applications consistently in production environments. Here's how you can leverage Docker for collaboration and deployment:
 
-1. **Sharing Docker Images for Consistent Development Environments:**
+### Sharing Docker Images for Consistent Development Environments
    - Build Docker images containing your C/C++ development environment, including dependencies, libraries, and tools.
    - Share these Docker images via a Docker registry or repository, ensuring consistency across development teams.
 
@@ -593,7 +590,7 @@ Collaboration and deployment are crucial stages in the software development life
 
    Team members can pull the shared Docker image to set up their development environments quickly and reliably.
 
-2. **Deploying C/C++ Applications using Docker Containers in Production Environments:**
+### Deploying C/CPP Applications using Docker Containers in Production Environments
    - Package your C/C++ applications into Docker containers, along with necessary dependencies and configurations.
    - Deploy these Docker containers to production environments, ensuring consistency and portability across different infrastructure setups.
 
@@ -608,7 +605,6 @@ By leveraging Docker for collaboration and deployment, development teams can str
 
 
 ## Best Practices and Tips
-
 Optimizing Dockerfiles, managing container resources, and securing Docker containers are essential aspects of using Docker effectively for C/C++ projects. Here are some best practices and tips:
 
 1. **Optimizing Dockerfiles for Efficiency:**
@@ -621,7 +617,7 @@ Optimizing Dockerfiles, managing container resources, and securing Docker contai
    - Monitor container resource usage using Docker metrics and adjust resource limits accordingly to optimize resource utilization.
    - Consider using orchestration tools like Docker Swarm or Kubernetes for managing containerized applications at scale, enabling efficient resource allocation and scheduling.
 
-3. **Securing Docker Containers for C/C++ Projects:**
+3. **Securing Docker Containers for C/CPP Projects:**
    - Update Docker base images and dependencies regularly to patch known vulnerabilities and ensure the security of your containers.
    - Implement least privilege principles by running containers with non-root users and restricting container capabilities using Docker security features.
    - Enable Docker Content Trust (DCT) to ensure the integrity and authenticity of images by verifying image signatures before pulling and running them.
@@ -687,7 +683,7 @@ Examples:
    docker stack deploy -c docker-compose.yml my_stack
    ```
 
-### Securing Docker Containers for C/C++ Projects:
+### Securing Docker Containers for C/CPP Projects:
 
 1. **Updating Docker Base Images:**
    ```bash
@@ -713,7 +709,7 @@ Examples:
    docker logs my_container
    ```
 
-## Debugging CPP apps using GDB
+## Debugging C/CPP Applications using GDB
 
 You can use GDB's remote debugging feature to debug your C/C++ applications running inside a Docker container from a host machine. Here's how you can achieve that:
 
@@ -772,7 +768,7 @@ This table provides a concise comparison between Docker containers and native bu
 | **Dependency Management**     | Encapsulates dependencies within a self-contained environment. | Relies on system-wide dependencies, requiring careful management. |
 
 
-## Multi architectures builds
+## Multi Architecture Builds
 This example demonstrates how to build a simple "Hello, World!" C++ application for both amd64 and arm64 architectures using Docker buildx. The resulting Docker image can be run on systems with different CPU architectures without modification, showcasing the versatility and compatibility of Docker multi-architecture builds. (Demo: [HERE](https://github.com/luk6xff/luk6xff.github.io/tree/master/content/other/code/cpp_proj_template)):
 
 1. **Create a C++ source file** (hello.cpp):
@@ -1231,7 +1227,7 @@ cmake --build build -t codechecker
 # Goto http://localhost:8999/Default/runs
 ```
 
-### Unitests
+### Unit Tests
 ```sh
 ./run.sh -u -amd64
 # UnitTests Report
@@ -1281,7 +1277,7 @@ In conclusion, Docker containerization offers a powerful solution for simplifyin
 
 Throughout this guide, we've explored various aspects of Docker container management, including:
 
-- Setting up Docker for C/C++ development, including installing Docker and creating Dockerfiles.
+- Setting Up Docker for C/CPP Development, including installing Docker and creating Dockerfiles.
 - Configuring development environments within Docker containers, including installing compilers, build tools, and debugging utilities.
 - Managing dependencies and incorporating third-party libraries into Docker images.
 - Streamlining build processes using Dockerfile and Docker Compose.
