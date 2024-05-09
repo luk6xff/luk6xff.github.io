@@ -7,6 +7,53 @@ categories = ["cpp"]
 tags = ["cpp","docker"]
 +++
 
+# Table of Contents
+
+1. [Intro](#intro)
+2. [Part 1 - Docker Overview](#part-1---docker-overview)
+   1. [Understanding Docker](#understanding-docker)
+      - [Docker vs Virtual Machine](#docker-vs-virtual-machine)
+      - [Key Components of Docker](#key-components-of-docker)
+      - [Linux Mechanisms Leveraged by Docker](#linux-mechanisms-leveraged-by-docker)
+      - [Diagrams of Docker Environment on Linux](#diagrams-of-docker-environment-on-linux)
+   2. [Understanding Differences between Container Technologies - Docker, LXC, and OCI](#understanding-differences-between-container-technologies---docker-lxc-and-oci)
+      - [Docker](#docker)
+      - [LXC (Linux Containers)](#lxc-linux-containers)
+      - [OCI (Open Container Initiative)](#oci-open-container-initiative)
+      - [Comparison Table: Docker, LXC, and OCI](#comparison-table-docker-lxc-and-oci)
+   3. [Setting Up Docker for C/C++ Development](#setting-up-docker-for-cc-development)
+      1. [Installing Docker on Your Development Machine](#installing-docker-on-your-development-machine)
+      2. [Basics of Dockerfile](#basics-of-dockerfile)
+      3. [Creating a Docker Image for C/C++ Development](#creating-a-docker-image-for-cc-development)
+   4. [Useful Docker Client Commands](#useful-docker-client-commands)
+   5. [Managing Dependencies](#managing-dependencies)
+   6. [Streamlining Build Processes](#streamlining-build-processes)
+      1. [Automating the Build Process using Dockerfile and Docker Compose](#automating-the-build-process-using-dockerfile-and-docker-compose)
+      2. [Handling Different Build Configurations within Docker](#handling-different-build-configurations-within-docker)
+   7. [Collaboration and Deployment](#collaboration-and-deployment)
+      1. [Sharing Docker Images for Consistent Development Environments](#sharing-docker-images-for-consistent-development-environments)
+      2. [Deploying C/C++ Applications using Docker Containers in Production Environments](#deploying-cc-applications-using-docker-containers-in-production-environments)
+   8. [Best Practices and Tips](#best-practices-and-tips)
+      1. [Optimizing Dockerfiles for Efficiency](#optimizing-dockerfiles-for-efficiency)
+      2. [Managing Container Resources Effectively](#managing-container-resources-effectively)
+      3. [Securing Docker Containers for C/C++ Projects](#securing-docker-containers-for-cc-projects)
+   9. [Debugging C/C++ Applications using GDB](#debugging-cc-applications-using-gdb)
+   10. [Docker Containers vs Native Builds](#docker-containers-vs-native-builds)
+   11. [Multi-Architecture Builds](#multi-architecture-builds)
+   12. [Docker Container Runtime Management](#docker-container-runtime-management)
+3. [Part 2 - My Dockerized C/CPP Environment](#part-2---my-dockerized-ccpp-environment)
+    1. [Configuring My C/CPP Development Environment](#configuring-my-ccpp-development-environment)
+    2. [Features and Usage](#features-and-usage)
+        - [Build Images and Apps for Different Architectures](#build-images-and-apps-for-different-architectures)
+        - [Running the Container](#running-the-container)
+        - [Static Code Analysis](#static-code-analysis)
+        - [Unit Tests](#unit-tests)
+        - [Memcheck (Valgrind)](#memcheck-valgrind)
+        - [Scanning the Image and Linting the Dockerfile](#scanning-the-image-and-linting-the-dockerfile)
+        - [Profiling](#profiling)
+4. [Conclusion](#conclusion)
+
+
 
 ## Intro
 Today I'll explore how Docker facilitates the creation of reproducible and isolated Linux environments, accelerating the testing, debugging, and deployment phases of C/C++ applications. By harnessing the capabilities of Docker, C++ programmers can ensure consistency across development, testing, and production environments, ultimately enhancing productivity and software reliability. My complete environment containing example application available as always on [my github](https://github.com/luk6xff/cpp-project-template).
@@ -176,6 +223,43 @@ When executing Docker commands, a following sequence of interactions occurs:
 |  (Container Tool)   |
 +---------------------+
 ```
+
+
+
+## Understanding Differences between Container Technologies - Docker, LXC, and OCI
+
+### Docker
+
+Docker is a platform designed to simplify the creation, deployment, and management of applications within containers. It abstracts application-level processes and dependencies, allowing developers to encapsulate their applications in containers that can run consistently across various environments. Docker's ecosystem includes Docker Hub for image distribution, Docker Compose for multi-container applications, and extensive APIs for automation.
+
+### LXC (Linux Containers)
+
+LXC, or Linux Containers, represents a more traditional form of containerization, providing lightweight virtualization at the operating system level. It leverages Linux kernel features like cgroups (control groups) and namespaces to create isolated environments. LXC is particularly useful for running multiple isolated Linux systems on a single host, offering a minimalistic approach compared to Docker.
+
+### OCI (Open Container Initiative)
+
+The Open Container Initiative (OCI) was established to promote standardization within the container ecosystem. It defines open industry standards for container image formats and runtimes, ensuring interoperability across different container tools and platforms. OCI specifications are widely adopted by major container engines, including Docker, to maintain consistent container behavior.
+
+## Comparison Table: Docker, LXC, and OCI
+
+To better understand the distinctions and similarities between Docker, LXC, and OCI, refer to the comparison table below:
+
+## Comparison of Docker, LXC, and OCI
+
+| **Feature**                 | **Docker**                                                               | **LXC (Linux Containers)**                                                 | **OCI (Open Container Initiative)**                                        |
+|-----------------------------|--------------------------------------------------------------------------|----------------------------------------------------------------------------|----------------------------------------------------------------------------|
+| **Purpose**                 | Simplifies application deployment and management                         | Provides lightweight virtualization at OS level                            | Establishes open industry standards for container formats and runtimes     |
+| **Abstraction Level**       | Application-level with its dependencies                                  | OS-level virtualization                                                    | Standardized framework for containers                                      |
+| **Usage**                   | Widely used for microservices and cloud-native applications              | Used for running multiple isolated Linux systems on a single host          | Defines container image format and runtime specifications                  |
+| **Integration**             | Highly integrated with Docker Hub and Docker Compose                     | Directly integrates with Linux kernel features                             | Provides specifications adopted by major container engines like Docker     |
+| **Deployment**              | Easy to deploy and manage via Docker CLI and APIs                        | Requires more manual setup and configuration                               | Focuses on compatibility across different container tools and platforms    |
+| **Isolation**               | Uses container technology with additional tools for management           | Pure container management using cgroups and namespaces                     | Ensures consistent behavior of containers across different environments    |
+| **Image Format**            | Docker Images                                                            | LXC Templates                                                              | OCI Images                                                                 |
+| **Runtime**                 | Docker Engine                                                            | LXC Tools                                                                  | OCI Runtime Specification (e.g., runc)                                      |
+| **Community and Ecosystem** | Large ecosystem with extensive tools and third-party integrations        | Mature but smaller community compared to Docker                            | Supported by industry leaders to maintain interoperability standards       |
+
+*Table 1: Comparison of Docker, LXC, and OCI*
+
 
 ## Setting Up Docker for C/C++ Development
 
