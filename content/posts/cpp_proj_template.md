@@ -8,6 +8,7 @@ tags = ["cpp","docker"]
 +++
 
 # Table of Contents
+```
 1. [Intro](#intro)
 2. [Part 1 - Docker Overview](#part-1---docker-overview)
    1. [Understanding Docker](#understanding-docker)
@@ -51,7 +52,7 @@ tags = ["cpp","docker"]
         - [Scanning the Image and Linting the Dockerfile](#scanning-the-image-and-linting-the-dockerfile)
         - [Profiling](#profiling)
 4. [Conclusion](#conclusion)
-
+```
 
 
 
@@ -63,7 +64,7 @@ Today I'll explore how Docker facilitates the creation of reproducible and isola
 
 Docker is a platform that uses containerization to package and run applications in isolated environments called containers. These containers are lightweight and portable, containing everything needed to run the application, including code, runtime, system tools, libraries, and settings.They provide an abstraction layer between one or more processes (i.e., an application) and the OS on which they run. A container packages these processes and their underlying dependencies together so that they can be easily implemented on any OS that supports the container infrastructure. Under the hood, Docker leverages several Linux kernel features, such as cgroups (control groups) for resource isolation, namespaces for process isolation, and UnionFS (Union File System) for layering file systems.
 
-**Docker vs Virtual Machine**
+## Docker vs Virtual Machine
 ![Docker vs VM](https://raw.githubusercontent.com/luk6xff/luk6xff.github.io/master/content/other/media/cpp_proj_template/docker_vs_vm.png)\
 *Figure 1: docker vs vm - [plant_uml](//www.plantuml.com/plantuml/dpng/dP9FY_8m48Vl_HI3TtbfUdzHTvTTOVy8mbvBh8C6swGagOii_UuR8mcDiTXwgMPuydl2pCoKfb8tLPce0-CrbRI2GbIruCZrMfzA18c5fdnNOfBKj3ZG7SBacvbBj8GFMkmPHvXBywiDs4YSm6y20FwUmT-4ql2rdW1Li3V_Sw7oOnLHfnhbaIaXBw0_Mj2xNnkqQP0wqrNEOlcv_lU-N5ny6yPLNhBDsPZUmkUh5QGMfNMTkdUrFL8oMahwfCH9oJrfDbgQzKap9yr2wVdJcGrCj-A7J_zVJQ5pz4JSuA3YET_T-p4aYY7T638m9ejYCi-v3hIThNuMnG7b8ykyjJT3qkUzy1tZQFaBbwEjXCD-4bnJKvKZzzh91-nszvbjdvqyP1-mvB7TVi8M-lb4dGehdhlTXgZg-Q0FWrF9pTHmALrgcyoGRvkg_0C0)
 
@@ -80,7 +81,7 @@ Docker is a platform that uses containerization to package and run applications 
 
 
 
-**Key Components of Docker:**
+## Key Components of Docker
 
 1. **Docker Daemon (`dockerd`):** This is the persistent background process running on the host machine. It listens for Docker API requests and manages Docker objects such as images, containers, networks, and volumes.
 
@@ -92,7 +93,7 @@ Docker is a platform that uses containerization to package and run applications 
 
 
 
-**Linux Mechanisms Leveraged by Docker:**
+## Linux Mechanisms Leveraged by Docker
 
 - **cgroups (Control Groups):** Used for resource isolation, allowing Docker to limit and prioritize CPU, memory, disk I/O, and other resources for containers.
 - **Namespaces:** Used for process isolation, providing each container with its own namespace for processes, network interfaces, file systems, and more.
@@ -104,7 +105,7 @@ Key namespaces utilized by Docker include:
     - UTS Namespace: Isolates host and domain names, creating a unique identity for containers.
 - **UnionFS (Union File System):** Used for layering file systems, enabling Docker to create images efficiently by layering changes on top of existing file systems.
 
-**Diagrams of Docker Environment on Linux:**
+## Diagrams of Docker Environment on Linux
 
 ```
 +---------------------+
