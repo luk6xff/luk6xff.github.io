@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <meta content="#ffffff" name="theme-color" />
+  <meta content="#da532c" name="msapplication-TileColor" />
+
+  
+  <link href='&#x2F;icons&#x2F;site.webmanifest' rel="manifest" />
+  
+  
+  <link color="#5bbad5" href='&#x2F;icons&#x2F;safari-pinned-tab.svg' rel="mask-icon" />
+  
+  
+  <link href='&#x2F;icons&#x2F;favicon-16x16.png' rel="icon" sizes="16x16" type="image/png" />
+  
+  
+  <link href='&#x2F;icons&#x2F;favicon-32x32.png' rel="icon" sizes="32x32" type="image/png" />
+  
+  
+  <link href='&#x2F;icons&#x2F;apple-touch-icon.png' rel="apple-touch-icon" sizes="180x180" />
+  
+
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/galleria@1.6.1/dist/themes/folio/galleria.folio.min.css" integrity="sha384-+rY0QD+LRnTOquDMzGa9lXU6jIwdiQuwCJQ2cdcW0qeP/0UbjQCZlXnRsUMA+9pH" crossorigin="anonymous">
+  
+
+  
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1.9.1/css/academicons.min.css" integrity="sha384-FIue+PI4SsI9XfHCz8dBLg33b0c1fMJgNU3X//L26FYbGnlSEfWmNT7zgWc2N9b6" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link href="https://luk6xff.github.io/deep-thought.css" rel="stylesheet" />
+  
+  
+
+  <title>
+    
+luk6xff&#x27;s tech blog | GEF - A better GDB
+
+  </title>
+
+  
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XHHDR1Z596"></script>
+  <script type="text/javascript">
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+    gtag("config", "G-XHHDR1Z596");
+  </script>
+  
+  
+
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css" integrity="sha384-R4558gYOUz8mP9YWpZJjofhk+zx0AS11p36HnD2ZKj/6JR5z27gSSULCNHIRReVs" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js" integrity="sha384-z1fJDqw8ZApjGO3/unPWUPsIymfsJmyrDVWC8Tv/a1HeOtGmkwNd/7xUS0Xcnvsx" crossorigin="anonymous"></script>
+
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/mathtex-script-type.min.js" integrity="sha384-jiBVvJ8NGGj5n7kJaiWwWp9AjC+Yh8rhZY3GtAX8yU28azcLgoRo4oukO87g7zDT" crossorigin="anonymous"></script>
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/auto-render.min.js" integrity="sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR" crossorigin="anonymous"></script>
+  
+  
+</head>
+
+<body class="has-background-white">
+  <nav aria-label="section navigation" class="navbar is-light" role="navigation">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item is-size-5 has-text-weight-bold" href="https:&#x2F;&#x2F;luk6xff.github.io">luk6xff&#x27;s tech blog</a>
+        <a aria-expanded="false" aria-label="menu" class="navbar-burger burger" data-target="navMenu" role="button">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div class="navbar-menu" id="navMenu">
+        <div class="navbar-end has-text-centered">
+          
+          
+          
+          <a class="navbar-item has-text-weight-semibold" href="https:&#x2F;&#x2F;luk6xff.github.io&#x2F;">
+            Home
+          </a>
+          
+          <a class="navbar-item has-text-weight-semibold" href="https:&#x2F;&#x2F;luk6xff.github.io&#x2F;posts">
+            Posts
+          </a>
+          
+          <a class="navbar-item has-text-weight-semibold" href="https:&#x2F;&#x2F;luk6xff.github.io&#x2F;tags">
+            Tags
+          </a>
+          
+          <a class="navbar-item has-text-weight-semibold" href="https:&#x2F;&#x2F;luk6xff.github.io&#x2F;categories">
+            Categories
+          </a>
+          
+          
+          
+          <a class="navbar-item" id="nav-search" title="Search" data-target="#search-modal">
+            <span class="icon">
+              <i class="fas fa-search"></i>
+            </span>
+          </a>
+          <a class="navbar-item" id="dark-mode" title="Switch to dark theme">
+            <span class="icon">
+              <i class="fas fa-adjust"></i>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  
+  
+
+  
+<section class="section">
+  <div class="container">
+    <div class="columns">
+      <div class="column is-8 is-offset-2">
+        <article class="box">
+          <h1 class="title">
+            GEF - A better GDB
+          </h1>
+          <p class="subtitle"></p>
+          <div class="columns is-multiline is-gapless">
+            <div class="column is-8">
+              
+<span class="icon-text has-text-grey">
+  <span class="icon">
+    <i class="fas fa-user"></i>
+  </span>
+  <span>luk6xff published on</span>
+  <span class="icon">
+    <i class="far fa-calendar-alt"></i>
+  </span>
+  <span><time datetime="2022-10-18">October 18, 2022</time></span>
+</span>
+
+            </div>
+            <div class="column is-4 has-text-right-desktop">
+              
+<span class="icon-text has-text-grey">
+  <span class="icon">
+    <i class="far fa-clock"></i>
+  </span>
+  <span>8 min,</span>
+  <span class="icon">
+    <i class="fas fa-pencil-alt"></i>
+  </span>
+  <span>1432 words</span>
+</span>
+
+            </div>
+            <div class="column">
+              
+              
+<p>
+  Categories:
+  
+  <a class="has-text-info-dark has-text-weight-semibold" href="https://luk6xff.github.io/categories/tools/">
+    <span class="icon-text">
+      <span class="icon">
+        <i class="fas fa-cube"></i>
+      </span>
+      <span>tools</span>
+    </span>
+  </a>
+  
+  <a class="has-text-info-dark has-text-weight-semibold" href="https://luk6xff.github.io/categories/cybersecurity/">
+    <span class="icon-text">
+      <span class="icon">
+        <i class="fas fa-cube"></i>
+      </span>
+      <span>cybersecurity</span>
+    </span>
+  </a>
+  
+</p>
+
+              
+            </div>
+            <div class="column has-text-right-desktop">
+              
+              
+<p>
+  Tags:
+  
+  <a class="has-text-info-dark has-text-weight-semibold" href="https://luk6xff.github.io/tags/tools/">
+    <span class="icon-text">
+      <span class="icon">
+        <i class="fas fa-tag"></i>
+      </span>
+      <span>tools</span>
+    </span>
+  </a>
+  
+  <a class="has-text-info-dark has-text-weight-semibold" href="https://luk6xff.github.io/tags/cybersecurity/">
+    <span class="icon-text">
+      <span class="icon">
+        <i class="fas fa-tag"></i>
+      </span>
+      <span>cybersecurity</span>
+    </span>
+  </a>
+  
+</p>
+
+              
+            </div>
+          </div>
+          <div class="content mt-2">
+            <h2 id="a-quick-guide-to-using-gef-for-debugging">A Quick Guide to Using GEF for Debugging</h2>
+<p>Debugging is like being a detective for software, where you hunt for clues to fix problems in code. GEF makes this detective work easier and more effective, especially when you're dealing with tricky bugs or trying to understand how a program really works. Let's break down how GEF can help you and how to get started with it.</p>
+<h2 id="what-is-gef">What is GEF?</h2>
+<p>GEF is a tool that adds extra powers to GDB, the GNU Debugger, which is a tool many developers use to find bugs in their programs. GEF makes GDB more user-friendly and powerful by adding new features, such as better visuals, more information about your program's status, and tools to check the security of your software.</p>
+<h2 id="why-should-you-use-gef">Why Should You Use GEF?</h2>
+<p>GEF makes your life easier when you're debugging:</p>
+<ul>
+<li><strong>Clearer Information</strong>: It shows you what's going on in your program more clearly, making it easier to understand problems.</li>
+<li><strong>Better Control</strong>: You get more ways to stop and inspect your program exactly where and when you need to.</li>
+<li><strong>Find Bugs Faster</strong>: GEF has special features to help spot common mistakes that can lead to bugs.</li>
+</ul>
+<h2 id="getting-started-with-gef">Getting Started with GEF</h2>
+<h3 id="setting-up">Setting Up</h3>
+<p>First, you need GDB installed. Then, to add GEF, you run a simple command in your terminal:</p>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span>bash -c </span><span style="color:#d69d85;">&quot;$(</span><span>curl -fsSL</span><span style="color:#d69d85;"> http://gef.blah.cat/sh)&quot;
+</span></code></pre>
+<p>This command gets GEF set up with your GDB, and you're ready to go!</p>
+<h3 id="using-gef">Using GEF</h3>
+<p>To start debugging a program with GEF, you open your terminal and type:</p>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span>gdb -q ./your_program
+</span></code></pre>
+<p>This command starts GDB like usual, but you'll notice GEF's improvements right away.</p>
+<h3 id="helpful-features">Helpful Features</h3>
+<ul>
+<li><strong><code>context</code></strong>: This shows a snapshot of what's happening in your program, like what the computer is currently working on and what data it's handling.</li>
+<li><strong><code>heap</code></strong>: If your program uses dynamic memory (allocating memory during runtime), this command helps you see how that memory is being used or misused.</li>
+<li><strong><code>pattern create</code> / <code>pattern search</code></strong>: These commands help you figure out how data is laid out in memory, which is super useful for finding certain types of bugs.</li>
+<li><strong><code>checksec</code></strong>: This command checks the security properties of your executable, providing insights into potential vulnerabilities, such as stack canaries or NX bits.</li>
+<li><strong><code>gef config / gef save</code></strong>: Customize and save your GEF environment to streamline your debugging sessions, tailoring the tool to your needs.</li>
+<li><strong><code>dereference</code></strong>: Offers a more intuitive view of pointers and memory addresses, making it easier to navigate through complex structures.</li>
+<li><strong><code>registers</code></strong>: Get a quick overview of the current state of CPU registers, which is crucial for low-level debugging</li>
+</ul>
+<h3 id="debugging-with-gef-a-quick-example">Debugging with GEF: A Quick Example</h3>
+<p>Imagine you have a program that's not working right, and you suspect it's due to a bug where the program is trying to access memory it shouldn't. Here's how you might use GEF to find that bug:</p>
+<ol>
+<li><strong>Start GEF with your program</strong>: <code>gdb -q ./buggy_program</code></li>
+<li><strong>Set a breakpoint</strong>: This is like telling GEF, &quot;Pause here; I want to check something.&quot; You can do this with the command <code>break main</code> if you want to stop right when the main function starts.</li>
+<li><strong>Run the program</strong>: Just type <code>run</code> and hit enter. The program will start and then pause where you set the breakpoint.</li>
+<li><strong>Step through the code</strong>: Use the <code>next</code> command to go through your program one line at a time. Watch the <code>context</code> information GEF gives you to see what the program is doing.</li>
+<li><strong>Inspect memory</strong>: If you think the bug is happening because the program is accessing memory it shouldn't, you can use commands like <code>x/gx</code>, <code>heap chunks</code>, and <code>search-pattern</code> to explore and manipulate memory at runtime, helping uncover issues like memory leaks or corruption.</li>
+<li><strong>Scripting</strong>: Automate repetitive analysis tasks or implement custom logic for complex debugging scenarios using Python scripts.</li>
+</ol>
+<p>Through this process, GEF gives you a clearer view of what's happening inside your program, helping you spot and fix the bug.</p>
+<h2 id="real-world-example">Real world example</h2>
+<p>Let's try to use <code>gef</code> in action:
+I have a following code simulating buffer overflow issue:</p>
+<pre data-lang="cpp" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#9b9b9b;">#include </span><span style="color:#d69d85;">&lt;iostream&gt;
+</span><span style="color:#9b9b9b;">#include </span><span style="color:#d69d85;">&lt;string&gt;
+</span><span style="color:#9b9b9b;">#include </span><span style="color:#d69d85;">&lt;cstring&gt;
+</span><span style="color:#9b9b9b;">#include </span><span style="color:#d69d85;">&lt;limits&gt;
+</span><span>
+</span><span style="color:#569cd6;">void </span><span>admin_panel() {
+</span><span>    std::cout &lt;&lt; </span><span style="color:#d69d85;">&quot;&lt;&lt;&lt; Setting up Admin Panel &gt;&gt;&gt;&quot; </span><span>&lt;&lt; std::endl;
+</span><span>    std::system(</span><span style="color:#d69d85;">&quot;/bin/sh&quot;</span><span>);
+</span><span>}
+</span><span>
+</span><span style="color:#569cd6;">void </span><span>store_credentials_into_db(</span><span style="color:#569cd6;">const char* </span><span>buf, size_t buf_len) {
+</span><span>    </span><span style="color:#569cd6;">if </span><span>(buf == </span><span style="color:#569cd6;">nullptr </span><span>|| buf_len == </span><span style="color:#b5cea8;">0</span><span>) {
+</span><span>        </span><span style="color:#569cd6;">return</span><span>;
+</span><span>    }
+</span><span>    </span><span style="color:#608b4e;">// Store data ...
+</span><span>}
+</span><span>
+</span><span style="color:#569cd6;">void </span><span>process_credentials() {
+</span><span>    std::cout &lt;&lt; </span><span style="color:#d69d85;">&quot;&gt;&quot;</span><span>;
+</span><span>    std::flush(std::cout);
+</span><span>
+</span><span>    </span><span style="color:#569cd6;">char</span><span> buffer[</span><span style="color:#b5cea8;">128</span><span>];
+</span><span>    std::cin &gt;&gt; buffer;
+</span><span>    buffer[</span><span style="color:#569cd6;">sizeof</span><span>(buffer) - </span><span style="color:#b5cea8;">1</span><span>] = </span><span style="color:#d69d85;">&#39;</span><span style="color:#e3bbab;">\0</span><span style="color:#d69d85;">&#39;</span><span>;
+</span><span>    store_credentials_into_db(buffer, </span><span style="color:#569cd6;">sizeof</span><span>(buffer));
+</span><span>}
+</span><span>
+</span><span style="color:#569cd6;">int </span><span>main() {
+</span><span>    process_credentials();
+</span><span>    </span><span style="color:#569cd6;">return </span><span style="color:#b5cea8;">0</span><span>;
+</span><span>}
+</span><span>
+</span></code></pre>
+<p>Debugging the provided C++ code with GEF (GDB Enhanced Features) will allow you to understand the execution flow, examine variables, and potentially identify vulnerabilities or logical errors. Below are steps on how to debug this C++ program using GEF, focusing on key points like setting breakpoints, stepping through the code, and inspecting the memory and variables.</p>
+<h4 id="step-1-compile-the-program-with-debugging-information">Step 1: Compile the Program with Debugging Information</h4>
+<p>First, compile the C++ program (full example available:<a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/luk6xff/luk6xff.github.io/tree/master/content/other/code/gef_tool">HERE</a>): with debugging information enabled (<code>-g</code>) and disable optimizations (<code>-O0</code>) to ensure that you can inspect the source code as is during debugging.</p>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span>cd gef_tool </span><span style="color:#569cd6;">&amp;&amp; </span><span>./build.sh
+</span></code></pre>
+<h4 id="step-2-start-and-analyze-gef-with-the-program">Step 2: Start and analyze GEF with the Program</h4>
+<ul>
+<li>Open a terminal and start GEF with your compiled program:</li>
+</ul>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span>gdb -q ./build/credentials_demo
+</span></code></pre>
+<ul>
+<li>Check the binary security flags by <code>checksec</code>:</li>
+</ul>
+<pre data-lang="sh" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-sh "><code class="language-sh" data-lang="sh"><span>checksec
+</span><span>    Canary                        : ✘
+</span><span>    NX                            : ✘
+</span><span>    PIE                           : ✘
+</span><span>    Fortify                       : ✘
+</span><span>    RelRO                         : Partial
+</span><span>elf-info
+</span><span>    Magic                 : 7f 45 4c 46
+</span><span>    Class                 : 0x2 - ELF_64_BITS
+</span><span>    Endianness            : 0x1 - LITTLE_ENDIAN
+</span><span>    Version               : 0x1
+</span><span>    OS ABI                : 0x0 - SYSTEMV
+</span><span>    ABI Version           : 0x0
+</span><span>    Type                  : 0x3 - ET_DYN
+</span><span>    Machine               : 0x3e - X86_64
+</span><span>    Program Header Table  : 0x0000000000000040
+</span><span>    Section Header Table  : 0x0000000000011150
+</span><span>    Header Table          : 0x0000000000000040
+</span><span>    ELF Version           : 0x1
+</span><span>    Header size           : 64 (0x40)
+</span><span>    Entry point           : 0x0000000000001220
+</span><span>    ...
+</span></code></pre>
+<h4 id="step-3-set-breakpoints">Step 3: Set Breakpoints</h4>
+<p>Set breakpoints at key functions to inspect their behavior. For instance, you might want to break at <code>process_credentials</code> to observe how input is handled and at <code>admin_panel</code> to see if it's possible to reach that function.</p>
+<pre data-lang="sh" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-sh "><code class="language-sh" data-lang="sh"><span>(gef) b </span><span style="color:#569cd6;">*</span><span>(&amp;process_credentials)
+</span><span>(gef) b </span><span style="color:#569cd6;">*</span><span>(&amp;admin_panel)
+</span></code></pre>
+<h4 id="step-4-run-the-program">Step 4: Run the Program</h4>
+<p>Start the program within GEF by typing <code>r</code> or <code>run</code>. The program will start and stop at the first breakpoint.</p>
+<pre data-lang="sh" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-sh "><code class="language-sh" data-lang="sh"><span>r
+</span></code></pre>
+<h3 id="step-5-after-reaching-breakpoint-analyze-gef-context-command">Step 5: After reaching breakpoint, analyze gef <code>context</code> command</h3>
+<p><img src="https://raw.githubusercontent.com/luk6xff/luk6xff.github.io/master/content/other/media/gef_tool/gef_context.png" alt="Time Planner app" /><br />
+<em>Figure 1: gef context command - more details here: https://hugsy.github.io/gef/commands/context/</em></p>
+<h3 id="step-6-find-the-ret-address-of-the-process-credentials-function">Step 6: Find the <code>ret</code> address of the <code>process_credentials</code> function</h3>
+<p>When brakpoint is reached, print the address of the stack pointer which contain the return address of <code>process_credentials</code> function. It will be used to overrite it with <code>admin_panel</code> address.</p>
+<pre data-lang="sh" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-sh "><code class="language-sh" data-lang="sh"><span>(gef) i r $rsp
+</span><span>    rsp            0x7fffffffd838      0x7fffffffd838
+</span></code></pre>
+<h4 id="step-7-step-through-the-code">Step 7: Step Through the Code</h4>
+<p>Use the <code>next</code> or <code>n</code> command to step through the code line by line. If you want to step into functions (like <code>store_credentials_into_db</code>), use <code>step</code> or <code>s</code> instead.</p>
+<h4 id="step-8-inspect-variables-and-memory">Step 8: Inspect Variables and Memory</h4>
+<p>As you reach the <code>std::cin</code> call, you can inspect the contents of <code>buffer</code> and other variables:</p>
+<ul>
+<li>If you want to dereference all the stack entries inside a function context (on a 64bit architecture): <code>p ($rbp - $rsp)/8</code></li>
+<li>Find the memory address of the <code>buffer</code> array: <code>p &amp;buffer[0]</code>= 0x7fffffffd7b0</li>
+<li>To examine the content of <code>buffer</code>: <code>x/128c buffer</code></li>
+</ul>
+<h4 id="step-9-continue-execution">Step 9: Continue Execution</h4>
+<p>After inspecting the variables at the first breakpoint, continue execution to see if the second breakpoint (<code>admin_panel</code>) is hit.</p>
+<pre data-lang="sh" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-sh "><code class="language-sh" data-lang="sh"><span>(gef) continue
+</span></code></pre>
+<h4 id="step-10-experiment-with-inputs">Step 10: Experiment with Inputs</h4>
+<p>If you're analyzing the program for vulnerabilities, you might try inputs that could potentially overflow <code>buffer</code> or otherwise manipulate the program's flow. Run</p>
+<h4 id="step-11-utilize-gef-commands-for-deeper-analysis">Step 11: Utilize GEF Commands for Deeper Analysis</h4>
+<p>GEF provides commands that are particularly useful for security analysis:</p>
+<ul>
+<li><code>pattern create</code> and <code>pattern search</code> to test for buffer overflows.</li>
+<li><code>heap bins</code> to inspect the heap state if dynamic memory allocation is used elsewhere in the program.</li>
+</ul>
+<h4 id="step-12-quit-gef">Step 12: Quit GEF</h4>
+<p>Once you're done debugging, you can quit GEF with the <code>quit</code> command.</p>
+<h3 id="more-commands">More commands</h3>
+<p>All the available GEF commands available <a rel="noopener nofollow noreferrer" target="_blank" href="https://hugsy.github.io/gef-extras/commands/assemble/">here</a>.</p>
+<h3 id="bonus">Bonus</h3>
+<p>I've also developed an exploit for the provided code using insights from gef. You can locate it <a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/luk6xff/luk6xff.github.io/tree/master/content/other/code/gef_tool/exploit_cpp.py">here</a>. Please remember to customize the addresses, specifically process_credentials_ret_addr and buffer_addr, to match those on your system.&quot;</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>GEF is like a supercharged version of GDB that makes debugging less of a headache. It's packed with features that give you a clearer view of your program and help you find and fix bugs more efficiently. Whether you're a new developer or have been coding for years, GEF is a valuable tool to add to your software debugging toolkit.</p>
+<p>Happy hacking!</p>
+
+          </div>
+        </article>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+
+  
+  <section class="modal" id="search-modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Search</p>
+      </header>
+      <section class="modal-card-body">
+        <div class="field mb-2">
+          <div class="control">
+            <input class="input" id="search" placeholder="Search this website." type="search" />
+          </div>
+        </div>
+        <div class="search-results">
+          <div class="search-results__items"></div>
+        </div>
+      </section>
+    </div>
+    <button aria-label="close" class="modal-close is-large"></button>
+  </section>
+  
+
+
+  
+
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <nav class="level">
+              
+          <div class="level-item has-text-centered">
+            <a class="button is-black is-outlined" href="https:&#x2F;&#x2F;luk6xff.github.io&#x2F;posts&#x2F;led-clock&#x2F;">
+              <span class="icon mr-2">
+                <i class="fas fa-arrow-circle-left"></i>
+              </span>
+              Led Clock
+            </a>
+          </div>
+           
+          <div class="level-item has-text-centered">
+            <a class="button is-black is-outlined" href="https:&#x2F;&#x2F;luk6xff.github.io&#x2F;posts&#x2F;cpp-proj-template&#x2F;">
+              Dockerized C&#x2F;C++ project build template<span class="icon ml-2">
+                <i class="fas fa-arrow-circle-right"></i>
+              </span>
+            </a>
+          </div>
+          
+        </nav>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+  
+
+
+
+  
+  <footer class="footer py-4">
+    <div class="content has-text-centered">
+        Powered by
+        <span class="icon-text">
+          <span class="icon">
+            <i class="fas fa-power-off"></i>
+          </span>
+          <a href="https://github.com/getzola/zola">
+            zola
+          </a>
+        </span>
+      </p>
+    </div>
+  </footer>
+  
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha384-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/galleria@1.6.1/dist/galleria.min.js" integrity="sha384-QSfwGT8/EU536DKdtyP2D6SLlh8zBaZ0cVkwfrwhqzIU9VCfJT00CLVP5t+HAiYg" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/galleria@1.6.1/dist/themes/folio/galleria.folio.min.js" integrity="sha384-DwpKI+deZB267+hPKwiOIc5Y2GKsVL0mR6hgz7GgIu7AgAMYqJwcJKY1YBNfhWcY" crossorigin="anonymous"></script>
+  
+  
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@8.13.5/dist/mermaid.min.js" integrity="sha384-0yWn54pSGtfKCU+skfA69l25VsCw+MZt4LQov3xNRoS7YkAMrFokGgSBnAWSK4pv" crossorigin="anonymous"></script>
+  
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.xkcd@1.1.13/dist/chart.xkcd.min.js" integrity="sha384-xC3h1+IHXK8seA+8KfT79Z4e0GPsznjXBoMa5nd8ooWKplPyXx92NOmljWxLC/cs" crossorigin="anonymous"></script>
+  
+  
+  <script src="https://luk6xff.github.io/elasticlunr.min.js"></script>
+  <script src="https://luk6xff.github.io/search_index.en.js"></script><script src="https://luk6xff.github.io/js/site.js"></script>
+
+  
+
+
+
+
+
+  
+  
+</body>
+
+</html>

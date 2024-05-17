@@ -1,0 +1,1637 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <meta content="#ffffff" name="theme-color" />
+  <meta content="#da532c" name="msapplication-TileColor" />
+
+  
+  <link href='&#x2F;icons&#x2F;site.webmanifest' rel="manifest" />
+  
+  
+  <link color="#5bbad5" href='&#x2F;icons&#x2F;safari-pinned-tab.svg' rel="mask-icon" />
+  
+  
+  <link href='&#x2F;icons&#x2F;favicon-16x16.png' rel="icon" sizes="16x16" type="image/png" />
+  
+  
+  <link href='&#x2F;icons&#x2F;favicon-32x32.png' rel="icon" sizes="32x32" type="image/png" />
+  
+  
+  <link href='&#x2F;icons&#x2F;apple-touch-icon.png' rel="apple-touch-icon" sizes="180x180" />
+  
+
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/galleria@1.6.1/dist/themes/folio/galleria.folio.min.css" integrity="sha384-+rY0QD+LRnTOquDMzGa9lXU6jIwdiQuwCJQ2cdcW0qeP/0UbjQCZlXnRsUMA+9pH" crossorigin="anonymous">
+  
+
+  
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1.9.1/css/academicons.min.css" integrity="sha384-FIue+PI4SsI9XfHCz8dBLg33b0c1fMJgNU3X//L26FYbGnlSEfWmNT7zgWc2N9b6" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link href="https://luk6xff.github.io/deep-thought.css" rel="stylesheet" />
+  
+  
+
+  <title>
+    
+luk6xff&#x27;s tech blog | Dockerized C&#x2F;C++ project build template
+
+  </title>
+
+  
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XHHDR1Z596"></script>
+  <script type="text/javascript">
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+    gtag("config", "G-XHHDR1Z596");
+  </script>
+  
+  
+
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css" integrity="sha384-R4558gYOUz8mP9YWpZJjofhk+zx0AS11p36HnD2ZKj/6JR5z27gSSULCNHIRReVs" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js" integrity="sha384-z1fJDqw8ZApjGO3/unPWUPsIymfsJmyrDVWC8Tv/a1HeOtGmkwNd/7xUS0Xcnvsx" crossorigin="anonymous"></script>
+
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/mathtex-script-type.min.js" integrity="sha384-jiBVvJ8NGGj5n7kJaiWwWp9AjC+Yh8rhZY3GtAX8yU28azcLgoRo4oukO87g7zDT" crossorigin="anonymous"></script>
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/auto-render.min.js" integrity="sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR" crossorigin="anonymous"></script>
+  
+  
+</head>
+
+<body class="has-background-white">
+  <nav aria-label="section navigation" class="navbar is-light" role="navigation">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item is-size-5 has-text-weight-bold" href="https:&#x2F;&#x2F;luk6xff.github.io">luk6xff&#x27;s tech blog</a>
+        <a aria-expanded="false" aria-label="menu" class="navbar-burger burger" data-target="navMenu" role="button">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div class="navbar-menu" id="navMenu">
+        <div class="navbar-end has-text-centered">
+          
+          
+          
+          <a class="navbar-item has-text-weight-semibold" href="https:&#x2F;&#x2F;luk6xff.github.io&#x2F;">
+            Home
+          </a>
+          
+          <a class="navbar-item has-text-weight-semibold" href="https:&#x2F;&#x2F;luk6xff.github.io&#x2F;posts">
+            Posts
+          </a>
+          
+          <a class="navbar-item has-text-weight-semibold" href="https:&#x2F;&#x2F;luk6xff.github.io&#x2F;tags">
+            Tags
+          </a>
+          
+          <a class="navbar-item has-text-weight-semibold" href="https:&#x2F;&#x2F;luk6xff.github.io&#x2F;categories">
+            Categories
+          </a>
+          
+          
+          
+          <a class="navbar-item" id="nav-search" title="Search" data-target="#search-modal">
+            <span class="icon">
+              <i class="fas fa-search"></i>
+            </span>
+          </a>
+          <a class="navbar-item" id="dark-mode" title="Switch to dark theme">
+            <span class="icon">
+              <i class="fas fa-adjust"></i>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  
+  
+
+  
+<section class="section">
+  <div class="container">
+    <div class="columns">
+      <div class="column is-8 is-offset-2">
+        <article class="box">
+          <h1 class="title">
+            Dockerized C&#x2F;C++ project build template
+          </h1>
+          <p class="subtitle"></p>
+          <div class="columns is-multiline is-gapless">
+            <div class="column is-8">
+              
+<span class="icon-text has-text-grey">
+  <span class="icon">
+    <i class="fas fa-user"></i>
+  </span>
+  <span>luk6xff published on</span>
+  <span class="icon">
+    <i class="far fa-calendar-alt"></i>
+  </span>
+  <span><time datetime="2022-12-19">December 19, 2022</time></span>
+</span>
+
+            </div>
+            <div class="column is-4 has-text-right-desktop">
+              
+<span class="icon-text has-text-grey">
+  <span class="icon">
+    <i class="far fa-clock"></i>
+  </span>
+  <span>30 min,</span>
+  <span class="icon">
+    <i class="fas fa-pencil-alt"></i>
+  </span>
+  <span>5873 words</span>
+</span>
+
+            </div>
+            <div class="column">
+              
+              
+<p>
+  Categories:
+  
+  <a class="has-text-info-dark has-text-weight-semibold" href="https://luk6xff.github.io/categories/cpp/">
+    <span class="icon-text">
+      <span class="icon">
+        <i class="fas fa-cube"></i>
+      </span>
+      <span>cpp</span>
+    </span>
+  </a>
+  
+</p>
+
+              
+            </div>
+            <div class="column has-text-right-desktop">
+              
+              
+<p>
+  Tags:
+  
+  <a class="has-text-info-dark has-text-weight-semibold" href="https://luk6xff.github.io/tags/cpp/">
+    <span class="icon-text">
+      <span class="icon">
+        <i class="fas fa-tag"></i>
+      </span>
+      <span>cpp</span>
+    </span>
+  </a>
+  
+  <a class="has-text-info-dark has-text-weight-semibold" href="https://luk6xff.github.io/tags/docker/">
+    <span class="icon-text">
+      <span class="icon">
+        <i class="fas fa-tag"></i>
+      </span>
+      <span>docker</span>
+    </span>
+  </a>
+  
+</p>
+
+              
+            </div>
+          </div>
+          <div class="content mt-2">
+            <h1 id="table-of-contents">Table of Contents</h1>
+<ol>
+<li><a href="https://luk6xff.github.io/posts/cpp-proj-template/#intro">Intro</a></li>
+<li><a href="https://luk6xff.github.io/posts/cpp-proj-template/#part-1-docker-overview">Part 1 - Docker Overview</a>
+<ol>
+<li><a href="https://luk6xff.github.io/posts/cpp-proj-template/#understanding-docker">Understanding Docker</a>
+<ul>
+<li><a href="https://luk6xff.github.io/posts/cpp-proj-template/#docker-vs-virtual-machine">Docker vs Virtual Machine</a></li>
+<li><a href="https://luk6xff.github.io/posts/cpp-proj-template/#key-components-of-docker">Key Components of Docker</a></li>
+<li><a href="https://luk6xff.github.io/posts/cpp-proj-template/#linux-mechanisms-leveraged-by-docker">Linux Mechanisms Leveraged by Docker</a></li>
+<li><a href="https://luk6xff.github.io/posts/cpp-proj-template/#diagrams-of-docker-environment-on-linux">Diagrams of Docker Environment on Linux</a></li>
+</ul>
+</li>
+<li><a href="https://luk6xff.github.io/posts/cpp-proj-template/#understanding-differences-between-container-technologies-docker-lxc-and-oci">Understanding Differences between Container Technologies - Docker, LXC, and OCI</a>
+<ul>
+<li><a href="https://luk6xff.github.io/posts/cpp-proj-template/#docker">Docker</a></li>
+<li><a href="https://luk6xff.github.io/posts/cpp-proj-template/#lxc-linux-containers">LXC (Linux Containers)</a></li>
+<li><a href="https://luk6xff.github.io/posts/cpp-proj-template/#oci-open-container-initiative">OCI (Open Container Initiative)</a></li>
+<li><a href="https://luk6xff.github.io/posts/cpp-proj-template/#comparison-table-docker-lxc-and-oci">Comparison Table: Docker, LXC, and OCI</a></li>
+</ul>
+</li>
+<li><a href="https://luk6xff.github.io/posts/cpp-proj-template/#setting-up-docker-for-c-cpp-development">Setting Up Docker for C/CPP Development</a>
+<ul>
+<li><a href="https://luk6xff.github.io/posts/cpp-proj-template/#installing-docker-on-your-development-machine">Installing Docker on Your Development Machine</a></li>
+<li><a href="https://luk6xff.github.io/posts/cpp-proj-template/#basics-of-dockerfile">Basics of Dockerfile</a></li>
+<li><a href="https://luk6xff.github.io/posts/cpp-proj-template/#creating-a-docker-image-for-c-cpp-development">Creating a Docker Image for C/CPP Development</a></li>
+</ul>
+</li>
+<li><a href="https://luk6xff.github.io/posts/cpp-proj-template/#useful-docker-client-commands">Useful Docker Client Commands</a></li>
+<li><a href="https://luk6xff.github.io/posts/cpp-proj-template/#managing-dependencies">Managing Dependencies</a></li>
+<li><a href="https://luk6xff.github.io/posts/cpp-proj-template/#streamlining-build-processes">Streamlining Build Processes</a>
+<ul>
+<li><a href="https://luk6xff.github.io/posts/cpp-proj-template/#automating-the-build-process-using-dockerfile-and-docker-compose">Automating the Build Process using Dockerfile and Docker Compose</a></li>
+<li><a href="https://luk6xff.github.io/posts/cpp-proj-template/#handling-different-build-configurations-within-docker">Handling Different Build Configurations within Docker</a></li>
+</ul>
+</li>
+<li><a href="https://luk6xff.github.io/posts/cpp-proj-template/#collaboration-and-deployment">Collaboration and Deployment</a>
+<ul>
+<li><a href="https://luk6xff.github.io/posts/cpp-proj-template/#sharing-docker-images-for-consistent-development-environments">Sharing Docker Images for Consistent Development Environments</a></li>
+<li><a href="https://luk6xff.github.io/posts/cpp-proj-template/#deploying-c-cpp-applications-using-docker-containers-in-production-environments">Deploying C/CPP Applications using Docker Containers in Production Environments</a></li>
+</ul>
+</li>
+<li><a href="https://luk6xff.github.io/posts/cpp-proj-template/#best-practices-and-tips">Best Practices and Tips</a>
+<ul>
+<li><a href="https://luk6xff.github.io/posts/cpp-proj-template/#optimizing-dockerfiles-for-efficiency">Optimizing Dockerfiles for Efficiency</a></li>
+<li><a href="https://luk6xff.github.io/posts/cpp-proj-template/#managing-container-resources-effectively">Managing Container Resources Effectively</a></li>
+<li><a href="https://luk6xff.github.io/posts/cpp-proj-template/#securing-docker-containers-for-c-cpp-projects">Securing Docker Containers for C/CPP Projects</a></li>
+</ul>
+</li>
+<li><a href="https://luk6xff.github.io/posts/cpp-proj-template/#debugging-c-cpp-applications-using-gdb">Debugging C/CPP Applications using GDB</a></li>
+<li><a href="https://luk6xff.github.io/posts/cpp-proj-template/#docker-containers-vs-native-builds">Docker Containers vs Native Builds</a></li>
+<li><a href="https://luk6xff.github.io/posts/cpp-proj-template/#multi-architecture-builds">Multi-Architecture Builds</a></li>
+<li><a href="https://luk6xff.github.io/posts/cpp-proj-template/#docker-container-runtime-management">Docker Container Runtime Management</a></li>
+</ol>
+</li>
+<li><a href="https://luk6xff.github.io/posts/cpp-proj-template/#part-2-my-dockerized-c-cpp-environment">Part 2 - My Dockerized C/CPP Environment</a>
+<ol>
+<li><a href="https://luk6xff.github.io/posts/cpp-proj-template/#configuring-my-c-cpp-development-environment">Configuring My C/CPP Development Environment</a></li>
+<li><a href="https://luk6xff.github.io/posts/cpp-proj-template/#features-and-usage">Features and Usage</a>
+<ul>
+<li><a href="https://luk6xff.github.io/posts/cpp-proj-template/#build-images-and-apps-for-different-architectures">Build Images and Apps for Different Architectures</a></li>
+<li><a href="https://luk6xff.github.io/posts/cpp-proj-template/#running-the-container">Running the Container</a></li>
+<li><a href="https://luk6xff.github.io/posts/cpp-proj-template/#static-code-analysis">Static Code Analysis</a></li>
+<li><a href="https://luk6xff.github.io/posts/cpp-proj-template/#unit-tests">Unit Tests</a></li>
+<li><a href="https://luk6xff.github.io/posts/cpp-proj-template/#memcheck-valgrind">Memcheck (Valgrind)</a></li>
+<li><a href="https://luk6xff.github.io/posts/cpp-proj-template/#scanning-the-image-and-linting-the-dockerfile">Scanning the Image and Linting the Dockerfile</a></li>
+<li><a href="https://luk6xff.github.io/posts/cpp-proj-template/#profiling">Profiling</a></li>
+</ul>
+</li>
+</ol>
+</li>
+<li><a href="https://luk6xff.github.io/posts/cpp-proj-template/#conclusion">Conclusion</a></li>
+</ol>
+<h1 id="intro">Intro</h1>
+<p>Today I'll explore how Docker facilitates the creation of reproducible and isolated Linux environments, accelerating the testing, debugging, and deployment phases of C/C++ applications. By harnessing the capabilities of Docker, C++ programmers can ensure consistency across development, testing, and production environments, ultimately enhancing productivity and software reliability. My complete environment containing example application available as always on <a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/luk6xff/cpp-project-template">my github</a>.</p>
+<h1 id="part-1-docker-overview">Part 1 - Docker Overview</h1>
+<h2 id="understanding-docker">Understanding Docker</h2>
+<p>Docker is a platform that uses containerization to package and run applications in isolated environments called containers. These containers are lightweight and portable, containing everything needed to run the application, including code, runtime, system tools, libraries, and settings.They provide an abstraction layer between one or more processes (i.e., an application) and the OS on which they run. A container packages these processes and their underlying dependencies together so that they can be easily implemented on any OS that supports the container infrastructure. Under the hood, Docker leverages several Linux kernel features, such as cgroups (control groups) for resource isolation, namespaces for process isolation, and UnionFS (Union File System) for layering file systems.</p>
+<h2 id="docker-vs-virtual-machine">Docker vs Virtual Machine</h2>
+<p><img src="https://raw.githubusercontent.com/luk6xff/luk6xff.github.io/master/content/other/media/cpp_proj_template/docker_vs_vm.png" alt="Docker vs VM" /><br />
+*Figure 1: docker vs vm - <a href="//www.plantuml.com/plantuml/dpng/dP9FY_8m48Vl_HI3TtbfUdzHTvTTOVy8mbvBh8C6swGagOii_UuR8mcDiTXwgMPuydl2pCoKfb8tLPce0-CrbRI2GbIruCZrMfzA18c5fdnNOfBKj3ZG7SBacvbBj8GFMkmPHvXBywiDs4YSm6y20FwUmT-4ql2rdW1Li3V_Sw7oOnLHfnhbaIaXBw0_Mj2xNnkqQP0wqrNEOlcv_lU-N5ny6yPLNhBDsPZUmkUh5QGMfNMTkdUrFL8oMahwfCH9oJrfDbgQzKap9yr2wVdJcGrCj-A7J_zVJQ5pz4JSuA3YET_T-p4aYY7T638m9ejYCi-v3hIThNuMnG7b8ykyjJT3qkUzy1tZQFaBbwEjXCD-4bnJKvKZzzh91-nszvbjdvqyP1-mvB7TVi8M-lb4dGehdhlTXgZg-Q0FWrF9pTHmALrgcyoGRvkg_0C0">plant_uml</a></p>
+<table><thead><tr><th><strong>Feature</strong></th><th><strong>Containers</strong></th><th><strong>Hypervisors</strong></th></tr></thead><tbody>
+<tr><td><strong>Abstraction Layer</strong></td><td>Specific processes and their dependencies</td><td>Underlying hardware (virtual machines)</td></tr>
+<tr><td><strong>Redeployment</strong></td><td>Services and applications to multiple Linux distributions (distros)</td><td>Entire systems: OS, services, applications on a single system</td></tr>
+<tr><td><strong>Software Integration</strong></td><td>Integrated into underlying OS and runs on hardware</td><td>Managed by hypervisor, but runs directly on hardware</td></tr>
+<tr><td><strong>Runtime Separation</strong></td><td>Integrated into system during runtime, constrained by container protection</td><td>Separated from other guests and isolated during runtime</td></tr>
+<tr><td><strong>Operation</strong></td><td>Runs as part of OS system</td><td>Runs as separate, independent systems; protected by hypervisor</td></tr>
+<tr><td><strong>Flexibility</strong></td><td>Containered software can run on “bare metal” or in a hypervisor virtual machine</td><td>Guest systems can use containers like on “bare metal”</td></tr>
+</tbody></table>
+<p><em>Table 1: Comparison of Containers and Hypervisors</em></p>
+<h2 id="key-components-of-docker">Key Components of Docker</h2>
+<ol>
+<li>
+<p><strong>Docker Daemon (<code>dockerd</code>):</strong> This is the persistent background process running on the host machine. It listens for Docker API requests and manages Docker objects such as images, containers, networks, and volumes.</p>
+</li>
+<li>
+<p><strong>Docker Client (<code>docker</code>):</strong> The primary interface through which users interact with Docker. It sends commands to the Docker daemon using the Docker API.</p>
+</li>
+<li>
+<p><strong>Docker Images:</strong> Immutable snapshots containing the application, its dependencies, and configurations. These images are built using Dockerfiles and stored in a local registry or a remote repository like Docker Hub.</p>
+</li>
+<li>
+<p><strong>Docker Containers:</strong> Instances of Docker images that run as isolated processes on the host machine. Each container operates in its own isolated environment, providing security and preventing conflicts between applications and their dependencies.</p>
+</li>
+</ol>
+<h2 id="linux-mechanisms-leveraged-by-docker">Linux Mechanisms Leveraged by Docker</h2>
+<ul>
+<li><strong>cgroups (Control Groups):</strong> Used for resource isolation, allowing Docker to limit and prioritize CPU, memory, disk I/O, and other resources for containers.</li>
+<li><strong>Namespaces:</strong> Used for process isolation, providing each container with its own namespace for processes, network interfaces, file systems, and more.
+Key namespaces utilized by Docker include:
+<ul>
+<li>PID Namespace: Isolates process IDs, enabling containers to maintain separate process trees.</li>
+<li>NET Namespace: Isolates network-related resources like interfaces and firewall rules.</li>
+<li>IPC Namespace: Isolates Inter-Process Communication resources.</li>
+<li>MNT Namespace: Manages mount points, allowing containers to have distinct filesystems.</li>
+<li>UTS Namespace: Isolates host and domain names, creating a unique identity for containers.</li>
+</ul>
+</li>
+<li><strong>UnionFS (Union File System):</strong> Used for layering file systems, enabling Docker to create images efficiently by layering changes on top of existing file systems.</li>
+</ul>
+<h2 id="diagrams-of-docker-environment-on-linux">Diagrams of Docker Environment on Linux</h2>
+<pre style="background-color:#1e1e1e;color:#dcdcdc;"><code><span>+---------------------+
+</span><span>|     Dockerfile      |
+</span><span>| (Build Instructions)|
+</span><span>|                     |
+</span><span>|  +-----------------+
+</span><span>|  | Instructions    |
+</span><span>|  | for building    |
+</span><span>|  | the image       |
+</span><span>|  | ...             |
+</span><span>|  +-----------------+
+</span><span>|  Defines the environment and configuration for the  |
+</span><span>|  Docker image.                                   |
+</span><span>+------------------------------------------------------+
+</span><span>           |
+</span><span>           |
+</span><span>           |
+</span><span>           v
+</span><span>+---------------------+
+</span><span>|   Docker Images     |
+</span><span>|                     |
+</span><span>|  +-----------------+
+</span><span>|  | Base OS Image   |
+</span><span>|  | Application     |
+</span><span>|  | Dependencies    |
+</span><span>|  | Configuration   |
+</span><span>|  | ...             |
+</span><span>|  +-----------------+
+</span><span>|    Immutable snapshots containing the             |
+</span><span>|    application, its dependencies, and configurations. |
+</span><span>+------------------------------------------------------+
+</span><span>           |
+</span><span>           |
+</span><span>           |
+</span><span>           v
+</span><span>+---------------------+
+</span><span>|  Docker Containers  |
+</span><span>|                     |
+</span><span>|  +-----------------+
+</span><span>|  | Running         |
+</span><span>|  | Application     |
+</span><span>|  | Instances       |
+</span><span>|  | ...             |
+</span><span>|  +-----------------+
+</span><span>|    Running instances of Docker images.                |
+</span><span>+------------------------------------------------------+
+</span><span>
+</span><span>
+</span><span>
+</span><span>
+</span><span>+---------------------+    Docker Daemon
+</span><span>|  Docker Client      | &lt;--------------------------+
+</span><span>|  (User Interface)   |                             |
+</span><span>+---------------------+                             |
+</span><span>|  User-facing command-line interface for Docker.     |
+</span><span>+----------------------------------------------------+
+</span><span>           |
+</span><span>           |
+</span><span>           |
+</span><span>           v
+</span><span>+---------------------+
+</span><span>|      Docker Daemon  |  &lt;------------------------------------+
+</span><span>+---------------------+                                       |
+</span><span>|  Persistent process running on the host machine.            |
+</span><span>|  Manages Docker objects such as images, containers,         |
+</span><span>|  networks, and volumes.                                      |
+</span><span>+--------------------------------------------------------------+
+</span><span>           |
+</span><span>           |
+</span><span>           |
+</span><span>           v
+</span><span>+---------------------+-----------------------------+
+</span><span>|      containerd     |                             |
+</span><span>|  (Container Runtime)|                             |
+</span><span>|                     |                             |
+</span><span>|  +-----------------+|                             |
+</span><span>|  |    runc         ||                             |
+</span><span>|  | (Container Tool)||                             |
+</span><span>|  +-----------------+|                             |
+</span><span>|  Manages container lifecycle tasks, including     |
+</span><span>|  creation, execution, and destruction.              |
+</span><span>+------------------------------------------------------+
+</span><span>
+</span></code></pre>
+<p>This diagram illustrates the core components of the Docker environment on a Linux system, including the Docker daemon, containers, images, and Dockerfile used for building images.</p>
+<p>When executing Docker commands, a following sequence of interactions occurs:</p>
+<pre style="background-color:#1e1e1e;color:#dcdcdc;"><code><span>+---------------------+
+</span><span>|   Docker Client     |
+</span><span>|   (User Interface)  |
+</span><span>+---------------------+
+</span><span>           |
+</span><span>           |
+</span><span>           | Docker Commands
+</span><span>           v
+</span><span>+---------------------+
+</span><span>|   Docker Daemon     |
+</span><span>|      (dockerd)      |
+</span><span>+---------------------+
+</span><span>           |
+</span><span>           |
+</span><span>           | Container Management Tasks
+</span><span>           v
+</span><span>+---------------------+
+</span><span>|      containerd     |
+</span><span>|  (Container Runtime)|
+</span><span>+---------------------+
+</span><span>           |
+</span><span>           |
+</span><span>           | Container Management (utilizes namespaces, cgroups, and runc)
+</span><span>           v
+</span><span>+---------------------+
+</span><span>|        runc         |
+</span><span>|  (Container Tool)   |
+</span><span>+---------------------+
+</span></code></pre>
+<h2 id="understanding-differences-between-container-technologies-docker-lxc-and-oci">Understanding Differences between Container Technologies - Docker, LXC, and OCI</h2>
+<h3 id="docker">Docker</h3>
+<p>Docker is a platform designed to simplify the creation, deployment, and management of applications within containers. It abstracts application-level processes and dependencies, allowing developers to encapsulate their applications in containers that can run consistently across various environments. Docker's ecosystem includes Docker Hub for image distribution, Docker Compose for multi-container applications, and extensive APIs for automation.</p>
+<h3 id="lxc-linux-containers">LXC (Linux Containers)</h3>
+<p>LXC, or Linux Containers, represents a more traditional form of containerization, providing lightweight virtualization at the operating system level. It leverages Linux kernel features like cgroups (control groups) and namespaces to create isolated environments. LXC is particularly useful for running multiple isolated Linux systems on a single host, offering a minimalistic approach compared to Docker.</p>
+<h3 id="oci-open-container-initiative">OCI (Open Container Initiative)</h3>
+<p>The Open Container Initiative (OCI) was established to promote standardization within the container ecosystem. It defines open industry standards for container image formats and runtimes, ensuring interoperability across different container tools and platforms. OCI specifications are widely adopted by major container engines, including Docker, to maintain consistent container behavior.</p>
+<h2 id="comparison-table-docker-lxc-and-oci">Comparison Table: Docker, LXC, and OCI</h2>
+<p>To better understand the distinctions and similarities between Docker, LXC, and OCI, refer to the comparison table below:</p>
+<h2 id="comparison-of-docker-lxc-and-oci">Comparison of Docker, LXC, and OCI</h2>
+<table><thead><tr><th><strong>Feature</strong></th><th><strong>Docker</strong></th><th><strong>LXC (Linux Containers)</strong></th><th><strong>OCI (Open Container Initiative)</strong></th></tr></thead><tbody>
+<tr><td><strong>Purpose</strong></td><td>Simplifies application deployment and management</td><td>Provides lightweight virtualization at OS level</td><td>Establishes open industry standards for container formats and runtimes</td></tr>
+<tr><td><strong>Abstraction Level</strong></td><td>Application-level with its dependencies</td><td>OS-level virtualization</td><td>Standardized framework for containers</td></tr>
+<tr><td><strong>Usage</strong></td><td>Widely used for microservices and cloud-native applications</td><td>Used for running multiple isolated Linux systems on a single host</td><td>Defines container image format and runtime specifications</td></tr>
+<tr><td><strong>Integration</strong></td><td>Highly integrated with Docker Hub and Docker Compose</td><td>Directly integrates with Linux kernel features</td><td>Provides specifications adopted by major container engines like Docker</td></tr>
+<tr><td><strong>Deployment</strong></td><td>Easy to deploy and manage via Docker CLI and APIs</td><td>Requires more manual setup and configuration</td><td>Focuses on compatibility across different container tools and platforms</td></tr>
+<tr><td><strong>Isolation</strong></td><td>Uses container technology with additional tools for management</td><td>Pure container management using cgroups and namespaces</td><td>Ensures consistent behavior of containers across different environments</td></tr>
+<tr><td><strong>Image Format</strong></td><td>Docker Images</td><td>LXC Templates</td><td>OCI Images</td></tr>
+<tr><td><strong>Runtime</strong></td><td>Docker Engine</td><td>LXC Tools</td><td>OCI Runtime Specification (e.g., runc)</td></tr>
+<tr><td><strong>Community and Ecosystem</strong></td><td>Large ecosystem with extensive tools and third-party integrations</td><td>Mature but smaller community compared to Docker</td><td>Supported by industry leaders to maintain interoperability standards</td></tr>
+</tbody></table>
+<p><em>Table 1: Comparison of Docker, LXC, and OCI</em></p>
+<h2 id="setting-up-docker-for-c-cpp-development">Setting Up Docker for C/CPP Development</h2>
+<p>Setting Up Docker for C/CPP Development involves installing Docker on your development machine, understanding the basics of Dockerfile for defining the development environment, and creating a Docker image tailored for C/C++ development.</p>
+<h3 id="installing-docker-on-your-development-machine">Installing Docker on Your Development Machine</h3>
+<p>First, you need to install Docker on your development machine. There are different ways to install Docker, depending on your operating system.</p>
+<ul>
+<li>
+<p><strong>Docker Desktop:</strong> Docker Desktop is a convenient solution for developers working on Windows or macOS. It includes Docker Engine, Docker CLI client, Docker Compose, Docker Content Trust, Kubernetes, and Credential Helper.</p>
+<p>Follow the instructions provided on the <a rel="noopener nofollow noreferrer" target="_blank" href="https://www.docker.com/products/docker-desktop">Docker Desktop website</a> to download and install Docker Desktop for your operating system.</p>
+</li>
+<li>
+<p><strong>Docker Engine:</strong> Docker Engine is the core technology behind Docker containers. It's available for various Linux distributions and is typically installed via package managers like apt or yum.</p>
+<p>Follow the instructions provided on the <a rel="noopener nofollow noreferrer" target="_blank" href="https://docs.docker.com/engine/install/">Docker Engine website</a> to install Docker Engine on your Linux distribution.</p>
+</li>
+</ul>
+<h3 id="basics-of-dockerfile">Basics of Dockerfile</h3>
+<p>Create a new directory for your C/C++ project and navigate into it:</p>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span>mkdir my_cpp_project
+</span><span>cd my_cpp_project
+</span></code></pre>
+<p>Inside your project directory, create a new file named <code>Dockerfile</code> using a text editor of your choice:</p>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span>touch Dockerfile
+</span></code></pre>
+<p>Edit the <code>Dockerfile</code> and define the environment for your C/C++ project. Here's a basic example:</p>
+<pre data-lang="Dockerfile" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-Dockerfile "><code class="language-Dockerfile" data-lang="Dockerfile"><span style="color:#608b4e;"># Use an official Ubuntu as a base image
+</span><span style="color:#569cd6;">FROM</span><span> ubuntu:latest
+</span><span>
+</span><span style="color:#608b4e;"># Set environment variables
+</span><span style="color:#569cd6;">ENV </span><span>DEBIAN_FRONTEND noninteractive
+</span><span>
+</span><span style="color:#608b4e;"># Install build essentials and other necessary tools
+</span><span style="color:#569cd6;">RUN </span><span>apt-get update &amp;&amp; apt-get install -y \
+</span><span>    build-essential \
+</span><span>    cmake \
+</span><span>    gcc \
+</span><span>    g++ \
+</span><span>    gdb \
+</span><span>    &amp;&amp; rm -rf /var/lib/apt/lists/*
+</span><span>
+</span><span style="color:#608b4e;"># Set the working directory in the container
+</span><span style="color:#569cd6;">WORKDIR </span><span>/usr/src/my_cpp_project
+</span><span>
+</span><span style="color:#608b4e;"># Copy the local project files into the container
+</span><span style="color:#569cd6;">COPY</span><span> . .
+</span></code></pre>
+<p>In this Dockerfile:</p>
+<ul>
+<li><code>FROM</code>: Specifies the base image for the Docker image.</li>
+<li><code>ENV</code>: Sets environment variables. In this example, it disables interactive prompts during package installation.</li>
+<li><code>RUN</code>: Executes commands within the container to install necessary tools.</li>
+<li><code>WORKDIR</code>: Sets the working directory within the container.</li>
+<li><code>COPY</code>: Copies the local project files into the container.</li>
+</ul>
+<h3 id="creating-a-docker-image-for-c-cpp-development">Creating a Docker Image for C/CPP Development</h3>
+<p>Once you've created the Dockerfile, you can build the Docker image using the <code>docker build</code> command. Run the following command in your project directory:</p>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span>docker build -t my_cpp_image .
+</span></code></pre>
+<p>This command builds a Docker image with the tag <code>my_cpp_image</code> using the Dockerfile (<code>.</code> denotes the current directory).</p>
+<h2 id="useful-docker-client-commands">Useful Docker Client Commands</h2>
+<ol>
+<li>
+<p><strong>Building Docker Images:</strong></p>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span>docker build -t my_image .
+</span></code></pre>
+</li>
+<li>
+<p><strong>Running Docker Containers:</strong></p>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span>docker run --name my_container my_image
+</span></code></pre>
+</li>
+<li>
+<p><strong>Listing Docker Containers:</strong></p>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span>docker ps -a
+</span></code></pre>
+</li>
+<li>
+<p><strong>Inspecting Docker Containers:</strong></p>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span>docker inspect my_container
+</span></code></pre>
+</li>
+<li>
+<p><strong>Copying Files to/from Docker Containers:</strong></p>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span>docker cp local_file.txt my_container:/path/to/destination
+</span></code></pre>
+</li>
+<li>
+<p><strong>Viewing Docker Logs:</strong></p>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span>docker logs my_container
+</span></code></pre>
+</li>
+<li>
+<p><strong>Stopping Docker Containers:</strong></p>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span>docker stop my_container
+</span></code></pre>
+</li>
+<li>
+<p><strong>Removing Docker Containers/Images:</strong></p>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span>docker rm my_container
+</span><span>docker rmi my_image
+</span></code></pre>
+</li>
+<li>
+<p><strong>Pulling Docker Images from Registry:</strong></p>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span>docker pull my_registry/my_image:tag
+</span></code></pre>
+</li>
+<li>
+<p><strong>Pushing Docker Images to Registry:</strong></p>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span>docker push my_registry/my_image:tag
+</span></code></pre>
+</li>
+<li>
+<p><strong>Executing Commands inside Docker Containers:</strong></p>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span>docker exec -it my_container bash
+</span></code></pre>
+</li>
+<li>
+<p><strong>Managing Docker Networks:</strong></p>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span>docker network ls
+</span></code></pre>
+</li>
+<li>
+<p><strong>Inspecting Docker Volumes:</strong></p>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span>docker volume inspect my_volume
+</span></code></pre>
+</li>
+<li>
+<p><strong>Cleaning up Unused Resources:</strong></p>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span>docker system prune
+</span></code></pre>
+</li>
+<li>
+<p><strong>Listing Docker Images:</strong></p>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span>docker images
+</span></code></pre>
+</li>
+<li>
+<p><strong>Searching Images Online:</strong></p>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span>docker search $IMAGE_NAME
+</span></code></pre>
+</li>
+<li>
+<p><strong>Attaching to a Running Container:</strong></p>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span>docker exec -it CONTAINER_ID_OR_NAME /bin/bash
+</span></code></pre>
+</li>
+<li>
+<p><strong>Starting and Stopping Containers:</strong></p>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span>docker start/stop CONTAINER_ID_OR_NAME
+</span></code></pre>
+</li>
+<li>
+<p><strong>Killing All Containers:</strong></p>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span>docker kill $(docker ps -q)
+</span></code></pre>
+</li>
+<li>
+<p><strong>Removing Containers:</strong></p>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span>docker rmi CONTAINER_ID_OR_NAME
+</span></code></pre>
+</li>
+<li>
+<p><strong>Removing All Containers:</strong></p>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span>docker rm $(docker ps -q -a)  </span><span style="color:#608b4e;"># -f for force remove even if it is running
+</span></code></pre>
+</li>
+<li>
+<p><strong>Exporting (Saving) an Image:</strong></p>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span>docker save IMAGE_NAME &gt; IMAGE_NAME.tar.gz
+</span></code></pre>
+</li>
+<li>
+<p><strong>Loading (Importing) an Image:</strong></p>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span>docker load -i IMAGE_NAME.tar.gz
+</span></code></pre>
+</li>
+<li>
+<p><strong>Finding the SHA256 Hash of a Docker Image:</strong></p>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span>docker inspect --format=</span><span style="color:#d69d85;">&#39;{{index .RepoDigests 0}}&#39;</span><span> IMAGE_NAME
+</span></code></pre>
+</li>
+<li>
+<p><strong>Pulling Docker Image by the SHA256 Digest:</strong></p>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span>docker pull IMAGE_NAME@sha256:0a3b2cc81
+</span></code></pre>
+</li>
+</ol>
+<h2 id="managing-dependencies">Managing Dependencies</h2>
+<p>Managing dependencies within your Dockerized C/C++ development environment is crucial for ensuring smooth project builds and executions. This involves:</p>
+<ol>
+<li><strong>Utilizing Package Managers:</strong>
+<ul>
+<li>Use tools like apt or yum within the Dockerfile to install system-level dependencies.</li>
+<li>Specify package versions to ensure consistency and reproducibility.</li>
+</ul>
+</li>
+</ol>
+<pre data-lang="Dockerfile" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-Dockerfile "><code class="language-Dockerfile" data-lang="Dockerfile"><span style="color:#608b4e;"># Example of installing specific versions of packages using apt
+</span><span>RUN apt-get update \
+</span><span>    &amp;&amp; apt-get install -y \
+</span><span>        &lt;package1&gt;=&lt;version1&gt; \
+</span><span>        &lt;package2&gt;=&lt;version2&gt; \
+</span><span>        ...
+</span><span>        &lt;packagen&gt;=&lt;versionn&gt; \
+</span><span>    &amp;&amp; rm -rf /var/lib/apt/lists/*
+</span></code></pre>
+<ol start="2">
+<li><strong>Incorporating Third-Party Libraries:</strong>
+<ul>
+<li>Download and install third-party libraries from their official sources or package repositories.</li>
+<li>Specify precise versions and document dependencies for future reference.</li>
+</ul>
+</li>
+</ol>
+<pre data-lang="Dockerfile" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-Dockerfile "><code class="language-Dockerfile" data-lang="Dockerfile"><span style="color:#608b4e;"># Example of incorporating a third-party library into the Docker image
+</span><span>RUN curl -L -o &lt;library&gt;.tar.gz &lt;URL_to_library.tar.gz&gt; \
+</span><span>    &amp;&amp; tar -xzvf &lt;library&gt;.tar.gz \
+</span><span>    &amp;&amp; cd &lt;library&gt; \
+</span><span>    &amp;&amp; ./configure \
+</span><span>    &amp;&amp; make \
+</span><span>    &amp;&amp; make install \
+</span><span>    &amp;&amp; cd .. \
+</span><span>    &amp;&amp; rm -rf &lt;library&gt;.tar.gz &lt;library&gt;
+</span></code></pre>
+<p>By managing dependencies effectively and specifying precise versions within your Dockerfile, you ensure consistency and reproducibility across different environments, making it easier to build and distribute your C/C++ projects.</p>
+<h2 id="streamlining-build-processes">Streamlining Build Processes</h2>
+<h3 id="automating-the-build-process-using-dockerfile-and-docker-compose">Automating the Build Process using Dockerfile and Docker Compose</h3>
+<p>Docker Compose can be employed for orchestrating multi-container applications and defining complex build configurations.
+Let's consider a scenario where you have a C/C++ project consisting of multiple services, such as a web server and a database. We'll compare how you would use Docker Compose and Docker run commands to manage these services.</p>
+<h3 id="scenario">Scenario:</h3>
+<p>You have a C/C++ project named &quot;MyProject&quot; that includes a web server service and a database service.</p>
+<h3 id="docker-compose-example">Docker Compose Example:</h3>
+<p>With Docker Compose, you can define a <code>docker-compose.yml</code> file to orchestrate the deployment of multiple containers as services.</p>
+<pre data-lang="yaml" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-yaml "><code class="language-yaml" data-lang="yaml"><span style="color:#608b4e;"># docker-compose.yml
+</span><span>
+</span><span style="background-color:#282828;color:#569cd6;">version</span><span>: </span><span style="color:#d69d85;">&#39;3&#39;
+</span><span style="background-color:#282828;color:#569cd6;">services</span><span>:
+</span><span>  </span><span style="background-color:#282828;color:#569cd6;">web_server</span><span>:
+</span><span>    </span><span style="background-color:#282828;color:#569cd6;">image</span><span>: </span><span style="background-color:#282828;color:#d69d85;">my_project_web_server:latest</span><span>
+</span><span>    </span><span style="background-color:#282828;color:#569cd6;">ports</span><span>:
+</span><span>      - </span><span style="color:#d69d85;">&quot;8080:80&quot;
+</span><span>    </span><span style="background-color:#282828;color:#569cd6;">depends_on</span><span>:
+</span><span>      - </span><span style="background-color:#282828;color:#d69d85;">database</span><span>
+</span><span>  </span><span style="background-color:#282828;color:#569cd6;">database</span><span>:
+</span><span>    </span><span style="background-color:#282828;color:#569cd6;">image</span><span>: </span><span style="background-color:#282828;color:#d69d85;">mysql:latest</span><span>
+</span><span>    </span><span style="background-color:#282828;color:#569cd6;">environment</span><span>:
+</span><span>      </span><span style="background-color:#282828;color:#569cd6;">MYSQL_ROOT_PASSWORD</span><span>: </span><span style="background-color:#282828;color:#d69d85;">root_password</span><span>
+</span><span>      </span><span style="background-color:#282828;color:#569cd6;">MYSQL_DATABASE</span><span>: </span><span style="background-color:#282828;color:#d69d85;">my_database</span><span>
+</span></code></pre>
+<p>In this example:</p>
+<ul>
+<li>The <code>web_server</code> service is defined with the <code>my_project_web_server</code> image, exposing port 8080 on the host and depending on the <code>database</code> service.</li>
+<li>The <code>database</code> service is defined with the <code>mysql</code> image, setting environment variables for MySQL root password and database name.</li>
+</ul>
+<p>You can then deploy the services using the following Docker Compose command:</p>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span>docker-compose up
+</span></code></pre>
+<h3 id="docker-run-example">Docker Run Example:</h3>
+<p>With Docker run commands, you would need to manually specify each container and its configurations.</p>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#608b4e;"># Start the database container
+</span><span>docker run --name database -e MYSQL_ROOT_PASSWORD=root_password -e MYSQL_DATABASE=my_database -d mysql:latest
+</span><span>
+</span><span style="color:#608b4e;"># Start the web server container
+</span><span>docker run --name web_server -p 8080:80 --link database my_project_web_server:latest
+</span></code></pre>
+<p>In this example:</p>
+<ul>
+<li>The <code>database</code> container is started with the MySQL image, setting environment variables for MySQL root password and database name.</li>
+<li>The <code>web_server</code> container is started with the <code>my_project_web_server</code> image, exposing port 8080 on the host and linking it to the <code>database</code> container.</li>
+</ul>
+<h3 id="comparison">Comparison:</h3>
+<ul>
+<li><strong>Docker Compose:</strong> Provides a declarative way to define and manage multi-container applications, simplifying service orchestration and dependencies.</li>
+<li><strong>Docker Run Commands:</strong> Require manual specification of each container and its configurations, which can become cumbersome for complex applications with multiple services.</li>
+</ul>
+<p>In summary, Docker Compose offers a more streamlined and maintainable approach for managing multi-container applications, while Docker run commands are suitable for simpler scenarios or quick ad-hoc deployments.</p>
+<h2 id="handling-different-build-configurations-within-docker">Handling Different Build Configurations within Docker</h2>
+<ul>
+<li>Use environment variables or build arguments in Dockerfile to handle different build configurations (e.g., Debug vs. Release).</li>
+<li>Customize build commands based on the selected configuration.</li>
+</ul>
+<pre data-lang="Dockerfile" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-Dockerfile "><code class="language-Dockerfile" data-lang="Dockerfile"><span style="color:#608b4e;"># Example of handling different build configurations in Dockerfile
+</span><span style="color:#569cd6;">ARG </span><span>BUILD_TYPE=Release
+</span><span>
+</span><span style="color:#608b4e;"># Set build options based on selected configuration
+</span><span>RUN if [ &quot;$BUILD_TYPE&quot; = &quot;Debug&quot; ]; then \
+</span><span>        make debug; \
+</span><span>    else \
+</span><span>        make release; \
+</span><span>    fi
+</span></code></pre>
+<h2 id="collaboration-and-deployment">Collaboration and Deployment</h2>
+<p>Collaboration and deployment are crucial stages in the software development lifecycle. Docker provides a robust platform for sharing development environments across teams and deploying C/C++ applications consistently in production environments. Here's how you can leverage Docker for collaboration and deployment:</p>
+<h3 id="sharing-docker-images-for-consistent-development-environments">Sharing Docker Images for Consistent Development Environments</h3>
+<ul>
+<li>Build Docker images containing your C/C++ development environment, including dependencies, libraries, and tools.</li>
+<li>Share these Docker images via a Docker registry or repository, ensuring consistency across development teams.</li>
+</ul>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#608b4e;"># Example of building and sharing a Docker image
+</span><span>docker build -t my_cpp_image .
+</span><span>docker tag my_cpp_image my_registry/my_cpp_image:latest
+</span><span>docker push my_registry/my_cpp_image:latest
+</span></code></pre>
+<p>Team members can pull the shared Docker image to set up their development environments quickly and reliably.</p>
+<h3 id="deploying-c-cpp-applications-using-docker-containers-in-production-environments">Deploying C/CPP Applications using Docker Containers in Production Environments</h3>
+<ul>
+<li>Package your C/C++ applications into Docker containers, along with necessary dependencies and configurations.</li>
+<li>Deploy these Docker containers to production environments, ensuring consistency and portability across different infrastructure setups.</li>
+</ul>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#608b4e;"># Example of deploying a Docker container in production
+</span><span>docker run -d --name my_cpp_app my_registry/my_cpp_image:latest
+</span></code></pre>
+<p>Docker containers offer isolation, scalability, and reproducibility, making them well-suited for deploying C/C++ applications in production environments.</p>
+<p>By leveraging Docker for collaboration and deployment, development teams can streamline their workflows, maintain consistency across environments, and accelerate the delivery of C/C++ applications from development to production.</p>
+<h2 id="best-practices-and-tips">Best Practices and Tips</h2>
+<p>Optimizing Dockerfiles, managing container resources, and securing Docker containers are essential aspects of using Docker effectively for C/C++ projects. Here are some best practices and tips:</p>
+<ol>
+<li>
+<p><strong>Optimizing Dockerfiles for Efficiency:</strong></p>
+<ul>
+<li>Keep Dockerfiles clean and concise by minimizing the number of layers and reducing the size of the final image.</li>
+<li>Use multi-stage builds to separate build dependencies from runtime dependencies, resulting in smaller images.</li>
+<li>Utilize caching mechanisms to speed up the build process by caching intermediate layers.</li>
+</ul>
+</li>
+<li>
+<p><strong>Managing Container Resources Effectively:</strong></p>
+<ul>
+<li>Specify resource constraints such as CPU and memory limits for Docker containers to prevent resource contention and ensure predictable performance.</li>
+<li>Monitor container resource usage using Docker metrics and adjust resource limits accordingly to optimize resource utilization.</li>
+<li>Consider using orchestration tools like Docker Swarm or Kubernetes for managing containerized applications at scale, enabling efficient resource allocation and scheduling.</li>
+</ul>
+</li>
+<li>
+<p><strong>Securing Docker Containers for C/CPP Projects:</strong></p>
+<ul>
+<li>Update Docker base images and dependencies regularly to patch known vulnerabilities and ensure the security of your containers.</li>
+<li>Implement least privilege principles by running containers with non-root users and restricting container capabilities using Docker security features.</li>
+<li>Enable Docker Content Trust (DCT) to ensure the integrity and authenticity of images by verifying image signatures before pulling and running them.</li>
+<li>Monitor container activities and network traffic using Docker security tools and third-party solutions to detect and respond to security threats effectively.</li>
+</ul>
+</li>
+</ol>
+<p>Examples:</p>
+<h3 id="optimizing-dockerfiles-for-efficiency">Optimizing Dockerfiles for Efficiency:</h3>
+<ol>
+<li>
+<p><strong>Minimizing Layers:</strong></p>
+<pre data-lang="Dockerfile" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-Dockerfile "><code class="language-Dockerfile" data-lang="Dockerfile"><span style="color:#608b4e;"># Bad practice: creating multiple layers
+</span><span>RUN apt-get update
+</span><span>RUN apt-get install -y package1
+</span><span>RUN apt-get install -y package2
+</span><span>
+</span><span style="color:#608b4e;"># Good practice: combining commands to reduce layers
+</span><span>RUN apt-get update &amp;&amp; \
+</span><span>    apt-get install -y package1 package2
+</span></code></pre>
+</li>
+<li>
+<p><strong>Using Multi-Stage Builds:</strong></p>
+<pre data-lang="Dockerfile" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-Dockerfile "><code class="language-Dockerfile" data-lang="Dockerfile"><span style="color:#608b4e;"># Single-stage build
+</span><span style="color:#569cd6;">FROM</span><span> base_image </span><span style="color:#569cd6;">AS </span><span>builder
+</span><span style="color:#569cd6;">RUN </span><span>build_commands
+</span><span>
+</span><span style="color:#569cd6;">FROM</span><span> base_image
+</span><span style="color:#569cd6;">COPY</span><span> --from=builder /app /app
+</span></code></pre>
+</li>
+<li>
+<p><strong>Caching Mechanisms:</strong></p>
+<pre data-lang="Dockerfile" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-Dockerfile "><code class="language-Dockerfile" data-lang="Dockerfile"><span style="color:#608b4e;"># Bad practice: not utilizing caching
+</span><span>COPY . /app
+</span><span>RUN npm install
+</span><span>RUN npm build
+</span><span>
+</span><span style="color:#608b4e;"># Good practice: using caching for dependencies
+</span><span>COPY package.json /app
+</span><span>RUN npm install
+</span><span>COPY . /app
+</span><span>RUN npm build
+</span></code></pre>
+</li>
+</ol>
+<h3 id="managing-container-resources-effectively">Managing Container Resources Effectively:</h3>
+<ol>
+<li>
+<p><strong>Specifying Resource Constraints:</strong></p>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#608b4e;"># Setting CPU and memory limits for a Docker container
+</span><span>docker run --cpus=2 --memory=2g my_image
+</span></code></pre>
+</li>
+<li>
+<p><strong>Monitoring Container Resource Usage:</strong></p>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#608b4e;"># Checking container resource usage
+</span><span>docker stats my_container
+</span></code></pre>
+</li>
+<li>
+<p><strong>Using Orchestration Tools:</strong></p>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#608b4e;"># Deploying a Docker stack with Docker Swarm
+</span><span>docker stack deploy -c docker-compose.yml my_stack
+</span></code></pre>
+</li>
+</ol>
+<h3 id="securing-docker-containers-for-c-cpp-projects">Securing Docker Containers for C/CPP Projects:</h3>
+<ol>
+<li>
+<p><strong>Updating Docker Base Images:</strong></p>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#608b4e;"># Pulling the latest version of a Docker base image
+</span><span>docker pull base_image:latest
+</span></code></pre>
+</li>
+<li>
+<p><strong>Implementing Least Privilege Principles:</strong></p>
+<pre data-lang="Dockerfile" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-Dockerfile "><code class="language-Dockerfile" data-lang="Dockerfile"><span style="color:#608b4e;"># Running container with non-root user
+</span><span>USER my_user
+</span></code></pre>
+</li>
+<li>
+<p><strong>Enabling Docker Content Trust (DCT):</strong></p>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#608b4e;"># Enabling Docker Content Trust
+</span><span style="color:#569cd6;">export </span><span>DOCKER_CONTENT_TRUST=</span><span style="background-color:#282828;color:#d69d85;">1</span><span>
+</span></code></pre>
+</li>
+<li>
+<p><strong>Monitoring Container Activities:</strong></p>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#608b4e;"># Monitoring container logs
+</span><span>docker logs my_container
+</span></code></pre>
+</li>
+</ol>
+<h2 id="debugging-c-cpp-applications-using-gdb">Debugging C/CPP Applications using GDB</h2>
+<p>You can use GDB's remote debugging feature to debug your C/C++ applications running inside a Docker container from a host machine. Here's how you can achieve that:</p>
+<ol>
+<li>
+<p><strong>Expose GDB Server Port in Docker Container:</strong></p>
+<ul>
+<li>In your Dockerfile or Docker Compose file, expose a port for GDB server to communicate with the host machine.</li>
+</ul>
+<pre data-lang="yaml" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-yaml "><code class="language-yaml" data-lang="yaml"><span style="color:#608b4e;"># Example of exposing GDB server port in Docker Compose file
+</span><span style="background-color:#282828;color:#569cd6;">version</span><span>: </span><span style="color:#d69d85;">&#39;3&#39;
+</span><span style="background-color:#282828;color:#569cd6;">services</span><span>:
+</span><span>  </span><span style="background-color:#282828;color:#569cd6;">my_cpp_app</span><span>:
+</span><span>    </span><span style="background-color:#282828;color:#569cd6;">build</span><span>:
+</span><span>      </span><span style="background-color:#282828;color:#569cd6;">context</span><span>: </span><span style="color:#b5cea8;">.
+</span><span>      </span><span style="background-color:#282828;color:#569cd6;">dockerfile</span><span>: </span><span style="background-color:#282828;color:#d69d85;">Dockerfile</span><span>
+</span><span>    </span><span style="background-color:#282828;color:#569cd6;">ports</span><span>:
+</span><span>      - </span><span style="color:#d69d85;">&quot;1234:1234&quot;  </span><span style="color:#608b4e;"># Expose port for GDB server
+</span></code></pre>
+</li>
+<li>
+<p><strong>Run GDB Server in Docker Container:</strong></p>
+<ul>
+<li>Start your Docker container as usual, but ensure that GDB server is running inside the container, listening on the exposed port.</li>
+</ul>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#608b4e;"># Start Docker container with GDB server
+</span><span>docker run --rm -d -p 1234:1234 my_cpp_image gdbserver :1234 my_executable
+</span></code></pre>
+</li>
+<li>
+<p><strong>Connect Host GDB to GDB Server:</strong></p>
+<ul>
+<li>On your host machine, use the GDB command-line interface to connect to the GDB server running inside the Docker container.</li>
+</ul>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#608b4e;"># Connect host GDB to GDB server in Docker container
+</span><span>gdb
+</span><span>(gdb) target remote &lt;docker_host_ip&gt;:1234
+</span></code></pre>
+</li>
+<li>
+<p><strong>Debug C/C++ Application with Host GDB:</strong></p>
+<ul>
+<li>Once connected, you can use GDB commands on your host machine to debug the C/C++ application running inside the Docker container.</li>
+</ul>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#608b4e;"># Example of setting breakpoints and debugging
+</span><span>(gdb) break main
+</span><span>(gdb) continue
+</span><span>(gdb) ...
+</span></code></pre>
+</li>
+</ol>
+<p>By setting up GDB server in the Docker container and connecting it to the host GDB, you can effectively debug your C/C++ applications running inside Docker containers from your host machine.</p>
+<h2 id="docker-containers-vs-native-builds">Docker containers vs native builds</h2>
+<p>This table provides a concise comparison between Docker containers and native builds across various aspects of performance and functionality.</p>
+<table><thead><tr><th>Aspect</th><th>Docker Containers</th><th>Native Builds</th></tr></thead><tbody>
+<tr><td><strong>Isolation Overhead</strong></td><td>Introduces a layer of abstraction, incurring some overhead.</td><td>Executes directly on the host system without overhead.</td></tr>
+<tr><td><strong>Resource Allocation</strong></td><td>Allows fine-grained control over resource allocation.</td><td>Accesses all system resources without virtualization.</td></tr>
+<tr><td><strong>Portability and Consistency</strong></td><td>Offers portability across different environments, ensuring consistency.</td><td>Tightly coupled to the host environment, may lack consistency.</td></tr>
+<tr><td><strong>Dependency Management</strong></td><td>Encapsulates dependencies within a self-contained environment.</td><td>Relies on system-wide dependencies, requiring careful management.</td></tr>
+</tbody></table>
+<h2 id="multi-architecture-builds">Multi Architecture Builds</h2>
+<p>This example demonstrates how to build a simple &quot;Hello, World!&quot; C++ application for both amd64 and arm64 architectures using Docker buildx. The resulting Docker image can be run on systems with different CPU architectures without modification, showcasing the versatility and compatibility of Docker multi-architecture builds. (Demo: <a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/luk6xff/luk6xff.github.io/tree/master/content/other/code/cpp_proj_template">HERE</a>):</p>
+<ol>
+<li>
+<p><strong>Create a C++ source file</strong> (hello.cpp):</p>
+<pre data-lang="cpp" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#9b9b9b;">#include </span><span style="color:#d69d85;">&lt;iostream&gt;
+</span><span>
+</span><span style="color:#569cd6;">int </span><span>main() {
+</span><span>    std::cout &lt;&lt; </span><span style="color:#d69d85;">&quot;Hello, World!&quot; </span><span>&lt;&lt; std::endl;
+</span><span>    </span><span style="color:#569cd6;">return </span><span style="color:#b5cea8;">0</span><span>;
+</span><span>}
+</span></code></pre>
+</li>
+<li>
+<p><strong>Create a Dockerfile</strong>:</p>
+<pre data-lang="Dockerfile" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-Dockerfile "><code class="language-Dockerfile" data-lang="Dockerfile"><span> FROM alpine:latest
+</span><span>
+</span><span> </span><span style="color:#608b4e;"># Install build dependencies
+</span><span> RUN apk update &amp;&amp; apk add --no-cache \
+</span><span>     g++ \
+</span><span>     &amp;&amp; rm -rf /var/cache/apk/*
+</span><span>
+</span><span> </span><span style="color:#608b4e;"># Copy the source code
+</span><span> COPY main.cpp /app/
+</span><span>
+</span><span> </span><span style="color:#608b4e;"># Set the working directory
+</span><span> WORKDIR /app/
+</span><span>
+</span><span> </span><span style="color:#608b4e;"># Compile the C++ code
+</span><span> RUN g++ -o hello main.cpp
+</span><span>
+</span><span> </span><span style="color:#608b4e;"># Run the compiled binary
+</span><span> CMD [&quot;./hello&quot;]
+</span></code></pre>
+</li>
+<li>
+<p><strong>Build the Docker image</strong> for multiple architectures:</p>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span> </span><span style="color:#608b4e;"># Create the builder (if not already created)
+</span><span> docker buildx create --name my_builder
+</span><span>
+</span><span> </span><span style="color:#608b4e;"># Use the builder for subsequent builds
+</span><span> docker buildx use my_builder
+</span><span>
+</span><span> </span><span style="color:#608b4e;"># Build the multi-architecture image and load it into local Docker daemon
+</span><span> docker buildx build --platform linux/amd64,linux/arm64 -t hello-world:latest .
+</span><span> docker buildx build --load -t hello-world:latest .
+</span></code></pre>
+</li>
+<li>
+<p><strong>Run the Docker image</strong>:</p>
+<pre data-lang="bash" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-bash "><code class="language-bash" data-lang="bash"><span>docker run hello-world
+</span></code></pre>
+</li>
+</ol>
+<h2 id="docker-container-runtime-management">Docker container runtime management</h2>
+<p>Docker container runtime management involves various tasks to ensure that containers are running efficiently, securely, and in accordance with application requirements. Here are some key commands used for that:</p>
+<ol>
+<li>
+<p><strong>Starting and Stopping Containers</strong>:</p>
+<ul>
+<li><code>docker start</code>: Start a stopped container.</li>
+<li><code>docker stop</code>: Stop a running container.</li>
+<li><code>docker restart</code>: Restart a container.</li>
+</ul>
+</li>
+<li>
+<p><strong>Viewing Container Logs</strong>:</p>
+<ul>
+<li><code>docker logs</code>: View the logs of a running container.</li>
+</ul>
+</li>
+<li>
+<p><strong>Inspecting Container Details</strong>:</p>
+<ul>
+<li><code>docker inspect</code>: View detailed information about a container.</li>
+</ul>
+</li>
+<li>
+<p><strong>Monitoring Container Performance</strong>:</p>
+<ul>
+<li><code>docker stats</code>: Display live performance statistics for running containers.</li>
+</ul>
+</li>
+<li>
+<p><strong>Managing Container Resources</strong>:</p>
+<ul>
+<li><code>docker run --cpu</code>: Limit CPU usage.</li>
+<li><code>docker run --memory</code>: Limit memory usage.</li>
+<li><code>docker run --cpus</code>: Limit CPU cores.</li>
+<li><code>docker service update --limit-cpu</code>: Update CPU limits for a service (Swarm mode).</li>
+<li><code>docker service update --limit-memory</code>: Update memory limits for a service (Swarm mode).</li>
+</ul>
+</li>
+<li>
+<p><strong>Health Checks</strong>:</p>
+<ul>
+<li>Docker supports health checks defined in Dockerfiles or using the <code>HEALTHCHECK</code> instruction.</li>
+</ul>
+</li>
+<li>
+<p><strong>Security</strong>:</p>
+<ul>
+<li>Docker provides various security features such as user namespaces, seccomp profiles, and container capabilities.</li>
+<li><code>docker run --security-opt</code>: Set security options for a container.</li>
+<li><code>docker container update --security-opt</code>: Update security options for a container.</li>
+</ul>
+</li>
+<li>
+<p><strong>Networking</strong>:</p>
+<ul>
+<li><code>docker network create</code>: Create a custom network.</li>
+<li><code>docker network connect</code>: Connect a container to a network.</li>
+<li><code>docker network disconnect</code>: Disconnect a container from a network.</li>
+</ul>
+</li>
+<li>
+<p><strong>Data Management</strong>:</p>
+<ul>
+<li><code>docker volume create</code>: Create a volume for persistent data.</li>
+<li><code>docker run -v</code>: Mount a volume inside a container.</li>
+<li><code>docker run --mount</code>: Mount a host directory into a container.</li>
+</ul>
+</li>
+<li>
+<p><strong>Lifecycle Management</strong>:</p>
+<ul>
+<li><code>docker create</code>: Create a container without starting it.</li>
+<li><code>docker rm</code>: Remove a container.</li>
+<li><code>docker prune</code>: Clean up unused resources.</li>
+</ul>
+</li>
+<li>
+<p><strong>Running Containers as Daemons</strong>:</p>
+<ul>
+<li>Use the <code>-d</code> or <code>--detach</code> flag with <code>docker run</code> to run a container in the background as a daemon.</li>
+<li>Example: <code>docker run -d my_image</code></li>
+</ul>
+</li>
+<li>
+<p><strong>Automatic Restart</strong>:</p>
+<ul>
+<li>Use the <code>--restart</code> option with <code>docker run</code> to specify restart policies.</li>
+<li>Example: <code>docker run --restart=unless-stopped my_image</code></li>
+</ul>
+</li>
+</ol>
+<p>Docker-compose real case example:</p>
+<pre data-lang="yaml" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-yaml "><code class="language-yaml" data-lang="yaml"><span style="background-color:#282828;color:#569cd6;">version</span><span>: </span><span style="color:#d69d85;">&quot;3&quot;
+</span><span>
+</span><span style="background-color:#282828;color:#569cd6;">services</span><span>:
+</span><span>
+</span><span>  </span><span style="background-color:#282828;color:#569cd6;">hub-frpc</span><span>:
+</span><span>    </span><span style="background-color:#282828;color:#569cd6;">image</span><span>: </span><span style="background-color:#282828;color:#d69d85;">energy-hub-manager-amd64:0.1</span><span>
+</span><span>    </span><span style="background-color:#282828;color:#569cd6;">command</span><span>: </span><span style="background-color:#282828;color:#d69d85;">/hub/frpc_amd64 -c /var/hub/frpc.ini</span><span>
+</span><span>    </span><span style="background-color:#282828;color:#569cd6;">network_mode</span><span>: </span><span style="color:#d69d85;">&quot;host&quot;
+</span><span>    </span><span style="background-color:#282828;color:#569cd6;">volumes</span><span>:
+</span><span>      - </span><span style="background-color:#282828;color:#d69d85;">/var/hub:/var/hub</span><span>
+</span><span>    </span><span style="background-color:#282828;color:#569cd6;">ports</span><span>:
+</span><span>      - </span><span style="background-color:#282828;color:#d69d85;">7400:7400</span><span>
+</span><span>    </span><span style="background-color:#282828;color:#569cd6;">restart</span><span>: </span><span style="background-color:#282828;color:#d69d85;">unless-stopped</span><span>
+</span><span>
+</span><span>  </span><span style="background-color:#282828;color:#569cd6;">hub-manager</span><span>:
+</span><span>    </span><span style="background-color:#282828;color:#569cd6;">image</span><span>: </span><span style="background-color:#282828;color:#d69d85;">energy-hub-manager-amd64:0.1</span><span>
+</span><span>    </span><span style="background-color:#282828;color:#569cd6;">command</span><span>: </span><span style="background-color:#282828;color:#d69d85;">python3 -u /hub/main.py</span><span>
+</span><span>    </span><span style="background-color:#282828;color:#569cd6;">volumes</span><span>:
+</span><span>      - </span><span style="background-color:#282828;color:#d69d85;">/var/run/docker.sock:/var/run/docker.sock</span><span>
+</span><span>      - </span><span style="background-color:#282828;color:#d69d85;">/tmp/logs:/tmp/logs</span><span>
+</span><span>      - </span><span style="background-color:#282828;color:#d69d85;">/var/hub:/var/hub</span><span>
+</span><span>    </span><span style="background-color:#282828;color:#569cd6;">network_mode</span><span>: </span><span style="color:#d69d85;">&quot;host&quot;
+</span><span>    </span><span style="background-color:#282828;color:#569cd6;">restart</span><span>: </span><span style="background-color:#282828;color:#d69d85;">on-failure</span><span>
+</span></code></pre>
+<h1 id="part-2-my-dockerized-c-cpp-environment">Part 2 - My Dockerized C/CPP environment</h1>
+<h2 id="configuring-my-c-cpp-development-environment">Configuring My C/CPP Development Environment</h2>
+<p>This Dockerfile is designed to create a C/C++ build environment within a Docker container. Let's elaborate on its structure and functionality:</p>
+<pre data-lang="Dockerfile" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-Dockerfile "><code class="language-Dockerfile" data-lang="Dockerfile"><span style="color:#608b4e;">################################################################################
+</span><span style="color:#608b4e;"># Dockerfile for creating a cpp build environment
+</span><span style="color:#608b4e;">################################################################################
+</span><span>
+</span><span>
+</span><span style="color:#608b4e;">################################################################################
+</span><span style="color:#608b4e;">################################################################################
+</span><span style="color:#608b4e;">## PROJECT BUILD STAGE
+</span><span style="color:#608b4e;">################################################################################
+</span><span style="color:#608b4e;">################################################################################
+</span><span style="color:#608b4e;">#FROM ubuntu:22.04
+</span><span style="color:#569cd6;">FROM</span><span> debian:bookworm-slim </span><span style="color:#569cd6;">as </span><span>project-build
+</span><span>
+</span><span style="color:#608b4e;"># Set docker image info
+</span><span style="color:#569cd6;">LABEL </span><span>maintainer=</span><span style="color:#d69d85;">&quot;Lukasz Uszko &lt;lukasz.uszko@gmail.com&gt;&quot;
+</span><span style="color:#569cd6;">LABEL </span><span>description=</span><span style="color:#d69d85;">&quot;luk6xff&#39;s cpp project template&quot;
+</span><span>
+</span><span style="color:#608b4e;"># Set non-interactive installation mode
+</span><span style="color:#569cd6;">ENV </span><span>DEBIAN_FRONTEND=noninteractive
+</span><span>
+</span><span style="color:#608b4e;"># Create a default user and group
+</span><span style="color:#569cd6;">ARG </span><span>USERNAME
+</span><span style="color:#569cd6;">ARG </span><span>USER_UID
+</span><span style="color:#569cd6;">ARG </span><span>USER_GID
+</span><span style="color:#569cd6;">ARG </span><span>ARCH
+</span><span style="color:#569cd6;">ENV </span><span>HOME /home/${USERNAME}
+</span><span>
+</span><span style="color:#608b4e;"># Create a non-root user to use
+</span><span style="color:#569cd6;">RUN </span><span>groupadd --gid ${USER_GID} ${USERNAME} \
+</span><span>    &amp;&amp; useradd -s /bin/bash -c ${USERNAME} -d ${HOME} --uid ${USER_UID} --gid ${USER_GID} -m ${USERNAME} \
+</span><span>    </span><span style="color:#608b4e;"># Add sudo support
+</span><span>    &amp;&amp; apt-get update \
+</span><span>    &amp;&amp; apt-get install --no-install-recommends -qy sudo \
+</span><span>    &amp;&amp; echo $USERNAME ALL=</span><span style="color:#b4cea8;">\(</span><span>root</span><span style="color:#b4cea8;">\)</span><span> NOPASSWD:ALL &gt; /etc/sudoers.d/$USERNAME \
+</span><span>    &amp;&amp; chmod 0440 /etc/sudoers.d/$USERNAME \
+</span><span>    </span><span style="color:#608b4e;"># Cleanup
+</span><span>    &amp;&amp; apt-get autoremove -y \
+</span><span>    &amp;&amp; apt-get clean -y \
+</span><span>    &amp;&amp; rm -rf /var/lib/apt/lists/*
+</span><span>
+</span><span style="color:#608b4e;">################################################################################
+</span><span style="color:#608b4e;"># Install luk6xff mandatory packages
+</span><span style="color:#608b4e;">################################################################################
+</span><span style="color:#569cd6;">RUN </span><span>apt-get update &amp;&amp; apt-get install --no-install-recommends -qy \
+</span><span>    </span><span style="color:#608b4e;"># Build tools
+</span><span>    make \
+</span><span>    autoconf \
+</span><span>    automake \
+</span><span>    ninja-build \
+</span><span>    libtool \
+</span><span>    m4 \
+</span><span>    cmake \
+</span><span>    ccache\
+</span><span>    </span><span style="color:#608b4e;"># GNU Toolchain
+</span><span>    gcc \
+</span><span>    g++ \
+</span><span>    </span><span style="color:#608b4e;"># LLVM Toolchain
+</span><span>    clang-15 \
+</span><span>    clang-tools \
+</span><span>    clangd-15 \
+</span><span>    libclang-15-dev \
+</span><span>    lld \
+</span><span>    lldb \
+</span><span>    </span><span style="color:#608b4e;"># C/C++ libraries
+</span><span>    libgtest-dev \
+</span><span>    libgmock-dev \
+</span><span>    </span><span style="color:#608b4e;"># Libraries
+</span><span>    gnupg \
+</span><span>    unzip \
+</span><span>    </span><span style="color:#608b4e;">#gcc-multilib \
+</span><span>    build-essential \
+</span><span>    software-properties-common \
+</span><span>    </span><span style="color:#608b4e;"># Python
+</span><span>    python3 \
+</span><span>    python3-pip \
+</span><span>    python3-venv \
+</span><span>    python3-dev \
+</span><span>    python3-setuptools \
+</span><span>    </span><span style="color:#608b4e;"># Networking
+</span><span>    curl \
+</span><span>    </span><span style="color:#608b4e;"># Code analysis
+</span><span>    cppcheck \
+</span><span>    iwyu \
+</span><span>    clang-tidy \
+</span><span>    clang-format \
+</span><span>    </span><span style="color:#608b4e;"># Debugging/tracing
+</span><span>    gdb \
+</span><span>    gdbserver \
+</span><span>    valgrind \
+</span><span>    strace \
+</span><span>    </span><span style="color:#608b4e;"># Code coverage
+</span><span>    lcov \
+</span><span>    gcovr \
+</span><span>    </span><span style="color:#608b4e;"># Documentation
+</span><span>    doxygen \
+</span><span>    graphviz \
+</span><span>    doxygen-latex \
+</span><span>    doxygen-doxyparse\
+</span><span>    </span><span style="color:#608b4e;"># Version control
+</span><span>    git \
+</span><span>    </span><span style="color:#608b4e;"># Other tools
+</span><span>    lsb-release \
+</span><span>    jq \
+</span><span>    gawk \
+</span><span>    </span><span style="color:#608b4e;"># Cleanup
+</span><span>    &amp;&amp; apt-get autoremove -y \
+</span><span>    &amp;&amp; apt-get clean -y \
+</span><span>    &amp;&amp; rm -rf /var/lib/apt/lists/*
+</span><span>
+</span><span style="color:#608b4e;"># Install GEF
+</span><span style="color:#569cd6;">RUN </span><span>bash -c </span><span style="color:#d69d85;">&quot;$(curl -fsSL https://gef.blah.cat/sh)&quot;
+</span><span>
+</span><span style="color:#608b4e;"># Setup python virtual environment
+</span><span style="color:#569cd6;">ENV </span><span>VIRTUAL_ENV=/opt/venv
+</span><span style="color:#569cd6;">RUN </span><span>python3 -m venv $VIRTUAL_ENV
+</span><span style="color:#569cd6;">ENV </span><span>PATH=</span><span style="color:#d69d85;">&quot;$VIRTUAL_ENV/bin:$PATH&quot;
+</span><span>
+</span><span style="color:#608b4e;"># Set environment variables for static analysis tools
+</span><span style="color:#569cd6;">ENV </span><span>CODE_CHECKER_PATH=/opt/CodeChecker
+</span><span style="color:#569cd6;">ENV </span><span>BUILD_LOGGER_64_BIT_ONLY=YES
+</span><span style="color:#569cd6;">ENV </span><span>PATH=</span><span style="color:#d69d85;">&quot;${CODE_CHECKER_PATH}/build/CodeChecker/bin:${PATH}&quot;
+</span><span style="color:#569cd6;">ENV </span><span>CC_REPO_DIR=</span><span style="color:#d69d85;">&quot;${CODE_CHECKER_PATH}&quot;
+</span><span style="color:#608b4e;"># Expose the default port used by CodeChecker server
+</span><span style="color:#569cd6;">EXPOSE </span><span>8999
+</span><span>
+</span><span style="color:#608b4e;"># Install static analysis tools only for x86_64
+</span><span style="color:#569cd6;">RUN </span><span>if [ </span><span style="color:#d69d85;">&quot;$ARCH&quot;</span><span> = </span><span style="color:#d69d85;">&quot;-amd64&quot;</span><span> ]; then \
+</span><span>        curl -sL https://deb.nodesource.com/setup_16.x | bash - \
+</span><span>        &amp;&amp; apt-get install -y nodejs \
+</span><span>        &amp;&amp; git clone --depth 1 https://github.com/Ericsson/CodeChecker.git ${CODE_CHECKER_PATH} \
+</span><span>        &amp;&amp; cd ${CODE_CHECKER_PATH} \
+</span><span>        &amp;&amp; make package \
+</span><span>        &amp;&amp; chmod +x ${CODE_CHECKER_PATH}/build/CodeChecker/bin/report-converter \
+</span><span>        &amp;&amp; pip install --no-cache-dir cpplint \
+</span><span>        &amp;&amp; VERSION=1.1.0; \
+</span><span>        curl -sSL </span><span style="color:#d69d85;">&quot;https://github.com/facebook/infer/releases/download/v$VERSION/infer-linux64-v$VERSION.tar.xz&quot;</span><span> \
+</span><span>        | tar -xJ -C /opt \
+</span><span>        &amp;&amp; ln -s </span><span style="color:#d69d85;">&quot;/opt/infer-linux64-v$VERSION/bin/infer&quot;</span><span> /usr/local/bin/infer \
+</span><span>    ; fi
+</span><span>
+</span><span>
+</span><span style="color:#608b4e;">################################################################################
+</span><span style="color:#608b4e;"># Install additional packages required for your project
+</span><span style="color:#608b4e;">################################################################################
+</span><span style="color:#569cd6;">RUN </span><span>apt-get update \
+</span><span>    &amp;&amp; apt-get install --no-install-recommends -qy \
+</span><span>    libxrandr-dev \
+</span><span>    libxcursor-dev \
+</span><span>    libudev-dev \
+</span><span>    libx11-dev \
+</span><span>    libfreetype-dev \
+</span><span>    libopenal-dev \
+</span><span>    libflac-dev \
+</span><span>    libvorbis-dev \
+</span><span>    libgl1-mesa-dev \
+</span><span>    libegl1-mesa-dev \
+</span><span>    </span><span style="color:#608b4e;"># Cleanup
+</span><span>    &amp;&amp; apt-get autoremove -y \
+</span><span>    &amp;&amp; apt-get clean -y \
+</span><span>    &amp;&amp; rm -rf /var/lib/apt/lists/*
+</span><span>
+</span><span style="color:#608b4e;">################################################################################
+</span><span style="color:#608b4e;"># Setup
+</span><span style="color:#608b4e;">################################################################################
+</span><span style="color:#569cd6;">USER </span><span>${USERNAME}
+</span><span style="color:#569cd6;">WORKDIR </span><span>$HOME
+</span><span>
+</span><span>
+</span><span>
+</span><span style="color:#608b4e;">################################################################################
+</span><span style="color:#608b4e;">################################################################################
+</span><span style="color:#608b4e;">## PROJECT RUNTIME STAGE
+</span><span style="color:#608b4e;">################################################################################
+</span><span style="color:#608b4e;">################################################################################
+</span><span style="color:#608b4e;">#FROM project-build as project-runtime
+</span><span style="color:#569cd6;">FROM</span><span> debian:bookworm-slim </span><span style="color:#569cd6;">as </span><span>project-runtime
+</span><span style="color:#569cd6;">RUN </span><span>apt-get update \
+</span><span>    &amp;&amp; apt-get install --no-install-recommends -qy \
+</span><span>    libxrandr2 \
+</span><span>    libxcursor1 \
+</span><span>    libudev1 \
+</span><span>    libfreetype6 \
+</span><span>    libopenal1 \
+</span><span>    libflac12 \
+</span><span>    libvorbisfile3 \
+</span><span>    libgl1 \
+</span><span>    libegl1 \
+</span><span>    gdbserver \
+</span><span>    &amp;&amp; apt-get autoremove -y \
+</span><span>    &amp;&amp; apt-get clean -y \
+</span><span>    &amp;&amp; rm -rf /var/lib/apt/lists/*
+</span><span style="color:#569cd6;">COPY</span><span> ../app/build/bin /app
+</span><span style="color:#608b4e;">#CMD [&quot;/app/my_project&quot;]
+</span><span style="color:#569cd6;">CMD </span><span>[</span><span style="color:#d69d85;">&quot;gdbserver&quot;</span><span>, </span><span style="color:#d69d85;">&quot;:2345&quot;</span><span>, </span><span style="color:#d69d85;">&quot;/app/my_project&quot;</span><span>]
+</span></code></pre>
+<p>My Dockerfile sets up a comprehensive development and runtime environment tailored for C++ projects, using Debian Bookworm as the base image. It's structured into two stages: <strong>build stage</strong> and <strong>runtime stage</strong>. Here's a detailed breakdown of what's happening:</p>
+<h3 id="build-stage">Build Stage</h3>
+<ol>
+<li>
+<p><strong>Base Image and Metadata</strong>:</p>
+<ul>
+<li>Starts from <code>debian:bookworm-slim</code> as the base.</li>
+<li>Sets labels for the maintainer and a description of the Docker image.</li>
+</ul>
+</li>
+<li>
+<p><strong>Environment Configuration</strong>:</p>
+<ul>
+<li>Sets <code>DEBIAN_FRONTEND</code> to <code>noninteractive</code> to avoid prompts during package installations.</li>
+<li>Uses <code>ARG</code> to accept variables like <code>USERNAME</code>, <code>USER_UID</code>, <code>USER_GID</code>, and <code>ARCH</code> from the build command, setting up a flexible user environment.</li>
+<li>Defines <code>HOME</code> directory based on the <code>USERNAME</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong>User Setup</strong>:</p>
+<ul>
+<li>Creates a non-root user with the specified UID and GID, adds them to a group, and gives them sudo access without a password. This step also performs a cleanup of the package lists.</li>
+</ul>
+</li>
+<li>
+<p><strong>Package Installation</strong>:</p>
+<ul>
+<li>Installs a variety of packages crucial for C++ development, including build tools (like <code>cmake</code>, <code>gcc</code>, <code>clang-15</code>), debugging tools (<code>gdb</code>, <code>valgrind</code>), static analysis tools (<code>cppcheck</code>, <code>clang-tidy</code>), and documentation tools (<code>doxygen</code>).</li>
+<li>It also handles installation and cleanup to keep the image size down.</li>
+</ul>
+</li>
+<li>
+<p><strong>GEF Installation</strong>:</p>
+<ul>
+<li>Installs GEF (GDB Enhanced Features), a script that supercharges the GDB debugger with additional features.</li>
+</ul>
+</li>
+<li>
+<p><strong>Python Environment Setup</strong>:</p>
+<ul>
+<li>Sets up a Python virtual environment and updates the <code>PATH</code> to use tools from this virtual environment.</li>
+</ul>
+</li>
+<li>
+<p><strong>CodeChecker Installation</strong>:</p>
+<ul>
+<li>Conditionally installs CodeChecker, a static analysis tool, if the architecture is AMD64. It includes installation of Node.js, compilation of CodeChecker, and linking of its binaries.</li>
+</ul>
+</li>
+<li>
+<p><strong>Project-Specific Libraries</strong>:</p>
+<ul>
+<li>Installs libraries that might be required for specific projects involving GUI, audio, or other multimedia components.</li>
+</ul>
+</li>
+</ol>
+<h3 id="runtime-stage">Runtime Stage</h3>
+<ol>
+<li>
+<p><strong>Base Image</strong>:</p>
+<ul>
+<li>Starts anew from <code>debian:bookworm-slim</code> as the base for the runtime environment.</li>
+</ul>
+</li>
+<li>
+<p><strong>Minimal Package Installation</strong>:</p>
+<ul>
+<li>Installs only the runtime libraries that are necessary for the application developed during the build stage. This includes libraries like <code>libxrandr2</code>, <code>libxcursor1</code>, etc., and excludes the development headers and tools, reducing the image size and improving security.</li>
+</ul>
+</li>
+<li>
+<p><strong>Copy Application</strong>:</p>
+<ul>
+<li>Copies the compiled binaries from a presumed location (<code>../app/build/bin</code>) into the Docker image.</li>
+</ul>
+</li>
+<li>
+<p><strong>Command Specification</strong>:</p>
+<ul>
+<li>Sets the default command to run the application using <code>gdbserver</code> on a specific port, allowing for remote debugging.</li>
+</ul>
+</li>
+</ol>
+<h2 id="features-and-usage">Features and Usage</h2>
+<h3 id="build-images-and-apps-for-different-architectures">Build images and apps for different architectures</h3>
+<ul>
+<li>Release app build</li>
+</ul>
+<pre data-lang="sh" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-sh "><code class="language-sh" data-lang="sh"><span>./run.sh -a -amd64
+</span><span>./run.sh -a -arm64
+</span></code></pre>
+<ul>
+<li>Debug app build</li>
+</ul>
+<pre data-lang="sh" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#608b4e;"># Debug app build
+</span><span>./run.sh -ad -amd64
+</span><span>./run.sh -ad -arm64
+</span></code></pre>
+<ul>
+<li>Production image build</li>
+</ul>
+<pre data-lang="sh" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#608b4e;"># Debug app build
+</span><span>./run.sh -pb -amd64
+</span><span>./run.sh -pb -arm64
+</span></code></pre>
+<h3 id="running-the-container">Running the container</h3>
+<ul>
+<li>Run Debug/Release app</li>
+</ul>
+<pre data-lang="sh" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-sh "><code class="language-sh" data-lang="sh"><span>./run.sh -ri -amd64
+</span><span>./run.sh -ri -arm64
+</span></code></pre>
+<ul>
+<li>Run Debug/Release app under GDB server</li>
+</ul>
+<pre data-lang="sh" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#608b4e;"># Debug app build
+</span><span>./run.sh -rig -amd64
+</span><span>./run.sh -rig -arm64
+</span><span>
+</span><span style="color:#608b4e;"># To connect to the server please run:
+</span><span>gdb app/build/bin/my_project
+</span><span>(gdb) target remote localhost:2345
+</span><span>(gdb) c
+</span><span>
+</span><span style="color:#608b4e;"># Demo:
+</span><span style="color:#608b4e;"># Stop execution
+</span><span>CTRL+C
+</span><span style="color:#608b4e;"># Set breakpoint
+</span><span>(gdb) break Game::updateStatusTextView
+</span><span>(gdb) set var m_score = 9999999
+</span></code></pre>
+<ul>
+<li>Run production container</li>
+</ul>
+<pre data-lang="sh" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-sh "><code class="language-sh" data-lang="sh"><span>./run.sh -pr -amd64
+</span><span>./run.sh -pr -arm64
+</span></code></pre>
+<ul>
+<li>Enter the dev container</li>
+</ul>
+<pre data-lang="sh" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-sh "><code class="language-sh" data-lang="sh"><span>./run.sh -s -amd64
+</span><span>./run.sh -s -arm64
+</span></code></pre>
+<h3 id="static-code-analysis">Static Code analysis</h3>
+<pre data-lang="sh" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-sh "><code class="language-sh" data-lang="sh"><span>./run.sh -ca -amd64
+</span><span>
+</span><span style="color:#608b4e;"># For CodeChecker server
+</span><span>./run.sh -s -amd64
+</span><span style="color:#608b4e;"># Inside the container
+</span><span>cmake --build build -t codechecker
+</span><span style="color:#608b4e;"># Goto http://localhost:8999/Default/runs
+</span></code></pre>
+<h3 id="unit-tests">Unit Tests</h3>
+<pre data-lang="sh" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-sh "><code class="language-sh" data-lang="sh"><span>./run.sh -u -amd64
+</span><span style="color:#608b4e;"># UnitTests Report
+</span><span>firefox ~/Projects/cpp-project-template/app/build/test/unit/report/unit_tests_report.html
+</span><span style="color:#608b4e;"># Coverage Report
+</span><span>firefox ~/Projects/cpp-project-template/app/build/test/unit/report/coverage-report/index.html
+</span><span>
+</span><span style="color:#608b4e;"># Run valgrind for the specific testcase
+</span><span style="color:#608b4e;"># Enter the container
+</span><span>./run.sh -s -amd64
+</span><span style="color:#608b4e;"># Inside the container
+</span><span>cmake --build build -t valgrind-ConfigReaderTest
+</span></code></pre>
+<h3 id="memcheck-valgrind">Memcheck (Valgrind)</h3>
+<pre data-lang="sh" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#608b4e;"># Build the app
+</span><span>./run.sh -ad -amd64
+</span><span style="color:#608b4e;"># Enter the container
+</span><span>./run.sh -s -amd64
+</span><span style="color:#608b4e;"># Inside the container
+</span><span>cmake --build build -t memcheck-my_project
+</span><span style="color:#608b4e;"># Memcheck  Report
+</span><span>firefox ~/Projects/cpp-project-template/app/build/memcheck_report/index.html
+</span></code></pre>
+<h3 id="scanning-the-image-and-linting-the-dockerfile">Scanning the image and Linting the Dockerfile</h3>
+<pre data-lang="sh" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-sh "><code class="language-sh" data-lang="sh"><span>./run.sh -sc
+</span></code></pre>
+<h3 id="profiling">Profiling</h3>
+<pre data-lang="sh" style="background-color:#1e1e1e;color:#dcdcdc;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#608b4e;"># Build the app in Debug mode
+</span><span>./run.sh -ad -amd64
+</span><span>
+</span><span style="color:#608b4e;"># Run the app
+</span><span>./run.sh -ri -amd64
+</span><span>
+</span><span style="color:#608b4e;"># Run the profiler client app and connect to port 28077
+</span><span>~/Projects/cpp-project-template/app/thirdparty/EasyProfiler/client_tools/easy_profiler-v2.1.0-linux/run_easy_profiler.sh
+</span></code></pre>
+<h1 id="conclusion">Conclusion</h1>
+<p>In conclusion, Docker containerization offers a powerful solution for simplifying and streamlining the development, testing, and deployment of C/C++ applications. By encapsulating applications and their dependencies into portable containers, Docker enables developers to create consistent and reproducible environments across different platforms.</p>
+<p>Throughout this guide, we've explored various aspects of Docker container management, including:</p>
+<ul>
+<li>Setting Up Docker for C/CPP Development, including installing Docker and creating Dockerfiles.</li>
+<li>Configuring development environments within Docker containers, including installing compilers, build tools, and debugging utilities.</li>
+<li>Managing dependencies and incorporating third-party libraries into Docker images.</li>
+<li>Streamlining build processes using Dockerfile and Docker Compose.</li>
+<li>Testing and debugging C/C++ applications within Docker containers.</li>
+<li>Collaboration and deployment strategies for sharing Docker images and deploying applications in production environments.</li>
+<li>Best practices for optimizing Dockerfiles, managing container resources, and securing Docker containers.</li>
+</ul>
+<p>By following these best practices and leveraging Docker's capabilities, C/C++ developers can enhance productivity, improve collaboration, and ensure consistency across development and production environments. With Docker, the process of building, testing, and deploying C/C++ applications becomes more efficient and reliable, ultimately leading to better software quality and faster time-to-market.</p>
+
+          </div>
+        </article>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+
+  
+  <section class="modal" id="search-modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Search</p>
+      </header>
+      <section class="modal-card-body">
+        <div class="field mb-2">
+          <div class="control">
+            <input class="input" id="search" placeholder="Search this website." type="search" />
+          </div>
+        </div>
+        <div class="search-results">
+          <div class="search-results__items"></div>
+        </div>
+      </section>
+    </div>
+    <button aria-label="close" class="modal-close is-large"></button>
+  </section>
+  
+
+
+  
+
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <nav class="level">
+              
+          <div class="level-item has-text-centered">
+            <a class="button is-black is-outlined" href="https:&#x2F;&#x2F;luk6xff.github.io&#x2F;posts&#x2F;gef-tool&#x2F;">
+              <span class="icon mr-2">
+                <i class="fas fa-arrow-circle-left"></i>
+              </span>
+              GEF - A better GDB
+            </a>
+          </div>
+           
+          <div class="level-item has-text-centered">
+            <a class="button is-black is-outlined" href="https:&#x2F;&#x2F;luk6xff.github.io&#x2F;posts&#x2F;linux-commands&#x2F;">
+              The Ultimate Command List for Linux Power Users<span class="icon ml-2">
+                <i class="fas fa-arrow-circle-right"></i>
+              </span>
+            </a>
+          </div>
+          
+        </nav>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+  
+
+
+
+  
+  <footer class="footer py-4">
+    <div class="content has-text-centered">
+        Powered by
+        <span class="icon-text">
+          <span class="icon">
+            <i class="fas fa-power-off"></i>
+          </span>
+          <a href="https://github.com/getzola/zola">
+            zola
+          </a>
+        </span>
+      </p>
+    </div>
+  </footer>
+  
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha384-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/galleria@1.6.1/dist/galleria.min.js" integrity="sha384-QSfwGT8/EU536DKdtyP2D6SLlh8zBaZ0cVkwfrwhqzIU9VCfJT00CLVP5t+HAiYg" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/galleria@1.6.1/dist/themes/folio/galleria.folio.min.js" integrity="sha384-DwpKI+deZB267+hPKwiOIc5Y2GKsVL0mR6hgz7GgIu7AgAMYqJwcJKY1YBNfhWcY" crossorigin="anonymous"></script>
+  
+  
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@8.13.5/dist/mermaid.min.js" integrity="sha384-0yWn54pSGtfKCU+skfA69l25VsCw+MZt4LQov3xNRoS7YkAMrFokGgSBnAWSK4pv" crossorigin="anonymous"></script>
+  
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.xkcd@1.1.13/dist/chart.xkcd.min.js" integrity="sha384-xC3h1+IHXK8seA+8KfT79Z4e0GPsznjXBoMa5nd8ooWKplPyXx92NOmljWxLC/cs" crossorigin="anonymous"></script>
+  
+  
+  <script src="https://luk6xff.github.io/elasticlunr.min.js"></script>
+  <script src="https://luk6xff.github.io/search_index.en.js"></script><script src="https://luk6xff.github.io/js/site.js"></script>
+
+  
+
+
+
+
+
+  
+  
+</body>
+
+</html>

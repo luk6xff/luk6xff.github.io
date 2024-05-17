@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+      <title>luk6xff&#x27;s tech blog - rtos</title>
+      <link>https://luk6xff.github.io</link>
+      <description>A simple blog theme focused on writing powered by Bulma and Zola based on [deepthought](https:&#x2F;&#x2F;github.com&#x2F;RatanShreshtha&#x2F;DeepThought&#x2F;)</description>
+      <generator>Zola</generator>
+      <language>en</language>
+      <atom:link href="https://luk6xff.github.io/tags/rtos/rss.xml" rel="self" type="application/rss+xml"/>
+      <lastBuildDate>Sun, 18 Jul 2021 00:00:00 +0000</lastBuildDate>
+      <item>
+          <title>Led Clock</title>
+          <pubDate>Sun, 18 Jul 2021 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://luk6xff.github.io/posts/led-clock/</link>
+          <guid>https://luk6xff.github.io/posts/led-clock/</guid>
+          <description xml:base="https://luk6xff.github.io/posts/led-clock/">&lt;h2 id=&quot;a-supercharged-led-clock&quot;&gt;A Supercharged LED Clock&lt;&#x2F;h2&gt;
+&lt;p&gt;Today, we&#x27;re diving into one of my latest small projects that&#x27;s perfect for anyone who loves building and coding. It&#x27;s an LED clock, but not your average timekeeper. This one offers features like weather updates, automatic time adjustments, and even a web interface for tweaking things on the fly. Let&#x27;s break down what makes this clock tick (literally).
+Note: All the pictures, videos and schematics to be found in the &lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;luk6xff&#x2F;led-clock&#x2F;tree&#x2F;master&quot;&gt;project&#x27;s GitHub repository&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;tech-toolbox&quot;&gt;Tech Toolbox&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;ESP32 Microcontroller:&lt;&#x2F;strong&gt; The ESP32 boasts dual cores and real-time operating system (FreeRTOS) capabilities, allowing for smoother multitasking and handling complex tasks efficiently.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;MAX7219 LED Driver:&lt;&#x2F;strong&gt; This chip controls the cool LED 4 MATRIX 32x8-MAX7219, making those numbers and letters shine bright.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;DS3231 Real-Time Clock (RTC):&lt;&#x2F;strong&gt; This keeps perfect time even during power outages, thanks to a backup battery.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;BH1750FVI Ambient light sensor:&lt;&#x2F;strong&gt; Used to modify the brightness of the display automatically&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;LORA Sensor (Optional):&lt;&#x2F;strong&gt; Want weather displayed on your clock? This sensor grabs temperature and humidity data for you.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;Plus some wires, resistors, capacitors&lt;&#x2F;strong&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;Full BOM available &lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;luk6xff&#x2F;led-clock&#x2F;blob&#x2F;master&#x2F;docs&#x2F;BOM.md&quot;&gt;HERE&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;coding-with-platformio&quot;&gt;Coding with PlatformIO&lt;&#x2F;h2&gt;
+&lt;p&gt;While the project leverages the familiar Arduino environment for coding the logic, it utilizes PlatformIO as the development platform. PlatformIO is a powerful tool that offers a streamlined experience for working with various microcontroller boards, including the ESP32 used in this project. It integrates seamlessly with popular code editors like Visual Studio Code, making development and debugging more efficient.&lt;&#x2F;p&gt;
+&lt;p&gt;The code itself handles everything from keeping time to controlling the display, talking to sensors (if you use them), and interacting with the web interface. This web interface lets you adjust things like time zones, weather app settings, and how the clock looks – all from your web browser.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;more-than-just-telling-time&quot;&gt;More Than Just Telling Time&lt;&#x2F;h2&gt;
+&lt;p&gt;This LED clock is packed with the folowing features:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Automatic Time Updates:&lt;&#x2F;strong&gt; Never worry about setting the time again! The clock can sync up with the internet to stay perfectly accurate. It also supports timezones and time changes.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;Current weather and forecasts:&lt;&#x2F;strong&gt;  See the weather forecasts, nowcasts from &lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;openweathermap.org&#x2F;&quot;&gt;openweathermap.org&lt;&#x2F;a&gt; on the display.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;Weather station:&lt;&#x2F;strong&gt;  See the current temperature, pressure or humidity (if you have the LORA sensor) right on your clock.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;Over-the-Air (OTA) Updates:&lt;&#x2F;strong&gt; Keep your clock&#x27;s firmware up-to-date by uploading new versions wirelessly. This ensures you have the latest features and bug fixes without needing to physically reconnect the clock to your computer.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;Web Tweaks:&lt;&#x2F;strong&gt; Change settings and customize how the clock looks using any web browser on your network.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;Make it Yours:&lt;&#x2F;strong&gt; Play around with different display styles, animations, and brightness levels to personalize your clock.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;building-and-beyond&quot;&gt;Building and Beyond&lt;&#x2F;h2&gt;
+&lt;p&gt;The &lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;luk6xff&#x2F;led-clock&#x2F;tree&#x2F;master&quot;&gt;project&#x27;s GitHub repository&lt;&#x2F;a&gt; has detailed instructions and a shopping list (Bill of Materials) to help you put it all together. Since it&#x27;s open-source, you can also get creative and add your own touches! If you run into any issues or want to learn more ping me directly.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;summary&quot;&gt;Summary&lt;&#x2F;h2&gt;
+&lt;p&gt;This LED clock project was a perfect project to learn more about ESP32 architecture and build something useful at once.&lt;&#x2F;p&gt;
+</description>
+      </item>
+    </channel>
+</rss>

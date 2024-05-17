@@ -1,0 +1,3713 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Safe and Secure Coding in Rust: A Comparative Analysis of Rust and C/C++</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="intro/index.html"><strong aria-hidden="true">1.</strong> Introduction to The Book</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="intro/rust_overview.html"><strong aria-hidden="true">1.1.</strong> Short Rust Overview</a></li><li class="chapter-item expanded "><a href="intro/safety_features_overview.html"><strong aria-hidden="true">1.2.</strong> Rust Safety Features</a></li><li class="chapter-item expanded "><a href="intro/example_app.html"><strong aria-hidden="true">1.3.</strong> Example Application</a></li></ol></li><li class="chapter-item expanded "><a href="memory_safety/index.html"><strong aria-hidden="true">2.</strong> Memory Safety in Rust</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="memory_safety/undefined_behavior.html"><strong aria-hidden="true">2.1.</strong> Undefined Behavior</a></li><li class="chapter-item expanded "><a href="memory_safety/buffer_overflow.html"><strong aria-hidden="true">2.2.</strong> Buffer Overflow</a></li><li class="chapter-item expanded "><a href="memory_safety/use_after_free.html"><strong aria-hidden="true">2.3.</strong> Use After Free</a></li><li class="chapter-item expanded "><a href="memory_safety/pointers.html"><strong aria-hidden="true">2.4.</strong> Pointers</a></li><li class="chapter-item expanded "><a href="memory_safety/memory_leaks.html"><strong aria-hidden="true">2.5.</strong> Memory Leaks</a></li><li class="chapter-item expanded "><a href="memory_safety/double_free.html"><strong aria-hidden="true">2.6.</strong> Double Free</a></li><li class="chapter-item expanded "><a href="memory_safety/format_string.html"><strong aria-hidden="true">2.7.</strong> Format String</a></li></ol></li><li class="chapter-item expanded "><a href="type_safety/index.html"><strong aria-hidden="true">3.</strong> Type Safety</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="type_safety/error_handling.html"><strong aria-hidden="true">3.1.</strong> Error Handling</a></li><li class="chapter-item expanded "><a href="type_safety/type_conversions.html"><strong aria-hidden="true">3.2.</strong> Type Conversions</a></li><li class="chapter-item expanded "><a href="type_safety/uninitialized_variables.html"><strong aria-hidden="true">3.3.</strong> Uninitialized Variables</a></li><li class="chapter-item expanded "><a href="type_safety/variable_overflow.html"><strong aria-hidden="true">3.4.</strong> Variable Overflow</a></li></ol></li><li class="chapter-item expanded "><a href="concurrency/index.html"><strong aria-hidden="true">4.</strong> Concurrency Without Data Races</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="concurrency/threads.html"><strong aria-hidden="true">4.1.</strong> Threads</a></li><li class="chapter-item expanded "><a href="concurrency/message_passing.html"><strong aria-hidden="true">4.2.</strong> Message Passing</a></li><li class="chapter-item expanded "><a href="concurrency/is_shared_pointer_thread_safe.html"><strong aria-hidden="true">4.3.</strong> Is SharedPtr thread safe</a></li></ol></li><li class="chapter-item expanded "><a href="unsafe/index.html"><strong aria-hidden="true">5.</strong> Safe Abstraction of Unsafe Code</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="unsafe/unsafe_examples.html"><strong aria-hidden="true">5.1.</strong> Unsafe usage examples</a></li></ol></li><li class="chapter-item expanded "><a href="rust_ecosystem/index.html"><strong aria-hidden="true">6.</strong> Rust Ecosystem</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="rust_ecosystem/rustup.html"><strong aria-hidden="true">6.1.</strong> Rustup</a></li><li class="chapter-item expanded "><a href="rust_ecosystem/cargo.html"><strong aria-hidden="true">6.2.</strong> Cargo</a></li><li class="chapter-item expanded "><a href="rust_ecosystem/security_features.html"><strong aria-hidden="true">6.3.</strong> Security Features</a></li></ol></li><li class="chapter-item expanded "><a href="cybersecurity_utils/index.html"><strong aria-hidden="true">7.</strong> Cybersecurity Utilities</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="cybersecurity_utils/fuzzing.html"><strong aria-hidden="true">7.1.</strong> Fuzzing</a></li><li class="chapter-item expanded "><a href="cybersecurity_utils/cryptography.html"><strong aria-hidden="true">7.2.</strong> Cryptography</a></li><li class="chapter-item expanded "><a href="cybersecurity_utils/scanners.html"><strong aria-hidden="true">7.3.</strong> Scanners</a></li><li class="chapter-item expanded "><a href="cybersecurity_utils/monitoring_tools.html"><strong aria-hidden="true">7.4.</strong> Monitoring Tools</a></li><li class="chapter-item expanded "><a href="cybersecurity_utils/others.html"><strong aria-hidden="true">7.5.</strong> Others</a></li></ol></li><li class="chapter-item expanded "><a href="conclusion.html"><strong aria-hidden="true">8.</strong> Conclusion</a></li><li class="chapter-item expanded "><a href="sources.html"><strong aria-hidden="true">9.</strong> Sources</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Safe and Secure Coding in Rust: A Comparative Analysis of Rust and C/C++</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="introduction-to-safe-and-secure-coding-in-rust-a-comparative-analysis-of-rust-and-cc"><a class="header" href="#introduction-to-safe-and-secure-coding-in-rust-a-comparative-analysis-of-rust-and-cc">Introduction to "Safe and Secure Coding in Rust: A Comparative Analysis of Rust and C/C++"</a></h1>
+<p>In the domain of systems programming, ensuring code safety and security is crucial. This book delves into the programming languages used for such tasks, with a special focus on Rust—a modern language celebrated for its ability to maintain high levels of safety and security. We explore typical issues encountered in traditional languages like C or C++, and how Rust's advanced features effectively mitigate these risks.</p>
+<h2 id="rust-as-a-safe-and-secure-system-language"><a class="header" href="#rust-as-a-safe-and-secure-system-language">Rust as a Safe and Secure System Language</a></h2>
+<p>Rust stands out as a system programming language designed with an emphasis on safety and security. It effectively addresses many common pitfalls in systems programming, such as memory errors and concurrency bugs, which are often encountered in C/C++ environments. Through its ownership model, borrowing rules, and type system, Rust ensures memory safety and thread safety, achieving these without compromising on performance.</p>
+<h2 id="understanding-the-secure-and-safety-concepts"><a class="header" href="#understanding-the-secure-and-safety-concepts">Understanding the Secure and Safety Concepts:</a></h2>
+<p><strong>Safety in Coding</strong> aims at preventing harm to humans by the system through various measures like validating inputs for reliability, effective error management, secure data storage and transmission using methods like Cyclic Redundancy Check (CRC), and avoiding hazardous coding practices.</p>
+<p><strong>Security in Coding</strong> focuses on protecting the system against malicious human activities. It encompasses rigorous input validation, robust error management, strong authentication and authorization mechanisms, securing data storage and transmission through Cipher-based Message Authentication Code (CMAC), and preventing issues like memory leaks and buffer overflows.</p>
+<p>It's crucial to note the distinction between Safe and Secure Coding practices, despite their overlapping areas. Excellence in software for dependable systems requires a fusion of both approaches.</p>
+<h2 id="what-this-book-wont-teach-you"><a class="header" href="#what-this-book-wont-teach-you">What This Book Won't Teach You</a></h2>
+<p>This book is dedicated to highlighting how Rust addresses safety and security concerns in system programming, but it is not an exhaustive guide to all of Rust's features. It intentionally avoids declaring Rust as superior to C/C++ or diminishing the value of other programming languages. The focus is on showing the specific problems in C/C++ programming and how Rust's design helps in preventing these issues, rather than claiming Rust as the only solution or the best language for all programming challenges.</p>
+<p>Through a comparative analysis of Rust and C/C++, this book aims to provide readers with a clear understanding of how Rust's safety and security features can mitigate the risks associated with systems programming, offering practical insights and guidelines for adopting safer and more secure coding practices.</p>
+<h2 id="contact"><a class="header" href="#contact">Contact</a></h2>
+<p>If you have some remarks, questions or ideas how to improve the book, feel free to open an issue or pull request at <a href="https://github.com/luk6xff/luk6xff.github.io/tree/master/content/other/safe_secure_rust_book"><strong>the book's repository</strong></a>.</p>
+<p>Happy Reading!
+Lukasz</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="quick-rust-overview"><a class="header" href="#quick-rust-overview">Quick Rust Overview</a></h1>
+<h2 id="brief-overview-of-rust"><a class="header" href="#brief-overview-of-rust">Brief Overview of Rust</a></h2>
+<p>Rust is a systems programming language, developed by mozilla and first released in 2010, focusing on safety, speed, and concurrency. It aims to provide memory safety without garbage collection, and concurrency without data races. Rust achieves these goals through a set of ownership rules, checked at compile time, without sacrificing performance. Rust achieves its goals through a set of unique features, including:</p>
+<ul>
+<li><strong>Ownership and Borrowing:</strong> Rust's ownership model enforces rules at compile time that eliminate various classes of bugs found in other systems programming languages, such as dangling pointers, data races, and memory leaks.</li>
+<li><strong>Type Safety and Inference:</strong> Rust's type system prevents null pointer dereferences and guarantees thread safety, among other safety checks. Its powerful type inference allows for concise code without sacrificing expressiveness or safety.</li>
+<li><strong>Zero-Cost Abstractions:</strong> Rust provides high-level abstractions without introducing runtime overhead. This means you can write high-level code that compiles down to low-level machine code as efficient as that written in C or C++.</li>
+<li><strong>Fearless Concurrency:</strong> Rust's ownership and type systems, along with its safe abstractions, make concurrent programming more approachable and less error-prone, enabling developers to take full advantage of modern multicore processors.</li>
+<li><strong>Ecosystem and Tooling:</strong> Rust offers a growing ecosystem with Cargo, its package manager and build system, and Crates.io, a repository of libraries (crates) that extend Rust's capabilities. Rust's tooling also includes robust documentation, format, and linting tools, making development in Rust productive and enjoyable.</li>
+<li><strong>Memory Safety Without Garbage Collection:</strong> Rust achieves memory safety without needing a garbage collector, making it suitable for performance-critical applications where controlling resource use is essential.</li>
+</ul>
+<h2 id="comparison-with-cc"><a class="header" href="#comparison-with-cc">Comparison with C/C++</a></h2>
+<ul>
+<li><strong>Memory Safety:</strong> Unlike C and C++, Rust enforces memory safety at compile time. This means many of the common vulnerabilities in C/C++ programs, such as use-after-free errors and data races, are caught before the code is even run. Rust's compiler enforces ownership and borrowing rules that prevent use-after-free, double-free, and null dereference errors that are common in C/C++. This drastically reduces the potential for security vulnerabilities in Rust programs.</li>
+<li><strong>Concurrency:</strong> Rust's approach to concurrency is safer and more straightforward, thanks to its ownership model, which prevents data races at compile time. In contrast, C/C++ requires developers to manage synchronization primitives manually, which is error-prone.</li>
+<li><strong>Modern Tooling:</strong> Rust comes with Cargo, which simplifies dependency management, building, testing, and documentation. C/C++ has various build systems and package managers, but none are as integrated with the language ecosystem as Cargo.</li>
+<li><strong>Learning Curve:</strong> Rust has a steeper learning curve than C/C++, primarily due to its strict compiler checks and ownership model. However, these same features lead to fewer runtime errors and more reliable software.</li>
+<li><strong>Runtime Performance:</strong> Rust and C/C++ offer comparable runtime performance. Rust's zero-cost abstractions mean that, in theory, anything written in C/C++ could be written in Rust without sacrificing speed.</li>
+<li><strong>Community and Ecosystem:</strong> C/C++ has been around for decades, leading to a vast ecosystem and a wide range of applications, from operating systems to game development. Rust is newer but has seen rapid growth in its community and ecosystem, with increasing adoption in systems programming, web assembly, and embedded systems.</li>
+</ul>
+<h2 id="conclusion"><a class="header" href="#conclusion">Conclusion</a></h2>
+<p>Rust presents a compelling alternative to C/C++ for systems programming, offering memory safety, concurrency features, and modern tooling, all without sacrificing performance. While Rust's learning curve may be steeper due to its strict compiler and unique concepts like ownership and borrowing, the benefits in terms of safety and productivity are considerable. For new projects, especially those where safety and concurrency are critical, Rust is an excellent choice.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="rust-compiler-safety-features-overview"><a class="header" href="#rust-compiler-safety-features-overview">Rust Compiler Safety Features Overview</a></h1>
+<p>Rust's compiler is designed with safety as a primary goal, employing several key features to prevent common bugs and security vulnerabilities that plague systems programming. These features enforce strict compile-time checks, ensuring that only safe code gets executed unless explicitly marked otherwise. Below, we explore some of Rust's compiler safety features with examples.</p>
+<h2 id="ownership-and-borrowing"><a class="header" href="#ownership-and-borrowing">Ownership and Borrowing</a></h2>
+<p>Rust's unique approach to memory management is enforced at compile time through its ownership and borrowing system, which eliminates a wide array of bugs related to memory usage, such as dangling pointers, double frees, and memory leaks.</p>
+<h3 id="example-ownership-1"><a class="header" href="#example-ownership-1">Example: Ownership 1</a></h3>
+<p><a href="https://godbolt.org/z/89PPW7oT6">GODBOLT</a></p>
+<pre><pre class="playground"><code class="language-rust editable">fn main() {
+    let a: String = String::from("Hello");
+    let b = a; // a's ownership is moved to b
+    println!("{}", b);
+    // println!("{}", a); // This line would cause a compile-time error
+}</code></pre></pre>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+int main() {
+    std::string a = "hello";
+    std::string b = a;  // Duplicate the data in a.
+    std::cout &lt;&lt; b &lt;&lt; std::endl;
+    std::cout &lt;&lt; a &lt;&lt; std::endl;
+    return 0;
+}
+</code></pre>
+<h3 id="example-ownership-2"><a class="header" href="#example-ownership-2">Example: Ownership 2</a></h3>
+<pre><pre class="playground"><code class="language-rust editable">fn greet(name: String) {
+    println!("Hello {name}")
+}
+
+fn main() {
+    let name = String::from("Tom");
+    greet(name);
+    // greet(name);
+}</code></pre></pre>
+<p>In this example, the ownership of the string <code>a</code> is moved to <code>b</code>. Attempting to use <code>a</code> after this point results in a compile-time error, preventing use-after-move bugs.</p>
+<h3 id="example-borrowing-1"><a class="header" href="#example-borrowing-1">Example: Borrowing 1</a></h3>
+<pre><pre class="playground"><code class="language-rust editable">fn calculate_length(s: &amp;String) -&gt; usize {
+    s.len()
+}
+
+fn main() {
+    let a = String::from("Hello");
+    let len = calculate_length(&amp;a); // a is borrowed
+    println!("The length of '{}' is {}.", a, len); // a can still be used here
+}</code></pre></pre>
+<p>Here, <code>a</code> is borrowed by <code>calculate_length</code>, allowing <code>a</code> to be used afterward because it wasn't moved but merely borrowed.</p>
+<h3 id="example-borrowing-2"><a class="header" href="#example-borrowing-2">Example: Borrowing 2</a></h3>
+<pre><pre class="playground"><code class="language-rust editable">fn append_world(s: &amp;mut String) {
+    s.push_str(" world"); // s is now a mutable reference, allowing us to modify the original String
+}
+
+fn main() {
+    let mut a = String::from("Hello");
+    append_world(&amp;mut a); // a is mutably borrowed
+    println!("The new value of 'a' is {}.", a); // a can still be used here because the mutable borrow ends at the end of the `append_world` scope
+}</code></pre></pre>
+<p>Here, <code>a</code> is mutably borrowed by <code>append_world</code>, allowing <code>a</code> to be modified inside and to be used afterward.</p>
+<h2 id="lifetimes"><a class="header" href="#lifetimes">Lifetimes</a></h2>
+<p>In Rust, references have lifetimes that ensure they don't outlive the data they point to, thanks to the borrow checker. Lifetimes can be:</p>
+<ul>
+<li><strong>Implicit</strong>, where Rust automatically figures out the lifespan of references for you.</li>
+<li><strong>Explicit</strong>, used in complex scenarios, where you guide Rust with lifetime annotations (like <code>'a</code>) to resolve ambiguities.</li>
+</ul>
+<p>The compiler uses these annotations to enforce safe reference usage, preventing errors related to invalid data access. Essentially, Rust's system manages reference validity for you, stepping in only when you need to clarify lifetimes in tricky situations.</p>
+<h3 id="example-0-borrow-checker"><a class="header" href="#example-0-borrow-checker">Example 0: Borrow Checker</a></h3>
+<pre><pre class="playground"><code class="language-rust editable">fn main() {
+    let result;                     // ---------+-- 'a
+    {                               //          |
+        let tmp = 42;               // -+-- 'b  |
+        result = &amp;tmp;              //  |       |
+    }                               // -+       |
+    println!("result: {}", result); //          |
+}                                   // ---------+</code></pre></pre>
+<p>In this example, the variable <code>result</code> is intended to have a longer lifetime, labeled <code>'a</code>, extending over the entire <code>main</code> function. Inside a nested block, we create <code>tmp</code> with a shorter lifetime, <code>'b</code>. We attempt to assign a reference to <code>tmp</code> to <code>result</code>. However, <code>'b</code> is much shorter than <code>'a</code> because <code>tmp</code> goes out of scope once the block ends, but <code>result</code> is used outside of this block.</p>
+<p>Rust checks lifetimes at compile time and identifies that <code>result</code> is supposed to live longer than <code>tmp</code>, based on their respective scopes. Since <code>result</code> is a reference to <code>tmp</code>, which has a shorter lifespan, Rust prevents this by design, to avoid dangling references. Essentially, Rust disallows the program because the data <code>result</code> points to (<code>tmp</code>) does not exist for the entirety of <code>result</code>'s lifetime. This ensures memory safety by preventing access to invalid or deallocated memory.</p>
+<h3 id="example-1"><a class="header" href="#example-1">Example 1:</a></h3>
+<pre><pre class="playground"><code class="language-rust editable">fn longest&lt;'a&gt;(x: &amp;'a str, y: &amp;'a str) -&gt; &amp;'a str {
+    if x.len() &gt; y.len() {
+        x
+    } else {
+        y
+    }
+}
+
+fn main() {
+    let string1 = String::from("abcd");
+    {
+        let string2 = "xyz";
+
+        let result = longest(string1.as_str(), string2);
+        println!("The longest string is {}", result);
+    }
+}</code></pre></pre>
+<p>This function signature tells Rust that the returned reference will live as long as the <code>shortest</code> of the two input references, ensuring the reference is valid for the duration of its use.</p>
+<h3 id="example-2"><a class="header" href="#example-2">Example 2:</a></h3>
+<pre><pre class="playground"><code class="language-rust editable">struct User&lt;'a&gt; {
+    username: &amp;'a str,
+}
+
+struct Tweet&lt;'a&gt; {
+    content: &amp;'a str,
+    author: &amp;'a User&lt;'a&gt;,
+}
+
+impl&lt;'a&gt; Tweet&lt;'a&gt; {
+    fn is_tweet_by_user(&amp;self, user: &amp;'a User) -&gt; bool {
+        self.author.username == user.username
+    }
+}
+
+fn main() {
+    let user = User { username: "johndoe" };
+    let tweet = Tweet {
+        content: "Hello, world!",
+        author: &amp;user,
+    };
+
+    if tweet.is_tweet_by_user(&amp;user) {
+        println!("This tweet is by {}", user.username);
+    } else {
+        println!("This tweet is not by {}", user.username);
+    }
+}</code></pre></pre>
+<p>This example demonstrates how explicit lifetime annotations guide the Rust compiler to enforce memory safety in scenarios where relationships between data (like tweets and their authors) are managed through references.
+I have created a <code>User</code> and a <code>Tweet</code> structs, then use the method <code>is_tweet_by_user</code> to check if the tweet was authored by the user. This entire flow is safe thanks to Rust's lifetimes, ensuring the references in Tweet and User are valid when accessed.</p>
+<h2 id="match-control-flow"><a class="header" href="#match-control-flow">Match Control Flow</a></h2>
+<p>The <code>match</code> control flow construct forces handling of all possible cases when used with enums, reducing the chances of bugs from unhandled cases.</p>
+<h3 id="example-match-with-enums"><a class="header" href="#example-match-with-enums">Example: Match with Enums</a></h3>
+<pre><pre class="playground"><code class="language-rust">enum Command {
+    Start(String), // Contains a message
+    Stop,
+    Restart { delay_secs: u32 }, // Contains named fields
+}
+
+fn execute_command(command: Command) {
+    match command {
+        Command::Start(message) =&gt; println!("Starting: {}", message),
+        Command::Stop =&gt; println!("Stopping"),
+        Command::Restart { delay_secs } =&gt; println!("Restarting in {} seconds", delay_secs),
+        _ =&gt; println!("Unknown Command!"),
+    }
+}
+
+fn main() {
+    let start_command = Command::Start(String::from("Hackathon 2024"));
+    execute_command(start_command);
+
+    let stop_command = Command::Stop;
+    execute_command(stop_command);
+
+    let restart_command = Command::Restart { delay_secs: 5 };
+    execute_command(restart_command);
+}</code></pre></pre>
+<h2 id="safe-concurrency"><a class="header" href="#safe-concurrency">Safe Concurrency</a></h2>
+<p>Rust's ownership and type system ensure safe concurrency, preventing data races at compile time.</p>
+<h3 id="example-safe-concurrency"><a class="header" href="#example-safe-concurrency">Example: Safe Concurrency</a></h3>
+<pre><pre class="playground"><code class="language-rust editable">use std::sync::{Arc, atomic::{AtomicUsize, Ordering}};
+use std::thread;
+
+fn main() {
+    let counter = Arc::new(AtomicUsize::new(0));
+    let mut handles = vec![];
+
+    for _ in 0..10 {
+        let counter_clone = Arc::clone(&amp;counter);
+        let handle = thread::spawn(move || {
+            // Safely increment the counter
+            counter_clone.fetch_add(1, Ordering::Relaxed);
+        });
+        handles.push(handle);
+    }
+
+    for handle in handles {
+        handle.join().unwrap();
+    }
+
+    println!("Counter: {}", counter.load(Ordering::Relaxed));
+}</code></pre></pre>
+<p>This example uses <code>Arc</code> (Atomic Reference Counting) to safely share and access data across threads.</p>
+<h2 id="conclusion-1"><a class="header" href="#conclusion-1">Conclusion</a></h2>
+<p>Rust's compiler safety features are central to its promise of safe systems programming, effectively addressing many of the pitfalls common in other languages. Through ownership, lifetimes, match statements, and safe concurrency, Rust empowers developers to write more reliable and secure code by default, catching potential errors early in the development cycle. These features, backed by a thorough compile-time checking system, make Rust an appealing choice for projects where safety and performance are paramount.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="rust-example-app-syntax-overview"><a class="header" href="#rust-example-app-syntax-overview">Rust example app, syntax overview</a></h2>
+<ul>
+<li><a href="https://github.com/luk6xff/luk6xff.github.io/tree/master/content/other/safe_secure_rust_book/examples/intro/example_app">DEMO</a></li>
+</ul>
+<pre><pre class="playground"><code class="language-rust editable">use std::fmt::{self, Display, Formatter};
+use std::sync::mpsc::{self, Receiver};
+use std::thread;
+use std::time::{Duration, Instant};
+
+// Define an enum to represent the status of an sensor, showcasing Rust's enum and pattern matching.
+enum SensorStatus {
+    Running,
+    Stopped,
+    Error(String),
+}
+
+// Implement the Display trait for SensorStatus to enable easy printing.
+impl Display for SensorStatus {
+    fn fmt(&amp;self, f: &amp;mut Formatter) -&gt; fmt::Result {
+        match self {
+            SensorStatus::Running =&gt; write!(f, "Sensor is running"),
+            SensorStatus::Stopped =&gt; write!(f, "Sensor is stopped"),
+            SensorStatus::Error(msg) =&gt; write!(f, "Sensor error: {}", msg),
+        }
+    }
+}
+
+// A struct representing a vehicle temperature sensor.
+struct TemperatureSensor {
+    name: &amp;'static str,
+    value: i32,
+}
+
+impl TemperatureSensor {
+    const MIN_TEMP: i32 = -30;
+    const MAX_TEMP: i32 = 150;
+}
+
+// A struct representing a vehicle speed sensor.
+struct SpeedSensor {
+    name: &amp;'static str,
+    value: u32,
+}
+
+impl SpeedSensor {
+    const MAX_SPEED_LIMIT: u32 = 180;
+}
+
+// Implement the Display trait for Sensors, enabling descriptive output.
+impl Display for TemperatureSensor {
+    fn fmt(&amp;self, f: &amp;mut Formatter) -&gt; fmt::Result {
+        write!(f, "[{}] TemperatureSensor: {}", self.name, self.value)
+    }
+}
+
+impl Display for SpeedSensor {
+    fn fmt(&amp;self, f: &amp;mut Formatter) -&gt; fmt::Result {
+        write!(f, "[{}] SpeedSensor: {}", self.name, self.value)
+    }
+}
+
+// Define a trait for diagnostic tools, demonstrating Rust's trait system for polymorphism.
+trait DiagnosticTool {
+    fn diagnose(&amp;self) -&gt; SensorStatus;
+}
+
+// Implement the DiagnosticTool trait for Sensors, showcasing trait implementations.
+impl DiagnosticTool for TemperatureSensor {
+    fn diagnose(&amp;self) -&gt; SensorStatus {
+        if self.value &gt; TemperatureSensor::MAX_TEMP {
+            SensorStatus::Error(format!("{} sensor exceeds max limit:{} over {} [C]!", self.name, self.value, (self.value - TemperatureSensor::MAX_TEMP)))
+        } else if self.value &lt; TemperatureSensor::MIN_TEMP {
+            SensorStatus::Error(format!("{} sensor reached below min limit:{} over {} [C]!", self.name, self.value, (self.value - TemperatureSensor::MIN_TEMP)))
+        } else {
+            SensorStatus::Running
+        }
+    }
+}
+
+impl DiagnosticTool for SpeedSensor {
+    fn diagnose(&amp;self) -&gt; SensorStatus {
+        if self.value &gt; SpeedSensor::MAX_SPEED_LIMIT {
+            SensorStatus::Error(format!("[{}] sensor exceeds max limit:{} over {} [km/h]!", self.name, self.value, (self.value - SpeedSensor::MAX_SPEED_LIMIT)))
+        } else {
+            SensorStatus::Running
+        }
+    }
+}
+
+// A function taking a dynamic trait object, demonstrating dynamic polymorphism.
+fn run_diagnostic(tool: &amp;dyn DiagnosticTool) -&gt; SensorStatus {
+    tool.diagnose()
+}
+
+
+// Define a struct for processing rear camera images, illustrating Rust's generic type parameters.
+struct RearCameraImageProcessor&lt;T&gt; {
+    data: T,
+}
+
+// Define a trait for image processing functionality.
+trait ImageProcessing {
+    fn process(&amp;mut self);
+}
+
+// Implement methods for RearCameraImageProcessor, demonstrating ownership and borrowing.
+impl&lt;T: Display + Clone&gt; RearCameraImageProcessor&lt;T&gt; {
+    // Constructor method takes ownership of data.
+    fn new(data: T) -&gt; Self {
+        RearCameraImageProcessor { data }
+    }
+
+    // Borrow self immutably to read data.
+    fn read(&amp;self) -&gt; &amp;T {
+        &amp;self.data
+    }
+
+    // Borrow self mutably to modify data.
+    fn write(&amp;mut self, data: T) {
+        self.data = data;
+    }
+}
+
+// Implement the ImageProcessing trait for RearCameraImageProcessor.
+impl&lt;T: Display + Clone&gt; ImageProcessing for RearCameraImageProcessor&lt;T&gt; {
+    // Sample processing method which just clones and displays the data.
+    fn process(&amp;mut self) {
+        let processed_data = self.data.clone();
+        println!("Processing image data: {}", processed_data);
+    }
+}
+
+// Demonstrates the use of closures to modify data, showcasing Rust's closure capabilities.
+fn adjust_brightness&lt;F, T&gt;(adjustment_closure: F, processor: &amp;mut RearCameraImageProcessor&lt;T&gt;)
+where
+    F: Fn(T) -&gt; T,
+    T: Display + Clone,
+{
+    let current_data = processor.read().clone();
+    println!("Current image brightness: {}", current_data);
+    let adjusted_data = adjustment_closure(current_data);
+    processor.write(adjusted_data);
+}
+
+
+
+fn main() {
+    // Simulate a sensor that continuously sends data for 10 seconds.
+    let (tx_temp, rx_temp): (mpsc::Sender&lt;TemperatureSensor&gt;, Receiver&lt;TemperatureSensor&gt;) = mpsc::channel();
+    let (tx_speed, rx_speed): (mpsc::Sender&lt;SpeedSensor&gt;, Receiver&lt;SpeedSensor&gt;) = mpsc::channel();
+    // Spawn a thread for the temp_sensor
+    let tx_temp_clone = tx_temp.clone();
+    let temp_handle = thread::spawn(move || {
+        let start = Instant::now();
+        while start.elapsed() &lt; Duration::new(5, 0) {
+            let value = (start.elapsed().as_secs() * 10) as i32; // Simulate increasing temp
+            let sensor = TemperatureSensor { name: "Engine Temperature", value: value };
+            if let Err(e) = tx_temp_clone.send(sensor) {
+                eprintln!("Error sending temp data: {}", e);
+                break;
+            }
+            thread::sleep(Duration::from_millis(500)); // Simulate data sent every 500ms
+        }
+    });
+    // Spawn a thread for the car_speed_sensor
+    let tx_speed_clone = tx_speed.clone();
+    let speed_handle = thread::spawn(move || {
+        let start = Instant::now();
+        let mut factor: u64 = 1;
+        while start.elapsed() &lt; Duration::new(5, 0) {
+            let value = (start.elapsed().as_secs() * 1 * factor) as u32; // Simulate increasing speed
+            let sensor = SpeedSensor { name: "Car Speed", value: value };
+            if let Err(e) = tx_speed_clone.send(sensor) {
+                eprintln!("Error sending car speed data: {}", e);
+                break;
+            }
+            factor = factor + 1;
+            thread::sleep(Duration::from_millis(100)); // Simulate data sent every 100ms
+        }
+    });
+
+    // Main thread acts as a diagnostic tool that processes sensors data
+    let start = Instant::now();
+    while start.elapsed() &lt; Duration::new(5, 0) {
+        if let Ok(sensor) = rx_temp.try_recv() {
+            println!("Received {}: {}", sensor.name, sensor.value);
+            // Here you can also run diagnostics on the received sensor data
+            let status = run_diagnostic(&amp;sensor);
+            println!("Diagnostic result: {}", status);
+        }
+        if let Ok(sensor) = rx_speed.try_recv() {
+            println!("Received {}: {}", sensor.name, sensor.value);
+            // Here you can also run diagnostics on the received sensor data
+            let status = run_diagnostic(&amp;sensor);
+            println!("Diagnostic result: {}", status);
+        }
+        // Simulate processing other tasks in the main thread
+        thread::sleep(Duration::from_millis(100));
+    }
+
+    // Instantiate a RearCameraImageProcessor and demonstrate processing.
+    let mut camera_processor = RearCameraImageProcessor::new("Initial image data".to_string());
+    camera_processor.process();
+
+    // Use a closure to adjust the brightness of the image data.
+    adjust_brightness(|data| format!("{} + brightness adjusted", data), &amp;mut camera_processor);
+    println!("After adjustment: {}", camera_processor.read());
+
+    // Join threads here
+    if let Err(e) = temp_handle.join() {
+        eprintln!("Error joining temperature sensor thread: {:?}", e);
+    }
+
+    if let Err(e) = speed_handle.join() {
+        eprintln!("Error joining speed sensor thread: {:?}", e);
+    }
+
+    println!("Simulation completed.");
+}</code></pre></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="memory-safety-in-rust"><a class="header" href="#memory-safety-in-rust">Memory Safety in Rust</a></h1>
+<p>The issue of memory safety in C++ poses significant risks, often being a root cause for numerous security vulnerabilities. This concern has even prompted advisories from entities like the U.S. government, recommending caution or alternatives when considering C++ for new projects. For C++ to maintain its relevance and applicability in modern software development, it's crucial that the language evolves to offer memory safety guarantees by default. Implementing mechanisms for explicit control over low-level operations could preserve the language's flexibility for specific use cases where direct memory manipulation is necessary.</p>
+<p>In this context, Rust emerges as a compelling solution. Designed with memory safety as a foundational principle, Rust eliminates many common pitfalls associated with C++ development, such as use-after-free, buffer overflows, and data races. Rust achieves this through its ownership model, borrow checker, and lifetimes, which together enforce memory safety at compile time. This not only minimizes security vulnerabilities but also alleviates the burden on developers to manually manage memory safety, allowing them to focus on the logic and performance of their applications. By providing these safety guarantees without sacrificing the low-level control and performance critical in systems programming, Rust presents a viable, modern alternative for projects where security and reliability are paramount.</p>
+<p>In the next chapter I will compare a C++ vs RUST in case of memory safety issues.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="undefined-behavior"><a class="header" href="#undefined-behavior">Undefined Behavior</a></h1>
+<h3 id="example-1---writing-to-not-allocated-memmory"><a class="header" href="#example-1---writing-to-not-allocated-memmory">Example 1 - Writing to not allocated memmory</a></h3>
+<p><a href="https://godbolt.org/z/c4sseTG8n">GODBOLT</a></p>
+<ul>
+<li>CPP
+<ul>
+<li>It would lead to undefined behavior because the algorithm attempts to write to memory locations that have not been allocated or are not owned by the dst vector.</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;vector&gt;
+#include &lt;cmath&gt;
+
+auto f(const std::vector&lt;int&gt;&amp; src) -&gt; std::vector&lt;int&gt; {
+    std::vector&lt;int&gt; dst;
+<span class="boring">    dst.reserve(src.size()); // Reserve space to avoid reallocations
+</span><span class="boring">     std::transform(src.begin(), src.end(), std::back_inserter(dst), [](int i) {
+</span><span class="boring">         return std::pow(i, 2);
+</span><span class="boring">     });
+</span>    std::transform(src.begin(), src.end(), dst.begin(), [](int i) {
+        return std::pow(i, 2);
+    });
+    return dst;
+}
+
+int main() {
+    std::vector&lt;int&gt; vec = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    auto res = f(vec);
+    for (const auto&amp; v : res) {
+        std::cout &lt;&lt; v &lt;&lt; " ";
+    }
+    std::cout &lt;&lt; std::endl;
+    return 0;
+}
+</code></pre>
+<ul>
+<li>RUST
+<ul>
+<li>Rust's compiler and type system prevent the kind of mistake seen in the C++ example, but for educational purposes, let's start with an attempt that might resemble the misuse of std::transform with an uninitialized destination:</li>
+<li>Rust does not allow uninitialized memory access or buffer overflow by design. The language's safety guarantees and compile-time checks ensure that operations on collections like vectors are performed within the bounds of allocated memory, preventing undefined behavior related to memory access.</li>
+</ul>
+</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust editable">fn f(src: &amp;Vec&lt;i32&gt;) -&gt; Vec&lt;i32&gt; {
+    let mut dst: Vec&lt;i32&gt;;
+<span class="boring">    //let mut dst: Vec&lt;i32&gt; = Vec::with_capacity(src.len());
+</span>    src.iter()
+        .map(|&amp;x| x.pow(2))
+        .for_each(|xx| dst.push(xx));
+    dst
+}
+
+pub fn main() {
+    let src = vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    let res = f(&amp;src);
+    println!("{:?}", res);
+}</code></pre></pre>
+<p>To prevent the problem in C++, according to the <a href="https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Res-init">C++ Core Guidelines</a>, one should not declare a variable before initializing it.
+The idiomatic way to write this code in C++23 would be</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;ranges&gt;
+#include &lt;vector&gt;
+#include &lt;cmath&gt;
+
+using namespace std;
+
+auto f(const std::vector&lt;int&gt;&amp; src) -&gt; std::vector&lt;int&gt; {
+    return src | views::transform([](int v) { return pow(v, 2); }) | ranges::to&lt;std::vector&lt;int&gt;&gt;();
+}
+
+int main() {
+    std::vector&lt;int&gt; vec = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    auto res = f(vec);
+    for (const auto&amp; v : res) {
+        std::cout &lt;&lt; v &lt;&lt; " ";
+    }
+    std::cout &lt;&lt; std::endl;
+    return 0;
+}
+
+</code></pre>
+<p>It's also nicer to write this way in Rust, becuase it doesn't require dst to be mutable, and is shorter and more succint</p>
+<pre><pre class="playground"><code class="language-rust editable">fn f(src: &amp;Vec&lt;i32&gt;) -&gt; Vec&lt;i32&gt; {
+    src.iter().map(|&amp;x| x.pow(2)).collect()
+}
+
+pub fn main() {
+    let src = vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    let res = f(&amp;src);
+    println!("{:?}", res);
+}
+</code></pre></pre>
+<h3 id="example-2---object-slicing-and-polymorphism"><a class="header" href="#example-2---object-slicing-and-polymorphism">Example 2 - Object Slicing and Polymorphism</a></h3>
+<p><a href="https://godbolt.org/z/E4jefbYYv">GODBOLT</a></p>
+<ul>
+<li>CPP
+Object slicing occurs when an object of a derived class is assigned to a base class object, leading to the loss of the derived part of the object. This can be particularly insidious in C++ because it often doesn't prevent compilation, but it can lead to unexpected runtime behavior.</li>
+</ul>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;memory&gt;
+#include &lt;vector&gt;
+
+class Base {
+public:
+    virtual void print() const {
+        std::cout &lt;&lt; "Base class" &lt;&lt; std::endl;
+    }
+    virtual ~Base() = default;
+};
+
+class Derived : public Base {
+public:
+    void print() const override {
+        std::cout &lt;&lt; "Derived class" &lt;&lt; std::endl;
+    }
+};
+
+void process(const Base&amp; obj) {
+    obj.print(); // Polymorphic call
+}
+
+int main() {
+    Derived d;
+    process(d); // Expected polymorphic behavior
+
+    std::vector&lt;Base&gt; vec;
+    vec.push_back(d); // Object slicing here
+    vec.back().print(); // Calls Base::print() instead of Derived::print(), due to object slicing
+
+<span class="boring">     std::vector&lt;std::unique_ptr&lt;Base&gt;&gt; vec;
+</span><span class="boring">     vec.push_back(std::make_unique&lt;Derived&gt;(d)); // No object slicing, polymorphism preserved
+</span><span class="boring">     vec.back()-&gt;print(); // Calls Derived::print(), preserving polymorphism
+</span>
+    return 0;
+}
+</code></pre>
+<ul>
+<li>RUST
+In Rust, preventing object slicing and ensuring polymorphism works as expected can be achieved by using trait objects or generics, along with smart pointers like Box, which enable dynamic dispatch</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust editable">use std::fmt::Debug;
+
+trait Printable: Debug {
+    fn print(&amp;self);
+}
+
+#[derive(Debug)]
+struct Base;
+impl Printable for Base {
+    fn print(&amp;self) {
+        println!("Base struct");
+    }
+}
+
+#[derive(Debug)]
+struct Derived;
+impl Printable for Derived {
+    fn print(&amp;self) {
+        println!("Derived struct");
+    }
+}
+
+fn process(obj: &amp;dyn Printable) {
+    obj.print(); // Polymorphic call
+}
+
+pub fn main() {
+    let d = Derived;
+    process(&amp;d); // Polymorphism in action
+
+    let mut vec: Vec&lt;Box&lt;dyn Printable&gt;&gt; = Vec::new();
+    vec.push(Box::new(d)); // No object slicing, dynamic dispatch works
+
+    vec[0].print(); // Calls Derived::print(), preserving polymorphism
+
+    // Using the debug trait to illustrate that the whole object is preserved
+    println!("{:?}", vec[0]);
+}</code></pre></pre>
+<h3 id="example-3---lambdas---dangling-reference"><a class="header" href="#example-3---lambdas---dangling-reference">Example 3 - Lambdas - Dangling Reference</a></h3>
+<p><a href="https://godbolt.org/z/fqWr4coff">GODBOLT</a></p>
+<ul>
+<li>CPP
+<ul>
+<li>Capturing local variables by reference in a lambda that outlives the scope of those variables typically leads to a dangling reference. Accessing a dangling reference is undefined behavior because the variable it refers to no longer exists.</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+
+auto f() {
+    int v = 42;
+    return [&amp;]() {
+<span class="boring">    //return [=]() mutable {
+</span>        v += 100;
+        return v;
+    };
+}
+
+int main() {
+    auto res = f();
+    std::cout &lt;&lt; res() &lt;&lt; std::endl;
+    return 0;
+}
+</code></pre>
+<ul>
+<li>RUST
+<ul>
+<li>Rust's design inherently prevents the creation of dangling references or captures by ensuring that any captured variables live as long as the closure itself. This is achieved through Rust's ownership and borrowing rules, which enforce compile-time checks for lifetimes and ownership.</li>
+</ul>
+</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust editable">fn f() -&gt; impl Fn() -&gt; i32 {
+    let v = 42;
+    || {
+        // This will not compile because `v` does not live long enough
+        v + 100
+    }
+}
+
+<span class="boring">// Rust forces us to use Captured Variables by Value
+</span><span class="boring">// fn f() -&gt; impl Fn() -&gt; i32 {
+</span><span class="boring">//     let v = 42;
+</span><span class="boring">//     {
+</span><span class="boring">//         v + 100
+</span><span class="boring">//     }
+</span><span class="boring">// }
+</span>
+pub fn main() {
+    let res = f();
+    println!("{}", res());
+}</code></pre></pre>
+<h3 id="example-4---dangling-iterators"><a class="header" href="#example-4---dangling-iterators">Example 4 - Dangling iterators</a></h3>
+<p><a href="https://godbolt.org/z/c7rsTj7cP">GODBOLT</a></p>
+<ul>
+<li>CPP
+<ul>
+<li>Erasing elements from a container (e.g., using erase method) invalidates iterators pointing to the erased elements and potentially beyond, depending on the container type.</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;string&gt;
+
+int main() {
+    std::vector&lt;int&gt; v = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    auto it_beg = v.begin();
+    auto it = v.begin() + 4;
+    auto it_last = v.end();
+    v.erase(it);                  // 'it' is invalidated
+    std::cout &lt;&lt; "1) it_beg: "&lt;&lt; *it_beg &lt;&lt; " it: " &lt;&lt; *it &lt;&lt; " it_last: " &lt;&lt; *it_last &lt;&lt; std::endl;  // Accessing 'it_s' now leads to undefined behavior
+    v.erase(it_beg);
+    std::cout &lt;&lt; "2) it_beg: "&lt;&lt; *it_beg &lt;&lt; " it: " &lt;&lt; *it &lt;&lt; " it_last: " &lt;&lt; *it_last &lt;&lt; std::endl;  // Accessing 'it_s' now leads to undefined behavior
+    v.erase(it);
+    std::cout &lt;&lt; "3) it_beg: "&lt;&lt; *it_beg &lt;&lt; " it: " &lt;&lt; *it &lt;&lt; " it_last: " &lt;&lt; *it_last &lt;&lt; std::endl;  // Accessing 'it_s' now leads to undefined behavior
+    // v.erase(it);
+    // std::cout &lt;&lt; "4) it_beg: "&lt;&lt; *it_beg &lt;&lt; " it: " &lt;&lt; *it &lt;&lt; " it_last: " &lt;&lt; *it_last &lt;&lt; std::endl;  // Accessing 'it_s' now leads to undefined behavior
+    // v.erase(it);
+    // std::cout &lt;&lt; "5) it_beg: "&lt;&lt; *it_beg &lt;&lt; " it: " &lt;&lt; *it &lt;&lt; " it_last: " &lt;&lt; *it_last &lt;&lt; std::endl;  // Accessing 'it_s' now leads to undefined behavior
+    // v.erase(it);
+    // std::cout &lt;&lt; "6) it_beg: "&lt;&lt; *it_beg &lt;&lt; " it: " &lt;&lt; *it &lt;&lt; " it_last: " &lt;&lt; *it_last &lt;&lt; std::endl;  // Accessing 'it_s' now leads to undefined behavior
+    // v.erase(it);
+    // std::cout &lt;&lt; "7) it_beg: "&lt;&lt; *it_beg &lt;&lt; " it: " &lt;&lt; *it &lt;&lt; " it_last: " &lt;&lt; *it_last &lt;&lt; std::endl;  // Accessing 'it_s' now leads to undefined behavior
+    return 0;
+}
+</code></pre>
+<ul>
+<li>RUST</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust editable">pub fn main() {
+    let mut v = vec![0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+    v.remove(4); // This is analogous to v.erase(it) in C++
+
+    // Safe accesses using `get`
+    println!("1) it_beg: {:?}, it: {:?}, it_last: {:?}", v.get(0), v.get(4), v.get(v.len()));
+
+    v.remove(0); // Removes the first element, shifting all others left
+    println!("2) it_beg: {:?}, it: {:?}, it_last: {:?}", v.get(0), v.get(4), v.get(v.len()));
+
+    // Attempt to remove an element at a now-invalid index (handled safely)
+    // This line would panic if we directly indexed, but with `get` we can see it returns `None`
+    match v.get(4) {
+        Some(&amp;element) =&gt; {
+            v.remove(4); // Safe if element exists
+            println!("Element at index 4 removed");
+        },
+        None =&gt; println!("No element at index 4, cannot remove"),
+    }
+
+    println!("3) it_beg: {:?}, it: {:?}, it_last: {:?}", v.get(0), v.get(4), v.get(v.len()));
+
+<span class="boring">    //v.remove(9); // Removes the first element, shifting all others left
+</span>}</code></pre></pre>
+<h3 id="example-5---maybe-not-undefined-but-weird-stdmap-operator--behavior"><a class="header" href="#example-5---maybe-not-undefined-but-weird-stdmap-operator--behavior">Example 5 - Maybe not undefined but weird std::map operator [] behavior</a></h3>
+<p><a href="https://godbolt.org/z/vnajbza4z">GODBOLT</a></p>
+<ul>
+<li>CPP
+<ul>
+<li>When you use the indexing operator ([]) on a std::map in C++ to access an element by its key, and if that key does not exist in the map, a new element with that key will be automatically created and initialized to its default value.</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;map&gt;
+#include &lt;string&gt;
+
+<span class="boring">// using EngineConfigMap = std::map&lt;std::string, int&gt;;
+</span>
+<span class="boring">// class EngineController {
+</span>
+<span class="boring">// public:
+</span><span class="boring">//     EngineController(const EngineConfigMap&amp; config)
+</span><span class="boring">//     : m_config(config)
+</span><span class="boring">//     {
+</span><span class="boring">//         std::cout &lt;&lt; "Initializing with default config: \n"
+</span><span class="boring">//                 &lt;&lt; "max_temp: " &lt;&lt; m_config["timeout"] &lt;&lt; std::endl
+</span><span class="boring">//                 &lt;&lt; "max_rpm: " &lt;&lt; m_config["max_rpm"] &lt;&lt; std::endl;
+</span><span class="boring">//     }
+</span><span class="boring">// private:
+</span><span class="boring">//     EngineConfigMap m_config;
+</span><span class="boring">// };
+</span>
+int main() {
+    std::map&lt;std::string, int&gt; ids_map;
+    ids_map["id1"] = 12;
+    std::cout &lt;&lt; ids_map["id2"] &lt;&lt; std::endl;
+
+<span class="boring">    // EngineConfigMap empty_config;
+</span><span class="boring">    // EngineController ec(empty_config);
+</span>
+    return 0;
+}
+</code></pre>
+<ul>
+<li>RUST
+<ul>
+<li>If "id2" does not exist in ids_map, it will be inserted with a default value of 0, and then the value is printed. This approach is idiomatic in Rust and provides a safe and explicit way to handle potential missing keys in HashMaps.</li>
+</ul>
+</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust editable">use std::collections::HashMap;
+
+pub fn main() {
+    let mut ids_map = HashMap::new();
+    ids_map.insert("id1".to_string(), 12);
+
+    // Using entry() and or_insert() to insert a default value for "id2" if it doesn't exist
+    let id2_value = ids_map.entry("id2".to_string()).or_insert(0);
+    println!("{}", id2_value);
+}</code></pre></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="buffer-overflow"><a class="header" href="#buffer-overflow">Buffer Overflow</a></h1>
+<h3 id="example-1-1"><a class="header" href="#example-1-1">Example 1:</a></h3>
+<p><a href="https://godbolt.org/z/rcj3Gnd19">GODBOLT</a></p>
+<ul>
+<li>C - A classic buffer overflow using an array in C language. This code compiles, but accessing arr[10] is undefined behavior,leading to a potential security vulnerability.</li>
+</ul>
+<pre><code class="language-c">#include &lt;stdio.h&gt;
+
+int main() {
+    int arr[5] = {1, 2, 3, 4, 5};
+    // Accidental buffer overflow
+    arr[10] = 10;
+    printf("%d\n", arr[10]);
+    return 0;
+}
+</code></pre>
+<ul>
+<li>CPP - Undefined behavior as well</li>
+</ul>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;array&gt;
+
+int main() {
+    std::array&lt;int, 5&gt; arr = {1, 2, 3, 4, 5};
+    // Accidental buffer overflow
+    arr[10] = 10;
+    std::cout &lt;&lt; arr[10] &lt;&lt; std::endl;
+    return 0;
+}
+
+<span class="boring"> // Compilation error, same behaviour like rust compiler
+</span><span class="boring">int main() {
+</span><span class="boring">    std::array&lt;int, 5&gt; arr = {1, 2, 3, 4, 5};
+</span><span class="boring">    // Compiler error due to out of bounds access
+</span><span class="boring">    std::get&lt;10&gt;(arr) = 10;
+</span><span class="boring">    std::cout &lt;&lt; std::get&lt;10&gt;(arr) &lt;&lt; std::endl;
+</span><span class="boring">    return 0;
+</span><span class="boring">}
+</span></code></pre>
+<ul>
+<li>RUST - This code will not compile, as the compiler checks array bounds at compile time and prevents out-of-bounds access.</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust editable">fn main() {
+    let mut arr = [1, 2, 3, 4, 5];
+    // Compile-time error for out-of-bounds access
+    arr[10] = 10;
+    println!("{}", arr[10]);
+}</code></pre></pre>
+<h3 id="example-2-1"><a class="header" href="#example-2-1">Example 2:</a></h3>
+<p><a href="https://godbolt.org/z/1vEY4zTWf">GODBOLT</a></p>
+<ul>
+<li>CPP - Attempting to print 10 elements from a 5-element array. This loop goes beyond the array's bounds, leading to undefined behavior, which could cause crashes or unpredictable outputs.</li>
+</ul>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;array&gt;
+
+int main() {
+    std::array&lt;int, 5&gt; arr = {1, 2, 3, 4, 5};
+    for (int i = 0; i &lt; 10; i++) {
+        std::cout &lt;&lt; arr[i] &lt;&lt; std::endl;
+    }
+    return 0;
+}
+
+<span class="boring"> // Runtime error, similar like in rust.
+</span><span class="boring"> int main() {
+</span><span class="boring">     std::array&lt;int, 5&gt; arr = {1, 2, 3, 4, 5};
+</span><span class="boring">     // Runtime error due to out of bounds access
+</span><span class="boring">     for (auto i = 0; i &lt; 10; i++)
+</span><span class="boring">         std::cout &lt;&lt; arr.at(i) &lt;&lt; std::endl;
+</span><span class="boring">     return 0;
+</span><span class="boring"> }
+</span></code></pre>
+<ul>
+<li>RUST - Attempting to access <code>arr[5]</code> results in a runtime error because the index 5 is out-of-bounds for an array of length 5.
+Rust's safety mechanisms detect this at runtime and cause the program to panic, preventing it from continuing with invalid memory access.</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust editable">fn main() {
+    let arr = [1, 2, 3, 4, 5];
+    // Causes the program to panic for out-of-bounds access
+    for i in 0..=5 {
+        println!("{}", arr[i]);
+    }
+}</code></pre></pre>
+<h3 id="example-3-strncpy-overflow"><a class="header" href="#example-3-strncpy-overflow">Example 3: strncpy overflow</a></h3>
+<p><a href="https://godbolt.org/z/13zGoPsqK">GODBOLT</a></p>
+<ul>
+<li>CPP</li>
+</ul>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+#include &lt;array&gt;
+
+int main() {
+    std::array&lt;char, 10&gt; buf;
+    const char* input = "This is way too long for the buffer";
+
+    strncpy(buf.data(), input, strlen(input));
+    std::cout &lt;&lt; buf.data() &lt;&lt; std::endl;
+
+    return 0;
+}
+</code></pre>
+<ul>
+<li>RUST</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust editable">fn main() {
+    let mut buf = [0u8; 10];
+    let input = "This is way too long for the buffer".as_bytes();
+
+    buf.copy_from_slice(&amp;input[..input.len()]);
+    println!("{:?}", &amp;buf);
+}
+<span class="boring">//https://doc.rust-lang.org/src/core/slice/mod.rs.html#3648-3650</span></code></pre></pre>
+<h3 id="example-4-buffer-overflow--undefined-behavior"><a class="header" href="#example-4-buffer-overflow--undefined-behavior">Example 4: Buffer overflow- undefined behavior</a></h3>
+<p><a href="https://godbolt.org/z/bPYveYdTz">GODBOLT</a></p>
+<ul>
+<li>CPP</li>
+</ul>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+#include &lt;array&gt;
+
+constexpr size_t k_bufSize = 5;
+const std::array&lt;char, k_bufSize&gt; buf = {'A', 'B', 'C', 'D', 'E'};
+
+bool exists_in_buffer(char v)
+{
+    // return true in one of the first 4 iterations or UB due to out-of-bounds access
+    for (auto i = 0; i &lt;= k_bufSize; ++i) {
+        if (buf[i] == v)
+            return true;
+    }
+
+    return false;
+}
+
+
+int main() {
+    std::cout &lt;&lt; exists_in_buffer('\0') &lt;&lt; std::endl;
+    return 0;
+}
+</code></pre>
+<ul>
+<li>RUST</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust editable">const K_BUF_SIZE: usize = 5;
+const BUF: [char; K_BUF_SIZE] = ['A', 'B', 'C', 'D', 'E'];
+
+fn exists_in_buffer(v: char) -&gt; bool {
+    // Iterate over each element in the buffer
+    for i in 0..K_BUF_SIZE+1 {
+        if BUF[i] == v {
+            return true;
+        }
+    }
+    false
+}
+
+pub fn main() {
+    println!("{}", exists_in_buffer('\0'));
+}</code></pre></pre>
+<p>This is an example of Rust’s memory safety principles in action. In many low-level languages, this kind of check is not done, and when you provide an incorrect index, invalid memory can be accessed. Rust protects you against this kind of error by immediately exiting instead of allowing the memory access and continuing.</p>
+<h3 id="example-5-stdio"><a class="header" href="#example-5-stdio">Example 5: std::io</a></h3>
+<p><a href="https://godbolt.org/z/ns394fEjs">GODBOLT</a></p>
+<ul>
+<li>CPP</li>
+</ul>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+
+int main() {
+    char buffer[10];
+    std::cin &gt;&gt; buffer;
+    std::cout &lt;&lt; "Input: " &lt;&lt; buffer &lt;&lt; std::endl;
+    return 0;
+}
+</code></pre>
+<ul>
+<li>RUST</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust editable">use std::io::{self, Read};
+
+fn main() -&gt; io::Result&lt;()&gt; {
+    let mut buffer = [0; 10];
+    let n = io::stdin().read(&amp;mut buffer)?;
+    println!("Input: {}", String::from_utf8_lossy(&amp;buffer[..n]));
+    Ok(())
+}
+
+<span class="boring">//fn main() -&gt; io::Result&lt;()&gt; {
+</span><span class="boring">   //let mut input = String::new();
+</span><span class="boring">   //io::stdin().read_line(&amp;mut input)?;
+</span><span class="boring">   //// Trim the newline from the end of the input
+</span><span class="boring">   //let input = input.trim_end();
+</span><span class="boring">   //println!("Input: {}", input);
+</span><span class="boring">   //Ok(())
+</span><span class="boring">//}</span></code></pre></pre>
+<p>Rust's standard library is designed to prevent from buffer overflow here by ensuring that read only reads up to the buffer's capacity.</p>
+<h3 id="example-6-dlt-deamon-buffer-overflow-issue"><a class="header" href="#example-6-dlt-deamon-buffer-overflow-issue">Example 6: DLT deamon buffer overflow issue</a></h3>
+<p>The use of <code>fscanf(handle, "%s", str1)</code> without specifying a limit for the number of characters to read into <code>str1</code> and <code>apid/ctid</code> arrays poses a risk of buffer overflow. If the file contains a string longer than the buffer size <code>(DLT_COMMON_BUFFER_LENGTH and DLT_ID_SIZE)</code>, it will overflow, leading to undefined behavior, which can be exploited.</p>
+<ul>
+<li>CPP</li>
+</ul>
+<pre><code class="language-cpp">DltReturnValue dlt_filter_load(DltFilter *filter, const char *filename, int verbose)
+{
+    if ((filter == NULL) || (filename == NULL))
+        return DLT_RETURN_WRONG_PARAMETER;
+    FILE *handle;
+    char str1[DLT_COMMON_BUFFER_LENGTH];
+    char apid[DLT_ID_SIZE], ctid[DLT_ID_SIZE];
+    PRINT_FUNCTION_VERBOSE(verbose);
+    handle = fopen(filename, "r");
+    if (handle == NULL) {
+        dlt_vlog(LOG_WARNING, "Filter file %s cannot be opened!\n", filename);
+        return DLT_RETURN_ERROR;
+    }
+    /* Reset filters */
+    filter-&gt;counter = 0;
+    while (!feof(handle)) {
+        str1[0] = 0;
+
+        if (fscanf(handle, "%s", str1) != 1)
+            break;
+
+        if (str1[0] == 0)
+            break;
+        printf(" %s", str1);
+        if (strcmp(str1, "----") == 0)
+            dlt_set_id(apid, "");
+        else
+            dlt_set_id(apid, str1);
+
+        str1[0] = 0;
+
+        if (fscanf(handle, "%s", str1) != 1)
+            break;
+
+        if (str1[0] == 0)
+            break;
+        printf(" %s\r\n", str1);
+        if (strcmp(str1, "----") == 0)
+            dlt_set_id(ctid, "");
+        else
+            dlt_set_id(ctid, str1);
+        if (filter-&gt;counter &lt; DLT_FILTER_MAX) {
+            dlt_filter_add(filter, apid, ctid, verbose);
+        }
+        else {
+            dlt_vlog(LOG_WARNING,
+                     "Maximum number (%d) of allowed filters reached, ignoring rest of filters!\n",
+                     DLT_FILTER_MAX);
+        }
+    }
+    fclose(handle);
+    return DLT_RETURN_OK;
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="use-after-free-types-of-bugs"><a class="header" href="#use-after-free-types-of-bugs">Use After Free types of bugs</a></h2>
+<p>"Use after Free" (UAF) is a memory corruption issue where a program tries to access memory that has already been freed. This typically happens due to programming errors when referencing memory that was deallocated. It can lead to crashes, data corruption, or even security vulnerabilities. Detection is challenging, and mitigation involves proper memory management practices and programming language features that enforce memory safety, such as Rust's ownership system.</p>
+<h3 id="example-1-use-after-free"><a class="header" href="#example-1-use-after-free">Example 1: Use After Free</a></h3>
+<p><a href="https://godbolt.org/z/o6M84n5b8">GODBOLT</a></p>
+<ul>
+<li>C - This code compiles but leads to undefined behavior by accessing memory that has been freed.</li>
+</ul>
+<pre><code class="language-c">#include &lt;iostream&gt;
+
+int main() {
+    int *ptr = new int(10);
+    delete ptr;
+    // Undefined behavior: use after free
+    std::cout &lt;&lt; *ptr &lt;&lt; std::endl;
+    return 0;
+}
+</code></pre>
+<ul>
+<li>CPP - Usage of std::unique_ptr prevents from UAF</li>
+</ul>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;memory&gt;
+
+int main() {
+    auto ptr = std::make_unique&lt;int&gt;(10);
+    // delete ptr is impossible, so use after free is impossible.
+    std::cout &lt;&lt; *ptr &lt;&lt; std::endl;
+    *ptr = 11;
+    std::cout &lt;&lt; *ptr &lt;&lt; std::endl;
+    return 0;
+}
+</code></pre>
+<ul>
+<li>RUST</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust editable">fn main() {
+    let ptr = Box::new(10);
+    // Memory is automatically cleaned up when `ptr` goes out of scope
+    // Attempting to use `ptr` after this point would result in a compile-time error
+    println!("{}", ptr);
+    // Rust's ownership system prevents "use after free" by design
+}</code></pre></pre>
+<h3 id="example-2-memory-bounds-dangling-pointer-or-even-use-after-free"><a class="header" href="#example-2-memory-bounds-dangling-pointer-or-even-use-after-free">Example 2: Memory bounds, dangling pointer or even use after free</a></h3>
+<p><a href="https://godbolt.org/z/dvGP1f6aa">GODBOLT</a></p>
+<ul>
+<li>CPP</li>
+</ul>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;optional&gt;
+#include &lt;exception&gt;
+
+// Function to modify the vector by adding a new value
+void modify(std::vector&lt;int&gt;&amp; vec, int value) {
+    vec.push_back(value);
+}
+
+
+// Function to safely get a value from the vector by index, returns std::optional
+std::optional&lt;int&gt; get(const std::vector&lt;int&gt;&amp; vec, size_t index) {
+    if (index &lt; vec.size()) { // You need to write THIS
+        return vec[index];
+    } else {
+        return std::nullopt;
+    }
+}
+
+
+int unsafe_get(const std::vector&lt;int&gt;&amp; vec, size_t index) {
+    return vec[index];
+}
+
+int safe_get(const std::vector&lt;int&gt;&amp; vec, size_t index) {
+    return vec.at(index);
+}
+
+int main() {
+    std::vector&lt;int&gt; data = {1, 2, 3};
+
+<span class="boring">    //// 4) Get an internal data reference
+</span><span class="boring">    // auto &amp;x = data[0];
+</span><span class="boring">    // //auto *x = &amp;data[0];
+</span><span class="boring">    // std::cout &lt;&lt; "x(1) = " &lt;&lt; x &lt;&lt; ", &amp;data[0] = " &lt;&lt; &amp;data[0] &lt;&lt; std::endl;
+</span><span class="boring">    //// `modify (vec.push_back)` will might cause the backing storage of `data` to be reallocated. Dangling pointer and use after free issue, Does this compile in CPP ?
+</span><span class="boring">    // data.push_back(4);
+</span>
+    // 1) Modifying the vector
+    modify(data, 10);
+    std::cout &lt;&lt; "Modified data: ";
+    for (auto&amp; n : data) {
+        std::cout &lt;&lt; n &lt;&lt; " ";
+    }
+    std::cout &lt;&lt; "\n";
+
+    // 2) Attempt to get a value from the vector by index
+    const size_t index = 42;
+    auto result = get(data, index);
+    if (result.has_value()) {
+        std::cout &lt;&lt; "Valid data returned: " &lt;&lt; result.value() &lt;&lt; std::endl;
+    } else {
+        std::cout &lt;&lt; "No data exists for index: " &lt;&lt; index &lt;&lt; std::endl;
+    }
+
+    // 3) Use automatic bounds checked access employing exceptions
+    try {
+        safe_get(data, index);
+    }
+    catch (std::out_of_range &amp;e) {
+        std::cout &lt;&lt; "No data exists for index: " &lt;&lt; index &lt;&lt; std::endl;
+    }
+
+    // 4) Will this fail ?
+    std::cout &lt;&lt; unsafe_get(data, index) &lt;&lt; std::endl;
+
+<span class="boring">    //// 5) Modify the reference
+</span><span class="boring">    // x = 11;
+</span><span class="boring">    // std::cout &lt;&lt; "x(2) = " &lt;&lt; x &lt;&lt; ", &amp;data[0] = " &lt;&lt; &amp;data[0] &lt;&lt; std::endl;
+</span><span class="boring">    // std::cout &lt;&lt; "Modified data once again: ";
+</span><span class="boring">    // for (auto&amp; n : data) {
+</span><span class="boring">    //     std::cout &lt;&lt; n &lt;&lt; " ";
+</span><span class="boring">    // }
+</span><span class="boring">    // std::cout &lt;&lt; "\n";
+</span>
+    return 0;
+}
+</code></pre>
+<ul>
+<li>RUST</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust editable">fn modify(vec: &amp;mut Vec&lt;i32&gt;, value: i32) -&gt; () {
+    vec.push(value);
+    ()
+}
+
+fn get(vec: &amp;Vec&lt;i32&gt;,index: usize) -&gt; Option&lt;&amp;i32&gt; {
+    vec.get(index)
+}
+
+fn not_best_get(vec: &amp;Vec&lt;i32&gt;,index: usize) -&gt; i32 {
+    vec[index]
+}
+
+
+fn main() {
+
+    let mut data = vec![1, 2, 3];
+
+<span class="boring">    //// 4) Get an internal reference
+</span><span class="boring">    //let x = &amp;data[0];
+</span><span class="boring">    //// This does not compile in rust
+</span><span class="boring">    //data.push(4);
+</span>
+    // 1) Modifying the vector
+    modify(&amp;mut data, 10);
+    println!("{:?}", data);
+    // 2) Attempt to get a value from the vector by index
+    let index: usize = 42;
+    match get(&amp;data, index) {
+        Some(x) =&gt; {
+            println!("Valid data returned: {}", x);
+        },
+        None =&gt; {
+            println!("No data exists for index:{}", index);
+        }
+    }
+
+    // 3) Will this fail ?
+    //println!("{}", not_best_get(&amp;data, index));
+
+<span class="boring">    //// 4) Modify the reference
+</span><span class="boring">    //x = 11;
+</span><span class="boring">    //println!("{}", x);
+</span><span class="boring">    //println!("{:?}", data);
+</span>}</code></pre></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="problems-with-pointers"><a class="header" href="#problems-with-pointers">Problems with pointers</a></h1>
+<p>Pointers are a powerful feature in programming languages like C and C++, providing the flexibility to directly manipulate memory addresses. They are essential for a range of programming tasks, from creating efficient data structures to interfacing with hardware and operating systems. However, their power comes with significant complexity and potential pitfalls. Improper use of pointers can lead to memory leaks, dangling pointers, null pointer dereferences, and undefined behavior, making programs unstable, insecure, and prone to crashes.</p>
+<h3 id="example-1-dangling-pointer"><a class="header" href="#example-1-dangling-pointer">Example 1: Dangling Pointer</a></h3>
+<p><a href="https://godbolt.org/z/anc5sdbqE">GODBOLT</a></p>
+<ul>
+<li>C</li>
+</ul>
+<pre><code class="language-c">#include "stdio.h"
+
+int main() {
+    int* a = NULL;
+    {
+        int b = 5;
+        a = &amp;b;
+    }
+    int c = 10;
+    // At this point, b goes out of scope, but the memory allocated to it does not
+    printf("a: %d\n", *a);
+
+    return 0;
+}
+</code></pre>
+<ul>
+<li>CPP</li>
+</ul>
+<pre><code class="language-c">#include &lt;iostream&gt;
+#include &lt;memory&gt;
+
+int main() {
+    std::unique_ptr&lt;int&gt; a;
+    {
+        auto b = std::make_unique&lt;int&gt;(5);
+        a = std::move(b);  // Move the ownership of the unique_ptr&lt;int&gt; from 'b' to 'a'
+    } // 'b' goes out of scope here, but its value is safely stored in 'a'
+
+    int _c = 10;
+    // At this point, 'b' has gone out of scope, but its value is safely stored in 'a'
+    std::cout &lt;&lt; *a &lt;&lt; std::endl;
+
+    return 0;
+}
+    
+</code></pre>
+<ul>
+<li>RUST</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust editable">pub fn main() {
+    let a: Box&lt;i32&gt;;
+    {
+        let b = Box::new(5);
+        a = b; // Move the ownership of the Box&lt;i32&gt; from 'b' to 'a'
+    } // 'b' goes out of scope here, but its value is safely stored in 'a'
+
+    let _c = 10;
+    // At this point, 'b' has gone out of scope, but its value is safely stored in 'a'
+    println!("a: {}", a);
+}
+
+
+<span class="boring">// pub fn main() {
+</span><span class="boring">//     let a: *const i32;
+</span><span class="boring">//     {
+</span><span class="boring">//         let b = 5;
+</span><span class="boring">//         a = &amp;b as *const i32; // Assign the address of 'b' to 'a'
+</span><span class="boring">//     } // 'b' goes out of scope here, but the memory allocated to it does not
+</span>
+<span class="boring">//     let c = 10;
+</span><span class="boring">//     // At this point, 'b' has gone out of scope, so 'a' is a dangling pointer
+</span><span class="boring">//     unsafe {
+</span><span class="boring">//         println!("a: {}", *a); // Unsafe: accessing potentially invalid memory
+</span><span class="boring">//     }
+</span><span class="boring">// }</span></code></pre></pre>
+<h3 id="example-2-null-pointer-dereference"><a class="header" href="#example-2-null-pointer-dereference">Example 2: Null Pointer Dereference</a></h3>
+<p><a href="https://godbolt.org/z/5EMEsGar8">GODBOLT</a></p>
+<ul>
+<li>C</li>
+</ul>
+<pre><code class="language-c">#include "stdio.h"
+
+void process(int* ptr) {
+    // Unsafe: dereferencing a null pointer leads to undefined behavior.
+    printf("Data:%d\n", *ptr);
+}
+
+int main() {
+    int* ptr = NULL;
+    process(ptr);
+    return 0;
+}
+</code></pre>
+<ul>
+<li>CPP</li>
+</ul>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;memory&gt;
+#include &lt;optional&gt;
+#include &lt;exceptions&gt;
+
+void process1(std::unique_ptr&lt;int&gt; ptr) {
+    std::cout &lt;&lt; "Data: " &lt;&lt; *ptr &lt;&lt; std::endl;
+}
+
+void process2(std::optional&lt;int&gt; ptr) {
+    int v = ptr.value();
+    std::cout &lt;&lt; "Data: " &lt;&lt; v &lt;&lt; std::endl;
+}
+
+void process3(std::optional&lt;int&gt; ptr) {
+    auto msg = ptr.transform(
+            [](auto p){ return std::format("Data: {}", p); }
+        ).value_or(
+            "No value"
+        );
+    std::cout &lt;&lt; msg &lt;&lt; std::endl;
+}
+
+int main() {
+    std::optional&lt;int&gt; a;
+    try {
+        process2(a);  // will throw an exception
+    }
+    catch (std::bad_optional_access &amp;ex) {
+        std::cout &lt;&lt; "Received a null pointer (None value)." &lt;&lt; std::endl;
+    }
+
+    process3(a); // will work as expected with no exceptions.
+
+    std::unique_ptr&lt;int&gt; b;
+    process1(std::move(b)); // will panic.
+
+    return 0;
+}
+</code></pre>
+<ul>
+<li>RUST</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust editable">fn process(ptr: Option&lt;&amp;i32&gt;) {
+    match ptr {
+        Some(val) =&gt; println!("Data:{}", val),
+        None =&gt; println!("Received a null pointer (None value)."),
+    }
+}
+
+fn main() {
+    let ptr: Option&lt;&amp;i32&gt; = None;
+    process(ptr);
+}</code></pre></pre>
+<h3 id="example-3-dangling-pointer"><a class="header" href="#example-3-dangling-pointer">Example 3: Dangling Pointer</a></h3>
+<p><a href="https://godbolt.org/z/Mb5T48azz">GODBOLT</a></p>
+<ul>
+<li>C</li>
+</ul>
+<pre><code class="language-c">#include "stdio.h"
+#include "stdlib.h"
+
+int* dangling_pointer() {
+    int value = 42;
+    return &amp;value; // Returning address of the local variable, which will be deallocated
+}
+
+int main() {
+    int* ptr = dangling_pointer();
+    printf("Data: %d\n", *ptr); // Undefined behavior: accessing a deallocated stack frame
+    return 0;
+}
+</code></pre>
+<ul>
+<li>CPP</li>
+</ul>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;memory&gt;
+
+std::unique_ptr&lt;int&gt; dangling_pointer() {
+    return std::make_unique&lt;int&gt;(42);
+}
+
+int main() {
+    auto val = dangling_pointer();
+    std::cout &lt;&lt; "Data: " &lt;&lt; *val &lt;&lt; std::endl;  // Safe: `val` owns the data directly.
+}
+
+</code></pre>
+<ul>
+<li>RUST</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust editable">fn dangling_pointer() -&gt; Box&lt;i32&gt; {
+    let value = Box::new(42);
+    value
+}
+
+pub fn main() {
+    let val = dangling_pointer();
+    println!("Data:{}", *val); // Safe: `val` owns the data directly.
+}</code></pre></pre>
+<h3 id="example-4-stdunique_ptr"><a class="header" href="#example-4-stdunique_ptr">Example 4: <code>std::unique_ptr</code></a></h3>
+<p><a href="https://godbolt.org/z/facc59MoM">GODBOLT</a></p>
+<ul>
+<li>CPP</li>
+</ul>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;memory&gt;
+
+void process(std::unique_ptr&lt;int&gt; ptr) {
+    std::cout &lt;&lt; "1) Data: " &lt;&lt; *ptr &lt;&lt; std::endl;
+}
+
+int main() {
+    auto ptr = std::make_unique&lt;int&gt;(10);
+    process(std::move(ptr)); // Ownership is transferred to process()
+
+    // ptr is now moved; accessing *ptr would result in undefined behavior
+    std::cout &lt;&lt; "2) Data: " &lt;&lt; *ptr &lt;&lt; std::endl;
+
+    return 0;
+}
+</code></pre>
+<p>This example demonstrates <code>std::unique_ptr</code> for managing dynamic memory and transferring ownership. When <code>ptr</code> is passed to <code>process</code>, its ownership is moved, preventing <code>ptr</code> from being accidentally used after the transfer, which would lead to undefined behavior.</p>
+<ul>
+<li>RUST</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust editable">fn process(ptr: Box&lt;i32&gt;) {
+    println!("1) Data: {}", ptr);
+}
+
+fn main() {
+    let ptr = Box::new(10);
+    process(ptr); // Ownership is moved to process()
+
+    // Rust's compiler will prevent us from using ptr here since its ownership has been moved
+    // Compile-time error: value borrowed here after move
+    println!("2) Data: {}", ptr);
+}</code></pre></pre>
+<p>Rust naturally avoids these issues through its ownership system. Once a value's ownership is moved, the original variable cannot be used, preventing dangling pointers or undefined behavior. This is enforced at compile time, making Rust programs safer by design.</p>
+<h3 id="example-5-stdshared_ptr"><a class="header" href="#example-5-stdshared_ptr">Example 5: <code>std::shared_ptr</code></a></h3>
+<p><a href="https://godbolt.org/z/dKEax8x4o">GODBOLT</a></p>
+<ul>
+<li>CPP</li>
+</ul>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;memory&gt;
+
+void process(std::shared_ptr&lt;int&gt; ptr) {
+    std::cout &lt;&lt; "Data: " &lt;&lt; *ptr &lt;&lt; " (count: " &lt;&lt; ptr.use_count() &lt;&lt; ")" &lt;&lt; std::endl;
+}
+
+int main() {
+    auto ptr = std::make_shared&lt;int&gt;(10);
+    process(ptr); // Shared ownership allows ptr to be used after being passed
+
+    std::cout &lt;&lt; "Main still owns ptr with data: " &lt;&lt; *ptr &lt;&lt; " (count: " &lt;&lt; ptr.use_count() &lt;&lt; ")" &lt;&lt; std::endl;
+
+    return 0;
+}
+</code></pre>
+<p>This example illustrates the use of <code>std::shared_ptr</code> for shared ownership scenarios. The reference count mechanism ensures that the memory is only freed when the last owner goes out of scope, avoiding premature deallocation.</p>
+<ul>
+<li>RUST</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust editable">use std::rc::Rc;
+
+fn process(ptr: Rc&lt;i32&gt;) {
+    println!("Data: {} (count: {})", ptr, Rc::strong_count(&amp;ptr));
+}
+
+fn main() {
+    let ptr = Rc::new(10);
+    process(ptr.clone()); // The Rc type allows for shared ownership through reference counting
+
+    println!("Main still owns ptr with data: {} (count: {})", ptr, Rc::strong_count(&amp;ptr));
+}</code></pre></pre>
+<p>Rust's <code>Rc&lt;T&gt;</code> type provides shared ownership with reference counting, similar to <code>std::shared_ptr</code>. It ensures that the memory is deallocated only when the last reference goes out of scope. Rust further prevents data races by ensuring <code>Rc&lt;T&gt;</code> is only used in single-threaded scenarios, with <code>Arc&lt;T&gt;</code> available for multi-threaded contexts.</p>
+<h3 id="example-6-moving-stdshared_ptr"><a class="header" href="#example-6-moving-stdshared_ptr">Example 6: Moving <code>std::shared_ptr</code></a></h3>
+<p><a href="https://godbolt.org/z/nMxcTx5ns">GODBOLT</a></p>
+<ul>
+<li>CPP</li>
+</ul>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;memory&gt;
+
+void process(std::shared_ptr&lt;int&gt; ptr) {
+    std::cout &lt;&lt; "Data: " &lt;&lt; *ptr &lt;&lt; " (count: " &lt;&lt; ptr.use_count() &lt;&lt; ")" &lt;&lt; std::endl;
+}
+
+int main() {
+    auto ptr = std::make_shared&lt;int&gt;(10);
+    process(ptr); // Shared ownership allows ptr to be used after being passed
+
+    std::cout &lt;&lt; "Main still owns ptr with data: " &lt;&lt; *ptr &lt;&lt; " (count: " &lt;&lt; ptr.use_count() &lt;&lt; ")" &lt;&lt; std::endl;
+
+    std::shared_ptr&lt;int&gt; moved = std::move(ptr);
+    std::cout &lt;&lt; "Moved use count: " &lt;&lt; *moved &lt;&lt; " (count: " &lt;&lt; moved.use_count() &lt;&lt; ")" &lt;&lt; std::endl;
+    std::cout &lt;&lt; "Original after move: "&lt;&lt; *ptr &lt;&lt; " " &lt;&lt; ptr.use_count() &lt;&lt; std::endl; // ptr is now nullptr, UB
+
+    return 0;
+}
+</code></pre>
+<p>This example demonstrates moving a <code>std::shared_ptr</code> in C++. Moving transfers ownership of the managed object to another <code>std::shared_ptr</code>, effectively nullifying the original pointer without altering the reference count. This operation is useful for avoiding unnecessary atomic operations associated with incrementing and decrementing the reference count, improving performance in certain scenarios.</p>
+<ul>
+<li>RUST</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust editable">use std::rc::Rc;
+
+fn process(ptr: Rc&lt;i32&gt;) {
+    println!("Data: {} (count: {})", *ptr, Rc::strong_count(&amp;ptr));
+}
+
+pub fn main() {
+    let ptr = Rc::new(10);
+    process(Rc::clone(&amp;ptr)); // Simulates shared ownership by increasing the reference count
+
+    println!("Main still owns ptr with data: {} (count: {})", *ptr, Rc::strong_count(&amp;ptr));
+
+    // Note: Direct move in Rust transfers ownership and makes the original variable inaccessible
+    let moved = ptr.clone();
+
+    println!("Moved use count: {} (count: {})", *moved, Rc::strong_count(&amp;moved));
+    // Note: This will NOT compile, ptr is not longer accessible
+    //println!("Original after move: {} (count: {})", *ptr, Rc::strong_count(&amp;ptr));
+}</code></pre></pre>
+<p>In Rust, the concept of moving a <code>Rc&lt;T&gt;</code> doesn't directly translate from C++ because Rust's ownership model ensures safety by preventing access to moved values. Cloning an <code>Rc&lt;T&gt;</code> increases the reference count, simulating shared ownership similar to <code>std::shared_ptr</code>. However, Rust's compile-time checks prevent the use of moved values, avoiding the risk of null pointer dereferences and undefined behavior, showcasing Rust's approach to memory safety.</p>
+<div style="break-before: page; page-break-before: always;"></div><h3 id="example-1-simple-memory-leak"><a class="header" href="#example-1-simple-memory-leak">Example 1: Simple Memory Leak</a></h3>
+<ul>
+<li><a href="https://godbolt.org/z/beGf1Mn9a">GODBOLT</a></li>
+<li><a href="https://github.com/luk6xff/luk6xff.github.io/tree/master/content/other/safe_secure_rust_book/examples/memory_safety/memory_leaks">DEMO</a></li>
+</ul>
+<ul>
+<li>CPP</li>
+</ul>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;memory&gt;
+
+bool is_limit_reached(int speed_limit) {
+
+    int current_speed = 0;
+
+    for (int factor = 0; factor &lt; 100; ++factor) {
+<span class="boring">        // std::unique_ptr&lt;int&gt; ptr = std::make_unique&lt;int&gt;(10); // Correct way to aloacte memory with automatic deallocation
+</span>        int* ptr = new int(2);
+        std::cout &lt;&lt; "Allocated memory at address: " &lt;&lt; ptr &lt;&lt; std::endl;
+        current_speed += (factor + *ptr);
+<span class="boring">        // delete ptr; // Correct way to deallocate memory
+</span>    }
+
+    int* ptr = new int(10);
+    current_speed += *ptr;
+    if (current_speed &gt; speed_limit) {
+<span class="boring">        // delete ptr; // Correct way to deallocate memory
+</span>        return true;
+    }
+    return false;
+}
+
+int main() {
+    if (is_limit_reached(120)) {
+        std::cout &lt;&lt; "Speed Limit exceeded." &lt;&lt; std::endl;
+    }
+    return 0;
+}
+</code></pre>
+<ul>
+<li>RUST</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust editable">fn is_limit_reached(speed_limit: i32) -&gt; bool {
+
+    let mut current_speed: i32 = 0;
+
+    for factor in 0..100 {
+        let ptr = Box::new(2); // Dynamically allocate memory with automatic deallocation
+        current_speed += factor + *ptr;
+    }
+
+    let ptr = Box::new(10); // Dynamically allocate memory with automatic deallocation
+    current_speed += *ptr;
+    if current_speed &gt; speed_limit {
+        return true;
+    }
+    return false;
+    // Memory pointed to by `ptr` is automatically deallocated here
+}
+
+fn main() {
+    if is_limit_reached(120) {
+        println!("Speed Limit exceeded.");
+    }
+}</code></pre></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="double-free"><a class="header" href="#double-free">Double Free</a></h1>
+<h3 id="example-1-classic-double-free-problem"><a class="header" href="#example-1-classic-double-free-problem">Example 1: Classic double free problem</a></h3>
+<p><a href="https://godbolt.org/z/8Wxnxhf34">GODBOLT</a></p>
+<ul>
+<li>CPP</li>
+</ul>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+
+void cause_double_free() {
+    int* ptr = new int(10); // Allocate memory on the heap
+    delete ptr; // Correctly free memory
+    *ptr = 11;
+    std:: cout &lt;&lt; "ptr = " &lt;&lt; *ptr &lt;&lt; std::endl;
+    delete ptr; // Double free error: undefined behavior
+    *ptr = 12;
+    std:: cout &lt;&lt; "ptr = " &lt;&lt; *ptr &lt;&lt; std::endl;
+}
+
+int main() {
+    cause_double_free();
+    return 0;
+}
+</code></pre>
+<ul>
+<li>RUST</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust editable">fn cause_double_free() {
+    let mut ptr = Box::new(10); // Allocate memory on the heap
+    *ptr = 11;
+    println!("ptr = {}", *ptr);
+    // Memory is automatically freed when `ptr` goes out of scope
+}
+
+pub fn main() {
+    cause_double_free();
+    println!("No double free error occurred.");
+}</code></pre></pre>
+<h3 id="example-2-double-free-because-of-the-manual-memory-management-implementation-issue"><a class="header" href="#example-2-double-free-because-of-the-manual-memory-management-implementation-issue">Example 2: Double free because of the manual memory management implementation issue</a></h3>
+<p><a href="https://godbolt.org/z/fW7jvjf8e">GODBOLT</a></p>
+<ul>
+<li>CPP</li>
+</ul>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;cstring&gt;
+
+class DynamicArray {
+public:
+    DynamicArray(size_t size)
+    : size(size)
+    , data(new int[size]) {}
+
+    ~DynamicArray() {
+        std::cout &lt;&lt; "DTOR called on data: " &lt;&lt; std::hex &lt;&lt; data &lt;&lt; std::endl;
+        delete[] data;
+    }
+
+    // Copy constructor for deep copy
+    DynamicArray(const DynamicArray&amp; other)
+    : size(other.size)
+    , data(new int[other.size]) {
+        std::memcpy(data, other.data, size * sizeof(int));
+    }
+
+    // Incorrect copy assignment operator - shallow copy
+    DynamicArray&amp; operator=(const DynamicArray&amp; other) {
+        if (this != &amp;other) {
+<span class="boring">            // First problem: Previous data is not deleted, leading to a memory leak
+</span><span class="boring">            // delete[] data;
+</span>            size = other.size;
+            data = other.data; //%// Second problem: This leads to sharing the same data pointer
+<span class="boring">            // data = new int[other.size];
+</span>            std::memcpy(data, other.data, size * sizeof(int));
+        }
+        return *this;
+    }
+
+    void fillWith(int value) {
+        std::fill(data, data + size, value);
+    }
+
+    void print() const {
+        for (int i = 0; i &lt; size; ++i) {
+            std::cout &lt;&lt; data[i] &lt;&lt; " ";
+        }
+        std::cout &lt;&lt; "\n";
+    }
+
+//private:
+    int* data;
+    size_t size;
+};
+
+
+<span class="boring">// class DynamicArray {
+</span><span class="boring">// public:
+</span><span class="boring">//     std::vector&lt;int&gt; data;
+</span>
+<span class="boring">//     // Constructor initializes the vector to a specific size with a default value
+</span><span class="boring">//     DynamicArray(size_t size, int initialValue = 0) : data(size, initialValue) {}
+</span>
+<span class="boring">//     // Method to fill the vector with a specific value
+</span><span class="boring">//     void fillWith(int value) {
+</span><span class="boring">//         std::fill(data.begin(), data.end(), value);
+</span><span class="boring">//     }
+</span>
+<span class="boring">//     // Method to print the contents of the vector
+</span><span class="boring">//     void print() const {
+</span><span class="boring">//         for (int item : data) {
+</span><span class="boring">//             std::cout &lt;&lt; item &lt;&lt; " ";
+</span><span class="boring">//         }
+</span><span class="boring">//         std::cout &lt;&lt; "\n";
+</span><span class="boring">//     }
+</span><span class="boring">// };
+</span>
+
+
+void cause_double_free() {
+    DynamicArray arr1(10);
+    arr1.fillWith(11);
+
+    DynamicArray arr2 = arr1; // Copy constructor - deep copy
+    arr2.fillWith(22); // Modifies arr1 after it has been assigned to arr2
+    std::cout &lt;&lt; "arr1: "; arr1.print(); // Expected to print values from arr1
+    std::cout &lt;&lt; "arr2: "; arr2.print(); // Expected to print values from arr2
+
+    DynamicArray arr3(5);
+    arr3 = arr2; // Copy assignment operator
+<span class="boring">    // Both arr1 and arr2 now share the same `data` pointer.
+</span>    arr3.fillWith(33); // Modifies arr1 after it has been assigned to arr2
+
+    std::cout &lt;&lt; "Adresses:" &lt;&lt; std::hex &lt;&lt; " arr1:" &lt;&lt; arr1.data &lt;&lt; " arr2:" &lt;&lt; arr2.data &lt;&lt; " arr3:" &lt;&lt; arr3.data  &lt;&lt;  std::endl;
+    std::cout &lt;&lt; "arr1: "; arr1.print(); // Expected to print values from arr1
+    std::cout &lt;&lt; "arr2: "; arr2.print(); // Expected to print values from arr2
+    std::cout &lt;&lt; "arr3: "; arr3.print(); // Expected to print values from arr3
+}
+
+int main() {
+    cause_double_free(); // This will lead to a double free error when arr2 and arr3 are destructed.
+    return 0;
+}
+</code></pre>
+<ul>
+<li>RUST</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust editable">struct DynamicArray {
+    data: Vec&lt;i32&gt;,
+}
+
+impl DynamicArray {
+    fn new(size: usize) -&gt; Self {
+        DynamicArray {
+            data: vec![0; size],
+        }
+    }
+
+    fn fill_with(&amp;mut self, value: i32) {
+        for item in &amp;mut self.data {
+            *item = value;
+        }
+    }
+
+    fn print(&amp;self) {
+        println!("{:?}", self.data);
+    }
+}
+
+pub fn main() {
+    let mut arr1 = DynamicArray::new(10);
+    arr1.fill_with(11);
+
+    let arr2 = arr1; // Ownership is moved to arr2, arr1 is no longer valid
+
+    // Trying to use `arr1` here would result in a compile-time error
+    //arr1.fill_with(0); // Uncommenting this line will not compile
+
+    // arr2 is safely used
+    arr2.print();
+}</code></pre></pre>
+<div style="break-before: page; page-break-before: always;"></div><h3 id="example-1-format-string-issue"><a class="header" href="#example-1-format-string-issue">Example 1: Format String Issue</a></h3>
+<ul>
+<li><a href="https://godbolt.org/z/beGf1Mn9a">GODBOLT</a></li>
+<li><a href="https://github.com/luk6xff/luk6xff.github.io/tree/master/content/other/safe_secure_rust_book/examples/memory_safety/format_string">DEMO</a></li>
+</ul>
+<ul>
+<li>C</li>
+</ul>
+<pre><code class="language-cpp">#include &lt;cstdio&gt;
+#include &lt;cstring&gt;
+#include &lt;cstdlib&gt;
+
+
+#define MAX_USERNAME_LENGTH 32
+#define MAX_PASSWORD_LENGTH 32
+#define BCRYPT_HASHSIZE 61
+
+namespace {
+    int bcrypt_checkpw(const char *password, const char *hash) {
+        // Simulate bcrypt password checking, always return 0 for this example
+        return 0;
+    }
+}
+
+// Simulated database storing username and hashed password
+struct User {
+    char username[MAX_USERNAME_LENGTH];
+    char hashed_password[BCRYPT_HASHSIZE];
+};
+
+// Example users array. In a real application, you would dynamically query a secure database.
+struct User database[] = {
+    {"admin", "aaaaaaaa"},
+    {"lukas", "hashed_lukasPass"},
+    {"greg", "hashed_gregPass"}
+};
+
+
+// Function to find a user by username and verify their password
+bool verify_user_password(const char* username, const char* password) {
+    if (username == NULL || password == NULL) {
+        fprintf(stderr, "Error: Username or password is NULL.\n");
+        return false; // Early return if input is NULL
+    }
+
+    size_t username_length = strlen(username);
+    size_t password_length = strlen(password);
+    if (username_length == 0 || username_length &gt;= MAX_USERNAME_LENGTH ||
+        password_length == 0 || password_length &gt;= MAX_PASSWORD_LENGTH) {
+        fprintf(stderr, "Error: Username or password is invalid length.\n");
+        return false; // Check for valid input length
+    }
+
+    // Simulate querying a database for the user
+    for (size_t i = 0; i &lt; sizeof(database) / sizeof(database[0]); ++i) {
+        if (strncmp(database[i].username, username, strlen(database[i].username)) == 0) {
+            // Simulating using bcrypt to compare the password with the stored hash
+            if (bcrypt_checkpw(password, database[i].hashed_password) == 0) {
+                return true; // Password matches
+            } else {
+                return false;
+            }
+        }
+    }
+    return false; // User not found
+}
+
+// Securely zeroize sensitive data in memory
+void secure_zeroize(void *ptr, size_t len) {
+    volatile unsigned char *p = (unsigned char *)ptr;
+    while (len--) {
+        *p++ = 0;
+    }
+}
+
+// Admin panel
+void admin_panel() {
+    printf("&lt;&lt;&lt; Welcome to admin panel &gt;&gt;&gt;\n");
+    std::system("/bin/sh");
+}
+
+// Handle admin authentication
+bool authenticate_admin() {
+    char entered_name[MAX_USERNAME_LENGTH];
+    char entered_password[MAX_PASSWORD_LENGTH];
+    secure_zeroize(entered_name, sizeof(entered_name));
+    secure_zeroize(entered_password, sizeof(entered_password));
+
+    printf("Enter username:\n");
+    fgets(entered_name, sizeof(entered_name), stdin);
+
+    printf("Enter password:\n");
+    fgets(entered_password, sizeof(entered_password), stdin);
+    entered_password[strcspn(entered_password, "\n")] = '\0'; // Remove newline character
+
+    if (verify_user_password(entered_name, entered_password)){
+        printf("\n------------------------------------------------------------\n");
+        printf("Password matched, Authenticated succesfully for the user:");
+        printf(entered_name);
+        printf("\n------------------------------------------------------------\n");
+        return true;
+    }
+    printf("Password mismatch for the user: %s\n", entered_name);
+    return false;
+}
+
+int main() {
+
+    // Simulate reading from database ...
+    if (authenticate_admin()) {
+        admin_panel();
+    } else {
+        printf("Authentication failed!\n");
+    }
+
+    return 0;
+}
+
+</code></pre>
+<p>The line <code>printf(entered_name);</code> in the code is potentially vulnerable to a format string vulnerability.</p>
+<p>In C, <code>printf</code> interprets its format string argument (<code>entered_name</code> in this case) and expects subsequent arguments to match the placeholders in the format string. If the contents of <code>entered_name</code> contain format specifiers (like <code>%s</code>, <code>%d</code>, etc.) and those are not intended for formatting, but rather as part of the data itself, it can lead to unexpected behavior.</p>
+<p>Consequences of a format string vulnerability include:</p>
+<ol>
+<li>
+<p><strong>Information Disclosure</strong>: Attackers can exploit format string vulnerabilities to read arbitrary memory contents, potentially exposing sensitive information like stack values, function return addresses, or other variables in memory.</p>
+</li>
+<li>
+<p><strong>Arbitrary Memory Modification</strong>: Format string vulnerabilities can also be leveraged to write data to arbitrary memory locations. This can lead to a variety of security issues, including code execution, denial of service, or corruption of critical data.</p>
+</li>
+</ol>
+<p>To mitigate this vulnerability, you should use format specifiers properly with <code>printf</code>, ensuring that user-controlled input is not directly used as the format string. Instead, use format specifiers like <code>%s</code> to print strings safely. In this specific case, it would be safer to use <code>printf("%s", entered_name);</code> to ensure that <code>entered_name</code> is treated as a string and not as a format specifier. Additionally, consider validating and sanitizing user input to prevent malicious input from being interpreted as format specifiers.</p>
+<ul>
+<li>RUST
+<code>Format string</code> vulnerabilities are avoided because Rust's <code>println!</code> and <code>format!</code> macros do not interpret format strings from user input as format specifiers, preventing attackers from manipulating the program's behavior through format strings.</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="type-safety-and-error-handling---no-null-no-problem"><a class="header" href="#type-safety-and-error-handling---no-null-no-problem">Type Safety and Error Handling - No Null, No Problem</a></h1>
+<pre><code class="language-sh">Safe Rust code is guaranteed to avoid undefined behavior.
+</code></pre>
+<p>Type safety is a key element to reliability. We ensure that safe Rust code is free of "undefined behavior", which is the term that compiler authors use to refer to things like segfaults, data races, and out-of-bounds memory accesses.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="rusts-tiered-error-handling-a-technical-overview"><a class="header" href="#rusts-tiered-error-handling-a-technical-overview">Rust's Tiered Error Handling: A Technical Overview</a></h2>
+<p>In Rust, error handling is designed to be both <strong>explicit</strong> and <strong>flexible</strong>. It uses a tiered approach based on the severity and recoverability of errors, offering different mechanisms for each level:</p>
+<p><strong>1. Option:</strong></p>
+<ul>
+<li><strong>Purpose:</strong> Represents a value that may or may not be present.</li>
+<li><strong>Use cases:</strong> Ideal for situations where a value might be missing due to user input, network issues, or optional data structures.</li>
+<li><strong>Example:</strong> Checking if a file exists using <code>fs::metadata(path).ok()</code>.</li>
+</ul>
+<p><strong>2. Result:</strong></p>
+<ul>
+<li><strong>Purpose:</strong> Represents either a successful outcome (Ok) or an error (Err).</li>
+<li><strong>Use cases:</strong> Handling recoverable errors like I/O operations, parsing, or database interactions.</li>
+<li><strong>Example:</strong> Reading data from a file using <code>fs::read_to_string(path).expect("Failed to read file")</code>.</li>
+</ul>
+<p><strong>3. Panic:</strong></p>
+<ul>
+<li><strong>Purpose:</strong> Signals an unrecoverable error that requires program termination.</li>
+<li><strong>Use cases:</strong> Internal logic errors, resource exhaustion, or unexpected system failures.</li>
+<li><strong>Example:</strong> Panicking with <code>panic!("Invalid data format")</code> when encountering corrupted data.</li>
+</ul>
+<p><strong>4. Program termination:</strong></p>
+<ul>
+<li><strong>Purpose:</strong> Occurs due to catastrophic events like memory exhaustion or segmentation faults.</li>
+<li><strong>Use cases:</strong> Unforeseen circumstances beyond the program's control.</li>
+<li><strong>Example:</strong> Out-of-memory error leading to program termination.</li>
+</ul>
+<p><strong>Benefits:</strong></p>
+<ul>
+<li><strong>Clarity:</strong> Explicit error handling improves code readability and maintainability.</li>
+<li><strong>Safety:</strong> Catching errors early prevents them from propagating and causing further issues.</li>
+<li><strong>Flexibility:</strong> Developers can choose the appropriate mechanism based on the error's severity and recoverability.</li>
+<li><strong>Performance:</strong> Rust's error handling is designed to be efficient and have minimal runtime overhead.</li>
+</ul>
+<p><strong>Additional points:</strong></p>
+<ul>
+<li>Rust's ownership system and type system also play a crucial role in preventing and handling errors.</li>
+<li>The <code>match</code> expression and the <code>?</code> operator provide convenient ways to work with <code>Result</code> values.</li>
+<li>For custom error types, you can define your own <code>enum</code> variants and implement the <code>Error</code> trait.</li>
+</ul>
+<h3 id="example-1-exception-handling"><a class="header" href="#example-1-exception-handling">Example 1: Exception Handling</a></h3>
+<ul>
+<li>CPP - In C++, exceptions provide a way to react to exceptional circumstances (like runtime errors) in programs by transferring control to special functions called handlers.</li>
+</ul>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;stdexcept&gt;
+
+void riskyFunction() {
+    bool errorOccurred = true; // Simulate an error
+    if (errorOccurred) {
+        throw std::runtime_error("Failed to execute risky operation");
+    }
+}
+
+int main() {
+    try {
+        riskyFunction();
+    } catch (const std::runtime_error&amp; err) {
+        std::cout &lt;&lt; "Caught an error: " &lt;&lt; err.what() &lt;&lt; std::endl;
+    }
+    return 0;
+}
+</code></pre>
+<ul>
+<li>RUST - Rust uses the <code>Result</code> type for error handling, which can either be <code>Ok</code>, indicating success, or <code>Err</code>, indicating an error.</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust editable">fn risky_operation() -&gt; Result&lt;(), &amp;'static str&gt; {
+    let error_occurred = true; // Simulate an error
+    if error_occurred {
+        return Err("Failed to execute risky operation");
+    }
+    Ok(())
+}
+
+fn main() {
+    match risky_operation() {
+        Ok(_) =&gt; println!("Operation succeeded."),
+        Err(e) =&gt; println!("Caught an error: {}", e),
+    }
+}</code></pre></pre>
+<h3 id="example-2-exception-handling-for-file-io"><a class="header" href="#example-2-exception-handling-for-file-io">Example 2: Exception Handling for File I/O</a></h3>
+<p><a href="https://godbolt.org/z/dTEss91jK">GODBOLT</a></p>
+<ul>
+<li>CPP</li>
+</ul>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;fstream&gt;
+#include &lt;stdexcept&gt;
+
+void readFile(const std::string&amp; filePath) {
+    std::ifstream file(filePath);
+    if (!file) {
+        throw std::runtime_error("Unable to open file");
+    }
+    std::cout &lt;&lt; "File opened successfully" &lt;&lt; std::endl;
+    // Read file contents...
+}
+
+int main() {
+    try {
+        readFile("example.txt");
+    } catch (const std::runtime_error&amp; err) {
+        std::cout &lt;&lt; "Caught an error: " &lt;&lt; err.what() &lt;&lt; std::endl;
+    }
+    return 0;
+}
+</code></pre>
+<p>There is a similar mechanism to rust <code>Result</code> available since C++23: <a href="https://en.cppreference.com/w/cpp/utility/expected">std::unexpected</a>.</p>
+<ul>
+<li>RUST</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust editable">use std::fs::File;
+use std::io::{self, Read};
+
+fn read_file(file_path: &amp;str) -&gt; Result&lt;String, io::Error&gt; {
+    let mut file = File::open(file_path)?;
+    let mut contents = String::new();
+    file.read_to_string(&amp;mut contents)?;
+    Ok(contents)
+}
+
+fn main() {
+    match read_file("example.txt") {
+        Ok(contents) =&gt; println!("File contents: {}", contents),
+        Err(e) =&gt; println!("Caught an error: {}", e),
+    }
+}</code></pre></pre>
+<h3 id="example-3-result"><a class="header" href="#example-3-result">Example 3: Result</a></h3>
+<ul>
+<li>RUST</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust editable">#[derive(Debug)]
+enum CopyError {
+    LengthMismatch { src_len: usize, dst_len: usize },
+}
+
+fn safe_copy_from_slice(dst: &amp;mut [u8], src: &amp;[u8]) -&gt; Result&lt;(), CopyError&gt; {
+    if dst.len() != src.len() {
+        Err(CopyError::LengthMismatch {
+            src_len: src.len(),
+            dst_len: dst.len()
+        })
+    } else {
+        dst.copy_from_slice(src);
+        Ok(())
+    }
+}
+
+fn main() {
+    let input = "This is way too long for the buffer".as_bytes();
+    let mut buf = [0u8; 10];
+
+    match safe_copy_from_slice(&amp;mut buf, &amp;input[0..buf.len()]) {
+        Ok(()) =&gt; println!("Copy successful: {:?}", &amp;buf),
+        Err(CopyError::LengthMismatch { src_len, dst_len }) =&gt; {
+            println!("Failed to copy: source length ({}) does not match destination length ({}).", src_len, dst_len);
+        }
+    }
+}</code></pre></pre>
+<h3 id="example-4-option"><a class="header" href="#example-4-option">Example 4: Option</a></h3>
+<p>The Option type in Rust and its equivalent pattern in C++ are used to represent the possibility of absence of a value</p>
+<ul>
+<li>CPP</li>
+</ul>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;optional&gt;
+
+std::optional&lt;double&gt; divide(double numerator, double denominator) {
+    if (denominator == 0.0) {
+        return std::nullopt;
+    } else {
+        return numerator / denominator;
+    }
+}
+
+int main() {
+    auto result = divide(10.0, 2.0);
+    if (result.has_value()) {
+        std::cout &lt;&lt; "Result: " &lt;&lt; result.value() &lt;&lt; std::endl;
+    } else {
+        std::cout &lt;&lt; "Cannot divide by zero" &lt;&lt; std::endl;
+    }
+}
+</code></pre>
+<ul>
+<li>RUST</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust editable">fn divide(numerator: f64, denominator: f64) -&gt; Option&lt;f64&gt; {
+    if denominator == 0.0 {
+        None
+    } else {
+        Some(numerator / denominator)
+    }
+}
+
+fn main() {
+    let result = divide(10.0, 2.0);
+    match result {
+        Some(value) =&gt; println!("Result: {}", value),
+        None =&gt; println!("Cannot divide by zero"),
+    }
+}</code></pre></pre>
+<h3 id="example-5-option---fetching-a-config-value"><a class="header" href="#example-5-option---fetching-a-config-value">Example 5: Option - Fetching a Config Value</a></h3>
+<ul>
+<li>CPP</li>
+</ul>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;optional&gt;
+#include &lt;string&gt;
+
+std::optional&lt;std::string&gt; get_config_value(const std::string&amp; key) {
+    if (key == "timeout") {
+        return "100";
+    } else {
+        return std::nullopt;
+    }
+}
+
+int main() {
+    auto timeout = get_config_value("timeout");
+    if (timeout.has_value()) {
+        std::cout &lt;&lt; "Timeout is set to " &lt;&lt; timeout.value() &lt;&lt; std::endl;
+    } else {
+        std::cout &lt;&lt; "Timeout not specified" &lt;&lt; std::endl;
+    }
+}
+</code></pre>
+<ul>
+<li>RUST</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust editable">fn get_config_value(key: &amp;str) -&gt; Option&lt;String&gt; {
+    match key {
+        "timeout" =&gt; Some("100".to_string()),
+        _ =&gt; None,
+    }
+}
+
+fn main() {
+    let timeout = get_config_value("timeout");
+    match timeout {
+        Some(value) =&gt; println!("Timeout is set to {}", value),
+        None =&gt; println!("Timeout not specified"),
+    }
+}</code></pre></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="types-conversions"><a class="header" href="#types-conversions">Types conversions</a></h1>
+<h3 id="example-1-2"><a class="header" href="#example-1-2">Example 1:</a></h3>
+<p><a href="https://godbolt.org/z/de5o4sj4f">GODBOLT</a></p>
+<ul>
+<li>CPP</li>
+</ul>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+
+int main() {
+    // Implicit conversion (no casting required)
+    int num_int = 10;
+    double num_double = num_int; // Implicit conversion from int to double
+
+    // C-style casting
+    double a = 5.5;
+    int b = (int)a; // C-style cast: double to int
+
+    // Static cast
+    double c = 10.7;
+    int d = static_cast&lt;int&gt;(c); // Static cast: double to int
+
+    // Reinterpret cast
+    int e = 10;
+    char* ptr = reinterpret_cast&lt;char*&gt;(&amp;e); // Reinterpret cast: int pointer to char pointer
+
+    // Const cast
+    const int f = 20;
+    int* g = const_cast&lt;int*&gt;(&amp;f); // Const cast: const int pointer to int pointer (use with caution)
+
+    // Dynamic cast (used in polymorphic classes)
+    class Base {
+    public:
+        virtual void print() {
+            std::cout &lt;&lt; "Base class" &lt;&lt; std::endl;
+        }
+    };
+
+    class Derived : public Base {
+    public:
+        void print() override {
+            std::cout &lt;&lt; "Derived class" &lt;&lt; std::endl;
+        }
+    };
+
+    Base* base_ptr = new Derived();
+    Derived* derived_ptr = dynamic_cast&lt;Derived*&gt;(base_ptr); // Dynamic cast: Base pointer to Derived pointer
+
+    // Output the results
+    std::cout &lt;&lt; "Implicit conversion: " &lt;&lt; num_double &lt;&lt; std::endl;
+    std::cout &lt;&lt; "C-style casting: " &lt;&lt; b &lt;&lt; std::endl;
+    std::cout &lt;&lt; "Static cast: " &lt;&lt; d &lt;&lt; std::endl;
+    std::cout &lt;&lt; "Reinterpret cast: " &lt;&lt; *ptr &lt;&lt; std::endl;
+    std::cout &lt;&lt; "Const cast: " &lt;&lt; *g &lt;&lt; std::endl;
+    if (derived_ptr) {
+        derived_ptr-&gt;print();
+    } else {
+        std::cout &lt;&lt; "Dynamic cast failed" &lt;&lt; std::endl;
+    }
+
+    return 0;
+}
+
+</code></pre>
+<ul>
+<li>RUST</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust editable">pub fn main() {
+    // Implicit conversion (no casting required)
+    let num_int: i32 = 10;
+    let num_double: f64 = num_int as f64; // Implicit conversion from i32 to f64
+
+    // C-style casting (not recommended in Rust)
+    let a: f64 = 5.5;
+    let b: i32 = a as i32; // C-style cast: f64 to i32
+
+    // Static cast (not directly available in Rust)
+    let c: f64 = 10.7;
+    let d: i32 = c as i32; // Rust uses as keyword for static cast
+
+    // Reinterpret cast
+    let e: i32 = 10;
+    let ptr: *const i32 = &amp;e;
+    let ptr_cast: *const u8 = ptr as *const u8; // Reinterpret cast: i32 pointer to u8 pointer
+
+    // Const cast (not directly available in Rust)
+    let f: i32 = 20;
+    let g: *const i32 = &amp;f;
+    let g_mut: *mut i32 = g as *mut i32; // Const cast: const i32 pointer to mut i32 pointer
+
+    // Dynamic cast (not directly available in Rust)
+    trait Base {
+        fn print(&amp;self);
+    }
+
+    struct Derived;
+
+    impl Base for Derived {
+        fn print(&amp;self) {
+            println!("Derived class");
+        }
+    }
+
+    let base_ref: &amp;dyn Base = &amp;Derived;
+
+    // Output the results
+    println!("Implicit conversion: {}", num_double);
+    println!("C-style casting: {}", b);
+    println!("Static cast: {}", d);
+    // unsafe {
+    //     println!("Reinterpret cast: {:?}", *ptr_cast);
+    //     *g_mut = 30; // Safe because we own the memory and it's not const anymore
+    //     println!("Const cast: {}", *g_mut);
+    // }
+
+    println!("{:?}", base_ref.print());
+}
+</code></pre></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="uninitialized-variables"><a class="header" href="#uninitialized-variables">Uninitialized Variables</a></h1>
+<h3 id="example-1-3"><a class="header" href="#example-1-3">Example 1</a></h3>
+<p>[AR, Rule 9.1] The value of an object shouldn't be read if it hasn't been written
+<a href="https://godbolt.org/z/dbP1br3eP">GODBOLT</a></p>
+<ul>
+<li>CPP</li>
+</ul>
+<pre><code class="language-cpp">#include &lt;cstdio&gt;
+
+bool foo() {
+    int var;
+
+    if (var &gt; 0) {
+        return true;
+    }
+    return false;
+}
+
+int main() {
+    printf("%d\n", foo());
+}
+</code></pre>
+<ul>
+<li>RUST</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust editable">fn foo() -&gt; bool {
+    let var: isize;
+
+    if var &gt; 0 {
+        return true;
+    }
+    return false;
+}
+
+pub fn main() {
+    println!("{}\n", foo());
+}</code></pre></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="variable-overflow"><a class="header" href="#variable-overflow">Variable Overflow</a></h1>
+<h3 id="example-1-4"><a class="header" href="#example-1-4">Example 1:</a></h3>
+<p><a href="https://godbolt.org/z/T14Gx5vcj">GODBOLT</a></p>
+<ul>
+<li>CPP</li>
+</ul>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;cstdint&gt;
+
+int main() {
+    uint8_t a = 200;
+    uint8_t b = 100;
+    uint8_t c = a + b;
+
+    std::cout &lt;&lt; "c: " &lt;&lt; static_cast&lt;int&gt;(c) &lt;&lt; std::endl;
+
+    return 0;
+}
+</code></pre>
+<ul>
+<li>RUST</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust editable">pub fn main() {
+    let a: u8 = 200;
+    let b: u8 = 100;
+    // Default addition, which will panic in debug mode due to overflow
+    // In release mode, this will wrap around according to Rust's overflow semantics
+    let c: u8 = a + b;
+    println!("c: (default_add):{}", c);
+
+    let c = a.wrapping_add(b); // Replaces the overflow line with safe wrapping behavior
+    println!("c (wrapping_add): {}", c);
+
+    // Checked addition - returns an Option, None if there's overflow
+    match a.checked_add(b) {
+        Some(value) =&gt; println!("c (checked_add): {}", value),
+        None =&gt; println!("c (checked_add): Overflow detected"),
+    }
+
+    // Saturating addition - saturates at the numeric bounds instead of overflowing
+    let c_saturating = a.saturating_add(b);
+    println!("c (saturating_add): {}", c_saturating);
+}</code></pre></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="concurrency-without-data-races"><a class="header" href="#concurrency-without-data-races">Concurrency Without Data Races</a></h1>
+<p>Rust fully embraces concurrent programming by leveraging operating system threads, mutexes, and channels. Its robust type system is central to transforming numerous potential runtime concurrency errors into compile-time issues. This approach, often termed "fearless concurrency," empowers software engineers to develop concurrent applications with confidence, trusting the compiler to enforce runtime correctness.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="threads"><a class="header" href="#threads">Threads</a></h1>
+<h3 id="example-1-thread-panics"><a class="header" href="#example-1-thread-panics">Example 1: Thread panics</a></h3>
+<p><a href="https://godbolt.org/z/4qMv9T8h4">GODBOLT</a></p>
+<ul>
+<li>CPP
+<ul>
+<li>Unlike Rust, C++ does not have a built-in mechanism for recovering from a thread that has thrown an exception uncaught within that thread. Therefore, it's important to catch exceptions within any thread to ensure proper cleanup and to prevent the entire program from crashing.</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;iostream&gt;
+#include &lt;thread&gt;
+#include &lt;chrono&gt;
+#include &lt;exception&gt;
+
+void thread_function() {
+    for (int i = 1; i &lt; 10; ++i) {
+        std::cout &lt;&lt; "Counting from the other thread: " &lt;&lt; i &lt;&lt; "!" &lt;&lt; std::endl;
+        std::this_thread::sleep_for(std::chrono::milliseconds(1));
+        if (i == 5) {
+            throw std::runtime_error("The other thread panicked!");
+        }
+    }
+}
+
+int main() {
+    std::thread t([&amp;]() {
+<span class="boring">        // try {
+</span>            thread_function();
+<span class="boring">        //} catch (const std::exception&amp; e) {
+</span><span class="boring">        //    std::cerr &lt;&lt; "Exception from the thread: " &lt;&lt; e.what() &lt;&lt; std::endl;
+</span><span class="boring">        //}
+</span>    });
+
+    for (int i = 1; i &lt; 10; ++i) {
+        std::cout &lt;&lt; "Counting from the main thread: " &lt;&lt; i &lt;&lt; "!" &lt;&lt; std::endl;
+        std::this_thread::sleep_for(std::chrono::milliseconds(1));
+    }
+
+    // Wait for the thread to complete
+    t.join();
+
+    return 0;
+}
+</code></pre>
+<ul>
+<li>RUST
+<ul>
+<li>Threads are all daemon threads, the main thread does not wait for them.</li>
+<li>Thread panics are independent of each other</li>
+</ul>
+</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust editable">use std::thread;
+use std::time::Duration;
+
+pub fn main() {
+
+    thread::spawn(|| {
+        for i in 1..10 {
+            println!("Counting from the other thread: {i}!");
+            thread::sleep(Duration::from_millis(1));
+            if i == 5 {
+                panic!("The other thread panicked!")
+            }
+        }
+    });
+
+    for i in 1..10 {
+        println!("Counting from the main thread: {i}!");
+        thread::sleep(Duration::from_millis(1));
+    }
+}</code></pre></pre>
+<h3 id="example-2-data-race"><a class="header" href="#example-2-data-race">Example 2: Data Race</a></h3>
+<p><a href="https://godbolt.org/z/YMxxKTof7">GODBOLT</a></p>
+<ul>
+<li>CPP
+<ul>
+<li>In C++, concurrent access to the shared variable counter without synchronization leads to a data race, resulting in undefined behavior.</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;thread&gt;
+#include &lt;mutex&gt;
+#include &lt;memory&gt;
+
+int main() {
+    auto counter = 0;
+<span class="boring">    //auto counter = std::make_shared&lt;int&gt;(0); // Shared counter
+</span>    std::mutex mutex;
+
+    std::vector&lt;std::thread&gt; handles;
+
+    for (int i = 0; i &lt; 2; ++i) {
+<span class="boring">        //auto counter_copy = counter;
+</span>        std::thread handle([&amp;counter, &amp;mutex]() {
+            for (int j = 0; j &lt; 1000000; ++j) {
+<span class="boring">                //std::lock_guard&lt;std::mutex&gt; lock(mutex); // Lock the mutex
+</span>                counter += 1;
+            }
+        });
+        handles.push_back(std::move(handle)); // Store the thread handle
+    }
+
+    // Wait for all threads to complete
+    for (auto&amp; handle : handles) {
+        handle.join();
+    }
+
+    // Safely access the counter one last time to print the final value
+    std::lock_guard&lt;std::mutex&gt; lock(mutex);
+    std::cout &lt;&lt; "Final counter value: " &lt;&lt; counter &lt;&lt; std::endl;
+
+    return 0;
+}
+</code></pre>
+<ul>
+<li>RUST
+<ul>
+<li>In Rust, Mutex (Mutual Exclusion) ensures that only one thread can access the data at any time, preventing data races.</li>
+</ul>
+</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust editable">use std::sync::{Arc, Mutex};
+use std::thread;
+
+pub fn main() {
+<span class="boring">    //let counter = Arc::new(Mutex::new(0)); // Mutex for safe concurrent access
+</span>    let counter = 0;
+    let mut handles = vec![];
+
+    for _ in 0..2 {
+<span class="boring">        //let counter = Arc::clone(&amp;counter);
+</span>        let handle = thread::spawn(move || {
+<span class="boring">            //let mut num = counter.lock().unwrap(); // Lock the mutex
+</span>            for _ in 0..1000000 {
+<span class="boring">                //*num += 1;
+</span>                counter += 1;
+            }
+        });
+        handles.push(handle);
+    }
+
+    for handle in handles {
+        handle.join().unwrap();
+    }
+
+    //println!("Final counter value: {}", *counter.lock().unwrap());
+    println!("Final counter value: {}", counter);
+}</code></pre></pre>
+<h3 id="example-3-deadlock"><a class="header" href="#example-3-deadlock">Example 3: Deadlock</a></h3>
+<p>It demonstrates a simple deadlock, where each thread locks a mutex and then attempts to lock the other, but neither can proceed.
+<a href="https://godbolt.org/z/354ch7z8f">GODBOLT</a></p>
+<ul>
+<li>CPP</li>
+</ul>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;mutex&gt;
+#include &lt;thread&gt;
+
+std::mutex mutex1, mutex2;
+
+void thread1() {
+    std::lock_guard&lt;std::mutex&gt; lock1(mutex1);
+    std::this_thread::sleep_for(std::chrono::milliseconds(1)); // Simulate work (and ensure deadlock)
+    std::lock_guard&lt;std::mutex&gt; lock2(mutex2);
+}
+
+void thread2() {
+    std::lock_guard&lt;std::mutex&gt; lock2(mutex2);
+    std::this_thread::sleep_for(std::chrono::milliseconds(1));
+    std::lock_guard&lt;std::mutex&gt; lock1(mutex1);
+}
+
+int main() {
+    std::thread t1(thread1);
+    std::thread t2(thread2);
+
+    t1.join();
+    t2.join();
+
+    std::cout &lt;&lt; "Finished without deadlock" &lt;&lt; std::endl;
+
+    return 0;
+}
+</code></pre>
+<ul>
+<li>RUST</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust editable">use std::sync::{Arc, Mutex};
+use std::thread;
+
+pub fn main() {
+    let mutex1 = Arc::new(Mutex::new(0));
+    let mutex2 = Arc::new(Mutex::new(0));
+
+    let m1_clone = Arc::clone(&amp;mutex1);
+    let m2_clone = Arc::clone(&amp;mutex2);
+
+    let handle1 = thread::spawn(move || {
+        let _lock1 = m1_clone.lock().unwrap();
+        std::thread::sleep(std::time::Duration::from_millis(10));
+        let _lock2 = m2_clone.lock().unwrap();
+    });
+
+    let handle2 = thread::spawn(move || {
+        let _lock2 = mutex2.lock().unwrap();
+        std::thread::sleep(std::time::Duration::from_millis(10));
+        let _lock1 = mutex1.lock().unwrap();
+    });
+
+    handle1.join().unwrap();
+    handle2.join().unwrap();
+    println!("Finished without deadlock");
+}</code></pre></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="message-passing-to-transfer-data-between-threads"><a class="header" href="#message-passing-to-transfer-data-between-threads">Message passing to transfer data between threads</a></h1>
+<h3 id="example-1-5"><a class="header" href="#example-1-5">Example 1:</a></h3>
+<p><a href="https://godbolt.org/z/9jKdG1soq">GODBOLT</a></p>
+<ul>
+<li>CPP
+<ul>
+<li>C++ does not have a direct equivalent to Rust's channels in the standard library, but we can achieve similar message passing between threads using a combination of mutexes, condition variables, and a queue.</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;thread&gt;
+#include &lt;vector&gt;
+#include &lt;string&gt;
+#include &lt;queue&gt;
+#include &lt;mutex&gt;
+#include &lt;condition_variable&gt;
+#include &lt;chrono&gt;
+
+class SafeQueue {
+public:
+    void push(std::string value) {
+        std::lock_guard&lt;std::mutex&gt; lock(m_mutex);
+        m_queue.push(std::move(value));
+        m_cond.notify_one(); // Notify one waiting thread
+    }
+
+    std::string pop() {
+        std::unique_lock&lt;std::mutex&gt; lock(m_mutex);
+        m_cond.wait(lock, [this] { return !m_queue.empty(); }); // Wait until the queue is not empty
+        auto value = m_queue.front();
+        m_queue.pop();
+        return value;
+    }
+
+private:
+    std::queue&lt;std::string&gt; m_queue;
+    mutable std::mutex m_mutex;
+    std::condition_variable m_cond;
+};
+
+int main() {
+    SafeQueue queue;
+
+    // Producer thread
+    std::thread producer([&amp;queue]() {
+        std::vector&lt;std::string&gt; vals = {
+            "111",
+            "222",
+            "333",
+            "444",
+        };
+
+        for (auto&amp; val : vals) {
+            queue.push(val);
+            std::this_thread::sleep_for(std::chrono::seconds(1));
+        }
+    });
+
+    // Consumer thread
+    std::thread consumer([&amp;queue]() {
+        for (int i = 0; i &lt; 4; ++i) { // Expecting 4 messages
+            auto received = queue.pop();
+            std::cout &lt;&lt; "Got: " &lt;&lt; received &lt;&lt; std::endl;
+        }
+    });
+
+    producer.join();
+    consumer.join();
+
+    return 0;
+}
+</code></pre>
+<ul>
+<li>RUST</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust editable">use std::thread;
+use std::sync::mpsc;
+use std::time::Duration;
+
+pub fn main() {
+    let (producer, consumer) = mpsc::channel();
+
+    thread::spawn(move || {
+        let vals = vec![
+            String::from("111"),
+            String::from("222"),
+            String::from("333"),
+            String::from("444"),
+        ];
+
+        for val in vals {
+            producer.send(val).unwrap();
+            thread::sleep(Duration::from_secs(1));
+        }
+    });
+
+    thread::spawn(move || {
+        for received in consumer {
+            println!("Got: {}", received);
+        }
+    }).join().unwrap(); // Wait for the consumer thread to finish processing
+}</code></pre></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="is-stdshared_pointer-thread-safe-"><a class="header" href="#is-stdshared_pointer-thread-safe-">Is std::shared_pointer thread safe ?</a></h1>
+<h3 id="example-1-6"><a class="header" href="#example-1-6">Example 1:</a></h3>
+<ul>
+<li><a href="https://godbolt.org/z/se3d5Mf6b">GODBOLT</a></li>
+<li><a href="https://github.com/luk6xff/luk6xff.github.io/tree/master/content/other/safe_secure_rust_book/examples/concurrency/is_shared_pointer_thread_safe">DEMO</a></li>
+</ul>
+<ul>
+<li>CPP
+<ul>
+<li>Thread Safety of std::shared_ptr: The std::shared_ptr named counter is passed safely to multiple threads, demonstrating the thread-safe nature of creating and destroying std::shared_ptr copies. The reference count is managed correctly, ensuring the Counter object's lifetime is managed safely across threads.</li>
+<li>Lack of Thread Safety in Object Access: The Counter::increment method is called concurrently by multiple threads without synchronization. Since incrementing the value member variable is not an atomic operation, this leads to a race condition, and the final value of counter is likely to be less than the expected 100,000 due to missed increments.</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;memory&gt;
+#include &lt;vector&gt;
+#include &lt;thread&gt;
+#include &lt;mutex&gt;
+
+class Counter {
+public:
+    void increment() {
+<span class="boring">        //std::lock_guard&lt;std::mutex&gt; guard(mutex); // Protect access to value
+</span>        ++value; // This operation is not thread-safe.
+    }
+
+    int getValue() const {
+<span class="boring">        //std::lock_guard&lt;std::mutex&gt; guard(mutex); // Protect access to value
+</span>        return value;
+    }
+
+private:
+<span class="boring">    //mutable std::mutex mutex; // mutable allows modification in const methods
+</span>    int value = 0;
+};
+
+void incrementCounter(std::shared_ptr&lt;Counter&gt; counter) {
+    for (int i = 0; i &lt; 10000; ++i) {
+        counter-&gt;increment();
+    }
+}
+
+int main() {
+    constexpr auto num_of_threads = 10;
+    auto counter = std::make_shared&lt;Counter&gt;();
+    std::vector&lt;std::thread&gt; threads;
+
+    // Create multiple threads that increment the shared counter.
+    for (int i = 0; i &lt; num_of_threads; ++i) {
+        threads.emplace_back(incrementCounter, counter);
+    }
+
+    // Wait for all threads to complete.
+    for (auto&amp; thread : threads) {
+        thread.join();
+    }
+
+    std::cout &lt;&lt; "Expected value: " &lt;&lt; num_of_threads * 10000 &lt;&lt; std::endl;
+    std::cout &lt;&lt; "Actual value  : " &lt;&lt; counter-&gt;getValue() &lt;&lt; std::endl;
+
+    return 0;
+}
+</code></pre>
+<ul>
+<li>RUST
+<ul>
+<li>This Rust implementation ensures thread safety through the use of Mutex for data access synchronization and Arc for shared ownership among threads, similar to the thread safety mechanisms used in the provided C++ example.</li>
+</ul>
+</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust editable">// Common
+use std::sync::{Arc, Mutex};
+use std::thread;
+
+
+
+// 1)
+struct Counter {
+    value: i32,
+}
+
+impl Counter {
+    fn new() -&gt; Self {
+        Counter {
+            value: 0,
+        }
+    }
+
+    fn increment(&amp;mut self) {
+        self.value += 1;
+    }
+
+    fn get_value(&amp;self) -&gt; i32 {
+        self.value
+    }
+}
+
+pub fn main() {
+    const num_of_threads: usize = 10;
+    let counter = Arc::new(Mutex::new(Counter::new()));
+    let mut threads = vec![];
+
+    for _ in 0..num_of_threads {
+        let mut counter_clone = Arc::clone(&amp;counter);
+        let handle = thread::spawn(move || {
+            for _ in 0..10000 {
+                counter_clone.lock().unwrap().increment();
+            }
+        });
+        threads.push(handle);
+    }
+
+    for handle in threads {
+        handle.join().unwrap();
+    }
+
+    println!("Expected value: {}", num_of_threads * 10000);
+    println!("Actual Value:   {}", counter.lock().unwrap().get_value());
+}
+
+
+
+// 2)
+// struct Counter {
+//     value: Mutex&lt;i32&gt;,
+// }
+
+// impl Counter {
+//     fn new() -&gt; Self {
+//         Counter {
+//             value: Mutex::new(0),
+//         }
+//     }
+
+//     fn increment(&amp;self) {
+//         let mut value = self.value.lock().unwrap();
+//         *value += 1;
+//     }
+
+//     fn get_value(&amp;self) -&gt; i32 {
+//         let value = self.value.lock().unwrap();
+//         *value
+//     }
+// }
+
+// fn main() {
+//     const num_of_threads: usize = 10;
+//     let counter = Arc::new(Counter::new());
+//     let mut threads = vec![];
+
+//     for _ in 0..10 {
+//         let counter_clone = Arc::clone(&amp;counter);
+//         let handle = thread::spawn(move || {
+//             for _ in 0..10000 {
+//                 counter_clone.increment();
+//             }
+//         });
+//         threads.push(handle);
+//     }
+
+//     for handle in threads {
+//         handle.join().unwrap();
+//     }
+
+//     println!("Expected value: {}", num_of_threads * 10000);
+//     println!("Actual Value:   {}", counter.get_value());
+// }
+
+
+
+
+// 3) This will NOT compile
+// /*
+//  * Explanation of the Compilation Error in this code:
+//  * - The error in code here occurs because we are trying to mutate data inside an `Arc`
+//  *   without using a synchronization primitive like `Mutex`. `Arc` does not implement
+//  *   `DerefMut`, which means we cannot obtain a mutable reference to its contents directly.
+//  *   Rust's ownership rules ensure that data can either have multiple owners (`Arc`) or be
+//  *   mutable, but not both simultaneously without explicit synchronization mechanisms like `Mutex`.
+//  *
+//  * - The `increment` method requires mutable access to the `Counter` (`&amp;mut self`), which
+//  *   is not allowed through an `Arc` because `Arc` is designed for shared ownership of immutable
+//  *   data. When we try to call `increment` through an `Arc`, Rust enforces its safety guarantees
+//  *   and prevents we from potentially causing data races or other undefined behavior.
+//  *
+//  * -  MORE: https://fongyoong.github.io/easy_rust/Chapter_59.html
+//  */
+
+// struct Counter {
+//     value: i32,
+// }
+
+// impl Counter {
+//     fn new() -&gt; Self {
+//         Counter {
+//             value: 0,
+//         }
+//     }
+
+//     fn increment(&amp;mut self) {
+//         self.value += 1;
+//     }
+
+//     fn get_value(&amp;self) -&gt; i32 {
+//         self.value
+//     }
+// }
+
+// pub fn main() {
+//     const num_of_threads: usize = 10;
+//     let counter = Arc::new(Counter::new());
+//     let mut threads = vec![];
+
+//     for _ in 0..num_of_threads {
+//         let counter_clone = Arc::clone(&amp;counter);
+//         let handle = thread::spawn(move || {
+//             for _ in 0..10000 {
+//                 counter_clone.increment();
+//             }
+//         });
+//         threads.push(handle);
+//     }
+
+//     for handle in threads {
+//         handle.join().unwrap();
+//     }
+
+//     println!("Expected value: {}", num_of_threads * 10000);
+//     println!("Actual Value:   {}", counter.get_value());
+// }</code></pre></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="safe-abstraction-of-unsafe-code"><a class="header" href="#safe-abstraction-of-unsafe-code">Safe Abstraction of Unsafe Code</a></h1>
+<h2 id="introduction"><a class="header" href="#introduction">Introduction</a></h2>
+<p>Writing safe abstractions over unsafe code is a common pattern in systems programming, where performance and control over low-level details are critical. Both C++ and Rust allow programmers to write such code, but they approach safety, unsafety, and abstraction differently. C++ offers a lot of freedom with implicit trust in the programmer, while Rust provides a more structured approach, making unsafe operations explicit and encapsulating them within safe abstractions.
+Rust is designed to be safe by default, it acknowledges that unsafe operations are sometimes necessary for low-level systems programming. Rust requires that such operations be explicitly marked with the <code>unsafe keyword</code>, isolating unsafe code and making it easier to review and audit.</p>
+<h2 id="c-managing-safety-manually"><a class="header" href="#c-managing-safety-manually">C++: Managing Safety Manually</a></h2>
+<p>In C++, safety often relies on the programmer's discipline and conventions. The language offers mechanisms like RAII (Resource Acquisition Is Initialization) to manage resources safely but leaves it to the programmer to use these mechanisms consistently.</p>
+<h3 id="example-manual-memory-management"><a class="header" href="#example-manual-memory-management">Example: Manual Memory Management</a></h3>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+
+class SafeIntArray {
+private:
+    int* array;
+    size_t size;
+
+public:
+    SafeIntArray(size_t size): size(size), array(new int[size]) {}
+
+    ~SafeIntArray() {
+        delete[] array;
+    }
+
+    int&amp; operator[](size_t index) {
+        // Bounds check for safety
+        if (index &gt;= size) throw std::out_of_range("Index out of range");
+        return array[index];
+    }
+};
+
+int main() {
+    SafeIntArray arr(10);
+    arr[0] = 42; // Safe access
+    std::cout &lt;&lt; arr[0] &lt;&lt; std::endl;
+
+    // arr[10] = 3; // This would throw an exception, preventing undefined behavior
+    return 0;
+}
+</code></pre>
+<p>This C++ class <code>SafeIntArray</code> is a simple example of providing a safe interface to unsafe raw pointer operations. It manually manages memory with <code>new</code> and <code>delete</code>, encapsulating unsafe array access within a class that checks bounds.</p>
+<h2 id="rust-explicit-unsafe-with-safe-abstractions"><a class="header" href="#rust-explicit-unsafe-with-safe-abstractions">Rust: Explicit Unsafe with Safe Abstractions</a></h2>
+<p>Rust requires any unsafe operation to be explicitly marked with the <code>unsafe</code> keyword. This makes it clear which parts of the codebase could potentially lead to undefined behavior, encouraging the encapsulation of unsafe blocks within safe interfaces.</p>
+<h3 id="example-safe-abstraction-over-unsafe-code"><a class="header" href="#example-safe-abstraction-over-unsafe-code">Example: Safe Abstraction Over Unsafe Code</a></h3>
+<pre><pre class="playground"><code class="language-rust  editable">struct SafeIntArray {
+    array: Vec&lt;i32&gt;,
+}
+
+impl SafeIntArray {
+    fn new(size: usize) -&gt; Self {
+        SafeIntArray { array: vec![0; size] }
+    }
+
+    fn set(&amp;mut self, index: usize, value: i32) {
+        // Safe due to Rust's ownership and borrowing rules
+        if index &gt;= self.array.len() {
+            panic!("Index out of range");
+        }
+        // Unsafe block encapsulated within a safe function
+        unsafe {
+            *self.array.as_mut_ptr().add(index) = value;
+        }
+    }
+
+    fn get(&amp;self, index: usize) -&gt; i32 {
+        if index &gt;= self.array.len() {
+            panic!("Index out of range");
+        }
+        // Unsafe block encapsulated within a safe function
+        unsafe {
+            *self.array.as_ptr().add(index)
+        }
+    }
+}
+
+fn main() {
+    let mut arr = SafeIntArray::new(10);
+    arr.set(0, 42); // Safe API
+    println!("{}", arr.get(0));
+
+    // arr.set(10, 3); // This would panic at runtime, preventing undefined behavior
+}</code></pre></pre>
+<p>In this Rust example, <code>SafeIntArray</code> provides a safe interface to an underlying vector. Rust's vector provides safety guarantees, but for demonstration, we've used unsafe operations to manipulate memory directly, simulating what might be necessary for interfacing with low-level system components or optimizing critical paths.</p>
+<h2 id="conclusion-2"><a class="header" href="#conclusion-2">Conclusion</a></h2>
+<p>Both C++ and Rust offer mechanisms to write high-performance, low-level code safely. C++ trusts the programmer to manage safety, while Rust enforces safety at the language level, requiring any escape from these guarantees to be explicit. This explicitness in Rust aids in creating clear boundaries between safe and unsafe code, making it easier to maintain and audit for safety while still allowing for the performance benefits of low-level programming.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="usage-of-rusts-unsafe-keyword"><a class="header" href="#usage-of-rusts-unsafe-keyword">Usage of rust's unsafe keyword</a></h1>
+<p>Rust's <code>unsafe</code> keyword permits operations that could potentially lead to undefined behavior, such as dereferencing raw pointers or calling functions written in another language. The beauty of Rust lies in its ability to encapsulate these unsafe operations within safe interfaces, providing the best of both worlds: the control and performance of low-level programming with the safety guarantees of high-level languages.</p>
+<h3 id="example-0-raw-pointers"><a class="header" href="#example-0-raw-pointers">Example 0: Raw pointers</a></h3>
+<p>Raw pointers (*) and references (&amp;T) in Rust serve similar purposes, but references are inherently safe due to Rust's borrow checker ensuring they always point to valid data. In contrast, dereferencing raw pointers requires an unsafe block, acknowledging potential risks of accessing potentially invalid data.</p>
+<pre><pre class="playground"><code class="language-rust editable">fn main() {
+    let num = 42;
+    let raw_pointer: *const u32 = &amp;num;
+
+    unsafe {
+        println!("*raw_pointer = {}", *raw_pointer);
+    }
+}</code></pre></pre>
+<h3 id="example-1-calling-an-unsafe-c-function-from-rust"><a class="header" href="#example-1-calling-an-unsafe-c-function-from-rust">Example 1: Calling an Unsafe C Function from Rust</a></h3>
+<p><a href="https://github.com/luk6xff/luk6xff.github.io/tree/master/content/other/safe_secure_rust_book/examples/unsafe/ffi_example">DEMO</a></p>
+<p>Suppose you have a C library with the following function:</p>
+<pre><code class="language-c">// In a file `library.c`
+#include &lt;stdio.h&gt;
+
+void print_hello_from_c() {
+    printf("Hello from C!\n");
+}
+</code></pre>
+<p>You can call this function from Rust, safely encapsulating the unsafe foreign function interface (FFI) call:</p>
+<pre><pre class="playground"><code class="language-rust">// Assuming you have linked the C library appropriately
+extern "C" {
+    fn print_hello_from_c();
+}
+
+fn safe_print_hello() {
+    unsafe {
+        print_hello_from_c(); // Unsafe FFI call
+    }
+}
+
+fn main() {
+    safe_print_hello(); // Safe to call
+}</code></pre></pre>
+<p>This example demonstrates how Rust can interact with C code. The unsafe block is necessary because calling foreign code can't be checked by Rust's safety guarantees, but wrapping it in a safe function allows you to control where and how these interactions occur.</p>
+<h3 id="example-2-calling-an-unsafe-system-library-libcrypt-c-function-from-rust"><a class="header" href="#example-2-calling-an-unsafe-system-library-libcrypt-c-function-from-rust">Example 2: Calling an Unsafe System Library (libcrypt) C Function from Rust</a></h3>
+<p><a href="https://github.com/luk6xff/luk6xff.github.io/tree/master/content/other/safe_secure_rust_book/examples/unsafe/ffi_example">DEMO</a></p>
+<pre><pre class="playground"><code class="language-rust">extern "C" {
+    pub fn crypt(phrase: *const c_char, setting: *const c_char) -&gt; *mut c_char;
+}
+
+fn safe_crypt(input: &amp;str, salt: &amp;str) -&gt; String {
+    let c_input = std::ffi::CString::new(input).expect("CString::new failed for input");
+    let c_salt = std::ffi::CString::new(salt).expect("CString::new failed for salt");
+
+    let result_ptr = unsafe { crypt(c_input.as_ptr(), c_salt.as_ptr()) };
+
+    assert!(!result_ptr.is_null(), "crypt returned a null pointer");
+
+    let result_cstr = unsafe { std::ffi::CStr::from_ptr(result_ptr) };
+    result_cstr.to_string_lossy().into_owned()
+}
+
+fn main() {
+    let input = "hello world";
+    let salt = "somesalt"; // Example for SHA-512 based on Linux's glibc
+    let encrypted = safe_crypt(input, salt);
+    println!("Encrypted: {}", encrypted);
+}</code></pre></pre>
+<h3 id="example-3-safe-wrapper-for-a-raw-pointer"><a class="header" href="#example-3-safe-wrapper-for-a-raw-pointer">Example 3: Safe Wrapper for a Raw Pointer</a></h3>
+<p>Raw pointers (<code>*const T</code> and <code>*mut T</code>) are often used in Rust for low-level memory manipulation, but they are inherently unsafe to dereference. Here's an example of a simple safe wrapper around a raw pointer:</p>
+<pre><pre class="playground"><code class="language-rust editable">struct SafePtr&lt;T&gt; {
+    ptr: *mut T,
+}
+
+impl&lt;T&gt; SafePtr&lt;T&gt; {
+    fn new(t: &amp;mut T) -&gt; Self {
+        SafePtr { ptr: t as *mut T }
+    }
+
+    fn read(&amp;self) -&gt; &amp;T {
+        unsafe { &amp;*self.ptr }
+    }
+
+    fn write(&amp;mut self, value: T) {
+        unsafe { *self.ptr = value; }
+    }
+}
+
+fn main() {
+    let mut num = 10;
+    let mut safe_ptr = SafePtr::new(&amp;mut num);
+
+    println!("Before: {}", safe_ptr.read());
+    safe_ptr.write(20);
+    println!("After: {}", safe_ptr.read());
+}</code></pre></pre>
+<p>In this example, <code>SafePtr</code> is a wrapper that provides a safe API to read from and write to a location in memory. The unsafe operations are contained within the implementation of <code>SafePtr</code>, making the public interface safe to use.</p>
+<h3 id="example-4-interfacing-with-unsafe-code-for-performance"><a class="header" href="#example-4-interfacing-with-unsafe-code-for-performance">Example 4: Interfacing with Unsafe Code for Performance</a></h3>
+<p>Sometimes, for performance reasons, you might choose to use unsafe code to avoid the overhead of certain safety checks. Here's an example that manipulates a vector in an unsafe manner to avoid bounds checks:</p>
+<pre><pre class="playground"><code class="language-rust editable">fn sum_elements(slice: &amp;[i32]) -&gt; i32 {
+    let mut sum = 0;
+    unsafe {
+        for i in 0..slice.len() {
+            sum += *slice.get_unchecked(i); // Unsafe to avoid bounds checking
+        }
+    }
+    sum
+}
+
+fn main() {
+    let nums = vec![1, 2, 3, 4, 5];
+    println!("Sum: {}", sum_elements(&amp;nums));
+}</code></pre></pre>
+<p><code>get_unchecked</code> is an unsafe method because it does not perform bounds checking. If used incorrectly, it could lead to undefined behavior. However, by carefully controlling its use within a safe function, we can leverage its performance benefits while minimizing risk.</p>
+<p>These examples illustrate Rust's approach to combining low-level control with high-level safety. By requiring unsafe operations to be explicitly marked and encouraging their encapsulation within safe abstractions, Rust helps prevent many common programming errors related to memory safety and concurrency, fostering the development of robust, efficient software.</p>
+<h3 id="example-5-inline-assembly"><a class="header" href="#example-5-inline-assembly">Example 5: Inline Assembly</a></h3>
+<p><a href="https://godbolt.org/z/n7sGh6eba">GODBOLT</a>
+Rust's asm! macro allows embedding custom assembly code directly within Rust programs. This is mainly used for performance-critical tasks or when accessing low-level hardware features, such as in kernel development, where Rust's abstractions may not suffice.</p>
+<pre><pre class="playground"><code class="language-rust editable">use std::arch::asm;
+
+fn main() {
+    let msg = "Hello, world!\n";
+    let len = msg.len();
+    let fd = 1; // File descriptor 1 for stdout
+
+    unsafe {
+        asm!(
+            "syscall",
+            in("rax") 1,         // syscall number for write
+            in("rdi") fd,        // first argument: file descriptor
+            in("rsi") msg.as_ptr(), // second argument: pointer to message
+            in("rdx") len,       // third argument: message length
+            options(nostack)
+        );
+    }
+}</code></pre></pre>
+<div style="break-before: page; page-break-before: always;"></div><h3 id="rust-ecosystem"><a class="header" href="#rust-ecosystem">Rust Ecosystem</a></h3>
+<p>Here's content for a short overview of rust ecosystem mainly on Rustup and Cargo, including command examples. These sections will give readers a concise overview of these tools and how to use them effectively.</p>
+<p>It employs an LLVM backend for compilation, resulting in highly optimized machine code. Compilation times can be longer due to exhaustive checks.</p>
+<div style="break-before: page; page-break-before: always;"></div><h4 id="rustup-rust_ecosystemrustupmd"><a class="header" href="#rustup-rust_ecosystemrustupmd">Rustup (<code>rust_ecosystem/rustup.md</code>)</a></h4>
+<hr />
+<p><strong>Rustup</strong> is the Rust toolchain installer. It manages Rust versions and associated tools, making it easy to switch between stable, beta, and nightly compilers and ensure that you have the latest updates.</p>
+<p><strong>Installation:</strong></p>
+<p>To install Rustup and the default Rust toolchain, you can run:</p>
+<pre><code class="language-sh">curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+</code></pre>
+<p>This command downloads a script and starts the installation process, which includes the Rust compiler (<code>rustc</code>), the Rust package manager (<code>cargo</code>), and the standard library.</p>
+<p><strong>Managing Toolchains:</strong></p>
+<p>To list installed toolchains:</p>
+<pre><code class="language-sh">rustup toolchain list
+</code></pre>
+<p>To install a specific version of the Rust toolchain:</p>
+<pre><code class="language-sh">rustup toolchain install stable
+rustup toolchain install nightly
+</code></pre>
+<p>To switch the default toolchain:</p>
+<pre><code class="language-sh">rustup default nightly
+</code></pre>
+<p><strong>Updating Rust:</strong></p>
+<p>To update all installed toolchains:</p>
+<pre><code class="language-sh">rustup update
+</code></pre>
+<p><strong>Cross-compilation:</strong></p>
+<p>To add a target for cross-compilation:</p>
+<pre><code class="language-sh">rustup target add x86_64-unknown-linux-gnu
+</code></pre>
+<p><strong>Uninstallation:</strong></p>
+<p>To uninstall Rust and Rustup:</p>
+<pre><code class="language-sh">rustup self uninstall
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="cargo"><a class="header" href="#cargo">Cargo</a></h1>
+<ul>
+<li><a href="https://github.com/luk6xff/luk6xff.github.io/tree/master/content/other/safe_secure_rust_book/examples/rust_ecosystem/cargo">DEMO</a></li>
+</ul>
+<p><strong>Cargo</strong> is Rust's build system and package manager. It handles downloading libraries, compiling packages, and more.</p>
+<h3 id="creating-a-new-project"><a class="header" href="#creating-a-new-project">Creating a New Project:</a></h3>
+<p>To create a new Rust project:</p>
+<pre><code class="language-sh">cargo new my_project
+cd my_project
+</code></pre>
+<p>This creates a new directory called <code>my_project</code> with a <code>Cargo.toml</code> file (describing the project and its dependencies) and a <code>src</code> directory.</p>
+<h3 id="building-your-project"><a class="header" href="#building-your-project">Building Your Project:</a></h3>
+<p>To compile your project:</p>
+<pre><code class="language-sh">cargo build
+</code></pre>
+<p>To compile and run your project:</p>
+<pre><code class="language-sh">cargo run
+</code></pre>
+<h3 id="adding-dependencies"><a class="header" href="#adding-dependencies">Adding Dependencies:</a></h3>
+<p>To add a dependency, edit your <code>Cargo.toml</code> file and include the library under <code>[dependencies]</code>. For example, to add the <code>serde</code> library:</p>
+<pre><code class="language-toml">[dependencies]
+serde = "1.0"
+</code></pre>
+<p>After adding a dependency, run <code>cargo build</code>, and Cargo will download and compile the new dependency.</p>
+<h3 id="updating-dependencies"><a class="header" href="#updating-dependencies">Updating Dependencies:</a></h3>
+<p>To update your project's dependencies:</p>
+<pre><code class="language-sh">cargo update
+</code></pre>
+<h3 id="testing"><a class="header" href="#testing">Testing:</a></h3>
+<p>To run tests defined in your project:</p>
+<pre><code class="language-sh">cargo test
+</code></pre>
+<h3 id="documentation"><a class="header" href="#documentation">Documentation:</a></h3>
+<p>To build and view documentation for your project's dependencies:</p>
+<pre><code class="language-sh">cargo doc --open
+</code></pre>
+<h3 id="publishing-a-crate"><a class="header" href="#publishing-a-crate">Publishing a Crate:</a></h3>
+<p>To publish a crate to <a href="https://crates.io/">crates.io</a>:</p>
+<pre><code class="language-sh">cargo publish
+</code></pre>
+<p>(Note: You'll need to create an account on crates.io and obtain an API token first.)</p>
+<hr />
+<h3 id="testing-with-cargo"><a class="header" href="#testing-with-cargo">Testing with Cargo:</a></h3>
+<p><code>cargo test</code> runs all unit tests, integration tests, and documentation tests in your Rust project. Rust makes it easy to write tests by annotating functions with <code>#[test]</code>, and <code>cargo test</code> automatically finds and executes these tests.</p>
+<pre><code class="language-sh">cargo test
+</code></pre>
+<p>This command compiles your code in test mode and runs the specified tests. To run a subset of tests, you can specify their name as an argument:</p>
+<pre><code class="language-sh">cargo test test_name
+</code></pre>
+<h3 id="linting-with-clippy"><a class="header" href="#linting-with-clippy">Linting with Clippy:</a></h3>
+<p><code>cargo clippy</code> is a helpful linting tool that catches common mistakes and suggests improvements to make your Rust code more idiomatic. Clippy extends the compiler's linting capabilities and provides a vast collection of lint checks.</p>
+<p>First, you might need to install <code>clippy</code> if you haven't already:</p>
+<pre><code class="language-sh">rustup component add clippy
+</code></pre>
+<p>Then, to run <code>clippy</code> on your project:</p>
+<pre><code class="language-sh">cargo clippy
+</code></pre>
+<h3 id="automatically-fixing-issues-with-cargo-fix"><a class="header" href="#automatically-fixing-issues-with-cargo-fix">Automatically Fixing Issues with Cargo Fix:</a></h3>
+<p><code>cargo fix</code> automatically applies fixes to your code for warnings or errors identified by the Rust compiler. This tool is incredibly useful for automatically resolving certain types of compiler warnings and for easing the transition when upgrading to a new Rust edition.</p>
+<p>To run <code>cargo fix</code>:
+cargo</p>
+<pre><code class="language-sh">cargo fix
+</code></pre>
+<h3 id="formatting-code-with-rustfmt"><a class="header" href="#formatting-code-with-rustfmt">Formatting Code with Rustfmt:</a></h3>
+<p><code>cargo fmt</code> uses Rustfmt to format your Rust code according to style guidelines. This tool ensures that your code is not only stylistically consistent but also adheres to the community-recommended style practices.</p>
+<p>First, ensure <code>rustfmt</code> is installed:</p>
+<pre><code class="language-sh">rustup component add rustfmt
+</code></pre>
+<p>Then, to format your project:</p>
+<pre><code class="language-sh">cargo fmt
+</code></pre>
+<p>This command will automatically format all <code>.rs</code> files in your project according to the Rust style guide.</p>
+<h3 id="summary"><a class="header" href="#summary">Summary:</a></h3>
+<p>Together, these Cargo commands enhance your Rust development workflow by ensuring that your code is clean, idiomatic, and well-tested. By integrating these tools into your daily development practices, you can improve the quality and maintainability of your Rust projects.</p>
+<hr />
+<div style="break-before: page; page-break-before: always;"></div><h1 id="rust-ecosystem-security-features"><a class="header" href="#rust-ecosystem-security-features">Rust Ecosystem Security Features</a></h1>
+<h2 id="dependency-auditing"><a class="header" href="#dependency-auditing">Dependency Auditing</a></h2>
+<p>The Rust compiler, combined with Cargo, Rust's package manager, provides tools for auditing dependencies for known vulnerabilities. This is crucial for maintaining the security of Rust applications, given the extensive use of external crates.</p>
+<h4 id="cargo-audit"><a class="header" href="#cargo-audit">cargo audit</a></h4>
+<ul>
+<li>DEMO: Run <code>run.sh audit</code> in <a href="https://github.com/luk6xff/luk6xff.github.io/tree/master/content/other/safe_secure_rust_book/examples/rust_ecosystem/cargo">DEMO</a>
+The <code>cargo audit</code> command checks your Cargo.lock file against the <a href="https://rustsec.org/advisories/">RustSec Advisory Database</a> to find vulnerable package versions, helping you keep dependencies up-to-date and secure.</li>
+</ul>
+<pre><code class="language-sh"># Install
+cargo install cargo-audit --features=fix
+# Run
+cargo audit
+cargo audit fix
+</code></pre>
+<h4 id="cargo-auditable"><a class="header" href="#cargo-auditable">cargo auditable</a></h4>
+<ul>
+<li>DEMO: Run <code>run.sh auditable</code> in <a href="https://github.com/luk6xff/luk6xff.github.io/tree/master/content/other/safe_secure_rust_book/examples/rust_ecosystem/cargo">DEMO</a>
+<code>cargo auditable</code> - is a Rust tool that enhances security by embedding dependency information directly into compiled binaries. This allows for auditing Rust binaries for known vulnerabilities without needing the original source code or Cargo.lock file. By including auditable as a dependency in your Cargo.toml, the compilation process automatically incorporates a summary of all project dependencies into the resulting binary. This works by embedding data about the dependency tree in JSON format into a dedicated linker section of the compiled executable (<code>.dep-v0</code>). Linux, Windows and Mac OS are officially supported.</li>
+</ul>
+<pre><code class="language-sh"># Install
+cargo install cargo-auditable
+# Build your project with dependency lists embedded in the binaries
+cargo auditable build --release
+# Scan the binary for vulnerabilities
+cargo audit bin target/release/car_project
+
+# Check for the `dep-v0` section
+readelf -S target/release/car_project
+readelf -p .dep-v0 target/release/car_project
+# Decompress zlib section content
+objdump -s -j .dep-v0 target/release/car_project | grep '^ ' | cut -c7-42 | xxd -r -p | python3 -c "import sys, zlib; sys.stdout.buffer.write(zlib.decompress(sys.stdin.buffer.read()))"
+</code></pre>
+<h2 id="compiler"><a class="header" href="#compiler">Compiler</a></h2>
+<h3 id="sanitizers"><a class="header" href="#sanitizers">Sanitizers</a></h3>
+<ul>
+<li>
+<p>DEMO: Run <code>run.sh</code> in <a href="https://github.com/luk6xff/luk6xff.github.io/tree/master/content/other/safe_secure_rust_book/examples/rust_ecosystem/compiler_flags">DEMO</a>
+Rust compiler supports use of one of following sanitizers:</p>
+</li>
+<li>
+<p><strong>AddressSanitizer</strong>: A memory error detector. It can detect the following types of bugs:</p>
+<ul>
+<li>Out of bound accesses to heap, stack and globals</li>
+<li>Use after free</li>
+<li>Use after return (runtime flag ASAN_OPTIONS=detect_stack_use_after_return=1)</li>
+<li>Use after scope</li>
+<li>Double-free, invalid free</li>
+<li>Memory leaks</li>
+</ul>
+</li>
+<li>
+<p><strong>ControlFlowIntegrity (CFI)</strong>: LLVM's Control Flow Integrity provides forward-edge control flow protection, preventing unauthorized code paths from being executed.</p>
+</li>
+<li>
+<p><strong>HWAddressSanitizer</strong>: Similar to AddressSanitizer, this tool uses partial hardware assistance for detecting memory errors. It's particularly useful for catching complex memory corruption bugs with minimal overhead.</p>
+</li>
+<li>
+<p><strong>KernelControlFlowIntegrity (KCFI)</strong>: An extension of LLVM's Control Flow Integrity aimed at operating system kernels, providing robust forward-edge control flow protection at the kernel level.</p>
+</li>
+<li>
+<p><strong>LeakSanitizer</strong>: A runtime memory leak detector that helps identify and report memory leaks in applications, facilitating easier memory management debugging.</p>
+</li>
+<li>
+<p><strong>MemorySanitizer</strong>: Specialized in detecting uninitialized memory reads, this tool helps prevent undefined behaviors arising from the use of uninitialized memory.</p>
+</li>
+<li>
+<p><strong>MemTagSanitizer</strong>: Leveraging the Armv8.5-A Memory Tagging Extension, this tool offers fast and efficient detection of memory errors, enhancing application security with hardware support.</p>
+</li>
+<li>
+<p><strong>SafeStack</strong>: Implements backward-edge control flow protection by segregating the application's stack into safe and unsafe regions, thus protecting against stack-based attacks.</p>
+</li>
+<li>
+<p><strong>ShadowCallStack</strong>: Provides backward-edge control flow protection on aarch64 architectures by maintaining a separate, secure call stack, further mitigating the risk of return-oriented programming (ROP) attacks.</p>
+</li>
+<li>
+<p><strong>ThreadSanitizer</strong>: A data race detector that quickly identifies threading issues in applications, promoting safer concurrent programming practices.</p>
+</li>
+</ul>
+<p>To enable a <code>sanitizer</code> compile with the following flags:</p>
+<pre><code class="language-sh">-Zsanitizer=address
+-Zsanitizer=cfi
+-Zsanitizer=hwaddress
+-Zsanitizer=leak
+-Zsanitizer=memory
+-Zsanitizer=memtag
+-Zsanitizer=shadow-call-stack
+-Zsanitizer=thread.
+# Add also:
+--target
+-Zbuild-std
+</code></pre>
+<ul>
+<li>ASAN example:</li>
+</ul>
+<pre><code class="language-sh">export RUSTFLAGS=-Zsanitizer=address RUSTDOCFLAGS=-Zsanitizer=address
+cargo run -Zbuild-std --target x86_64-unknown-linux-gnu
+</code></pre>
+<ul>
+<li>ASAN example:</li>
+</ul>
+<pre><code class="language-sh">export RUSTFLAGS=-Zsanitizer=address RUSTDOCFLAGS=-Zsanitizer=address
+cargo run -Zbuild-std --target x86_64-unknown-linux-gnu
+</code></pre>
+<h3 id="rust-compiler-exploit-mitigations"><a class="header" href="#rust-compiler-exploit-mitigations">Rust Compiler exploit mitigations</a></h3>
+<p>The Rust programming language offers memory and thread safety through features like ownership, references, borrowing, and slices. However, Unsafe Rust introduces constructs such as unsafe blocks, functions, methods, traits, and types, which bypass Rust's safety guarantees.</p>
+<p>Certain parts of the Rust standard library are built on top of unsafe code, potentially leading to memory corruption vulnerabilities. Moreover, Rust encourages creating safe abstractions over unsafe code, which may give a false sense of security if the unsafe code isn't thoroughly reviewed and tested.</p>
+<p>Unsafe Rust introduces features that lack memory and thread safety guarantees, making programs or libraries susceptible to memory corruption (CWE-119) and concurrency issues (CWE-557). To address this, Rust compiler needs to support exploit mitigations similar to those found in modern C and C++ compilers. This part details these exploit mitigations and their application in Rust.</p>
+<p>Summary of exploit mitigations supported by the Rust compiler:</p>
+<ul>
+<li>Position-independent executable (enabled by default)</li>
+<li>Integer overflow checks</li>
+<li>Non-executable memory regions</li>
+<li>Stack clashing protection</li>
+<li>Read-only relocations and immediate binding</li>
+<li>Heap corruption protection</li>
+<li>Stack smashing protection</li>
+<li>Forward-edge control flow protection</li>
+<li>Backward-edge control flow protection (e.g., shadow and safe stack)</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="rust-cybersecurity-utilities"><a class="header" href="#rust-cybersecurity-utilities">Rust cybersecurity utilities</a></h1>
+<p>The Rust programming language, known for its emphasis on safety and performance, has a growing ecosystem of libraries and tools for cybersecurity applications. Rust's memory safety features, combined with its speed and concurrency capabilities, make it an excellent choice for developing secure applications and utilities. Here are a few notable cybersecurity utilities and libraries in the Rust ecosystem</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="fuzzing-in-rust"><a class="header" href="#fuzzing-in-rust">Fuzzing in Rust</a></h1>
+<p>Fuzz testing, or fuzzing, is a powerful automated software testing technique that involves providing invalid, unexpected, or random data as input to a program. The goal is to discover bugs or potential vulnerabilities that might not be caught through traditional testing methods, particularly those that could be exploited for security breaches. Rust, known for its focus on safety and performance, supports fuzzing through several tools and libraries designed to integrate seamlessly with its ecosystem. Here are some notable fuzzing tools and libraries in the Rust ecosystem:</p>
+<h3 id="1-cargo-fuzz"><a class="header" href="#1-cargo-fuzz">1. <strong>cargo-fuzz</strong></a></h3>
+<ul>
+<li><a href="https://github.com/luk6xff/luk6xff.github.io/tree/master/content/other/safe_secure_rust_book/examples/cybersecurity_utils/fuzzing">DEMO</a></li>
+<li><strong>GitHub:</strong> <a href="https://github.com/rust-fuzz/cargo-fuzz">https://github.com/rust-fuzz/cargo-fuzz</a></li>
+<li><strong>Description:</strong> <code>cargo-fuzz</code> is a command-line tool for fuzzing Rust code. It is built on top of <code>libFuzzer</code>, which is a library for in-process, coverage-guided evolutionary fuzzing of other libraries. <code>cargo-fuzz</code> makes it easy to start fuzzing a Rust project by integrating with Cargo, Rust's package manager and build system. It automatically sets up the fuzzing target and provides a straightforward way to run the fuzzer on your code. This project requires the nightly compiler since it uses the -Z compiler flag (<code>-Zsanitizer=address</code>) to provide address sanitization.</li>
+<li><strong>Usage:</strong>
+Based on: https://rust-fuzz.github.io/book/introduction.html</li>
+</ul>
+<pre><code class="language-sh">cd fuzzing
+# Set up rust nightly version
+rustup default nightly
+# Install cargo-fuzz
+cargo install cargo-fuzz
+cargo fuzz init
+cargo fuzz add fuzz_wc_tool
+# Modify `fuzzing/fuzz/fuzz_targets/fuzz_wc_tool.rs`
+# Start fuzzing
+cargo fuzz run fuzz_wc_tool
+# Set back to stable version
+rustup default stable
+</code></pre>
+<h3 id="2-aflrs"><a class="header" href="#2-aflrs">2. <strong>afl.rs</strong></a></h3>
+<ul>
+<li><a href="https://github.com/luk6xff/luk6xff.github.io/tree/master/content/other/safe_secure_rust_book/examples/cybersecurity_utils/fuzzing/fuzz_afl">DEMO</a></li>
+<li><strong>GitHub:</strong> <a href="https://github.com/rust-fuzz/afl.rs">https://github.com/rust-fuzz/afl.rs</a></li>
+<li><strong>Description:</strong> <code>afl.rs</code> is a Rust wrapper around American Fuzzy Lop (AFL), one of the most popular fuzzers available. AFL is known for its efficiency in generating test cases that uncover deeply hidden bugs. <code>afl.rs</code> makes AFL's capabilities available to Rust projects, enabling developers to leverage AFL's fuzzing techniques to improve the security and reliability of their Rust code.</li>
+<li><strong>Usage:</strong>
+Based on: https://rust-fuzz.github.io/book/introduction.html</li>
+</ul>
+<pre><code class="language-sh">cd fuzzing
+# Install cargo-afl
+cargo install cargo-afl
+cargo new --bin wc-tool-fuzz-afl-target
+cd wc-tool-fuzz-afl-target
+# Modify `fuzzing/wc-tool-fuzz-afl-target/Cargo.toml` by adding:
+# [dependencies]
+# afl = "*"
+# url = "*"
+
+# Modify `fuzzing/wc-tool-fuzz-afl-target/src/main.rs`
+# Build project
+cargo afl build
+# Start fuzzing
+cargo afl fuzz -i in -o out target/debug/wc-tool-fuzz-afl-target
+</code></pre>
+<h3 id="3-honggfuzz-rs"><a class="header" href="#3-honggfuzz-rs">3. <strong>honggfuzz-rs</strong></a></h3>
+<ul>
+<li><strong>GitHub:</strong> <a href="https://github.com/rust-fuzz/honggfuzz-rs">https://github.com/rust-fuzz/honggfuzz-rs</a></li>
+<li><strong>Description:</strong> <code>honggfuzz-rs</code> allows Rust developers to use <code>honggfuzz</code>, a security-oriented fuzzer with powerful analysis options, to fuzz their Rust code. It provides features like automatic crash detection, memory leak detection, and coverage-guided fuzzing to help identify vulnerabilities. <code>honggfuzz-rs</code> integrates with Rust projects to make the fuzzing process as straightforward as possible.</li>
+</ul>
+<h3 id="4-proptest"><a class="header" href="#4-proptest">4. <strong>proptest</strong></a></h3>
+<ul>
+<li><strong>GitHub:</strong> <a href="https://github.com/AltSysrq/proptest">https://github.com/AltSysrq/proptest</a></li>
+<li><strong>Description:</strong> While not a fuzzer in the traditional sense, <code>proptest</code> is a property testing library for Rust inspired by the Hypothesis framework for Python. It allows developers to specify the properties that a program should have, then automatically generates test cases to try and falsify these properties. <code>proptest</code> can be used in conjunction with fuzzers to create more comprehensive testing strategies.</li>
+</ul>
+<h3 id="5-arbitrary"><a class="header" href="#5-arbitrary">5. <strong>Arbitrary</strong></a></h3>
+<ul>
+<li><strong>GitHub:</strong> <a href="https://github.com/rust-fuzz/arbitrary">https://github.com/rust-fuzz/arbitrary</a></li>
+<li><strong>Description:</strong> The <code>arbitrary</code> library provides a trait for defining how to generate arbitrary instances of data from structured input. This is particularly useful in fuzzing scenarios where you want to generate a wide variety of inputs to test your program's behavior under unexpected or edge-case conditions. It's often used in combination with fuzzers like <code>cargo-fuzz</code> to provide structured, yet randomized, input data for testing.</li>
+</ul>
+<p>Fuzzing in Rust aims to leverage the language's type safety and memory safety guarantees while uncovering potential issues that static analysis tools might miss. These tools and libraries make fuzzing accessible to Rust developers, helping to identify and fix bugs early in the development process and enhance software security.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="cryptography-utils-written-in-rust"><a class="header" href="#cryptography-utils-written-in-rust">Cryptography utils written in RUST</a></h1>
+<h3 id="rustcrypto"><a class="header" href="#rustcrypto"><strong>RustCrypto</strong></a></h3>
+<ul>
+<li><strong>GitHub:</strong> <a href="https://github.com/RustCrypto">https://github.com/RustCrypto</a></li>
+<li><strong>Description:</strong> The RustCrypto project provides a collection of cryptographic algorithms implemented in pure Rust. It includes libraries for hashes, MACs, ciphers, AEAD, RNGs, public key cryptography, and more. The focus on Rust ensures that these cryptographic primitives and utilities benefit from Rust's compile-time safety and efficiency, which is crucial for security-sensitive applications.</li>
+</ul>
+<h3 id="rusttls"><a class="header" href="#rusttls"><strong>RustTLS</strong></a></h3>
+<ul>
+<li><strong>GitHub:</strong> <a href="https://github.com/rustls/rustls">https://github.com/rustls/rustls</a></li>
+<li><strong>Description:</strong> A modern TLS library in Rust. Rustls is a TLS library that aims to provide a good level of cryptographic security, requires no configuration to achieve that security, and provides no unsafe features or obsolete cryptography by default.
+Rustls implements TLS1.2 and TLS1.3 for both clients and servers</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h3 id="rustscan"><a class="header" href="#rustscan"><strong>RustScan</strong></a></h3>
+<ul>
+<li><strong>GitHub:</strong> <a href="https://github.com/RustScan/RustScan">https://github.com/RustScan/RustScan</a></li>
+<li><strong>Description:</strong> RustScan is a modern port scanning tool designed to be fast and efficient. It automates the process of scanning IP addresses and ports, significantly speeding up the process compared to traditional tools like Nmap when used in conjunction. RustScan can be integrated into a cybersecurity workflow to quickly identify open ports and potential vulnerabilities in target systems.</li>
+<li><strong>Demo:</strong></li>
+</ul>
+<pre><code class="language-sh">docker pull rustscan/rustscan:2.1.1
+docker run -it --rm --name rustscan rustscan/rustscan:2.1.1 -b 10000 -a 127.0.0.1
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h3 id="suricata"><a class="header" href="#suricata"><strong>Suricata</strong></a></h3>
+<ul>
+<li><strong>GitHub:</strong> <a href="https://github.com/OISF/suricata">https://github.com/OISF/suricata</a></li>
+<li><strong>Description:</strong> Suricata is a high-performance Network IDS, IPS, and Network Security Monitoring engine. While Suricata itself is not written in Rust, it incorporates Rust for many of its parsers and operations, leveraging Rust's memory safety features to enhance its security posture. Suricata is widely used for real-time intrusion detection (IDS), inline intrusion prevention (IPS), network security monitoring (NSM), and offline pcap processing.</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h3 id="wasmer"><a class="header" href="#wasmer"><strong>Wasmer</strong></a></h3>
+<ul>
+<li><strong>GitHub:</strong> <a href="https://github.com/wasmerio/wasmer">https://github.com/wasmerio/wasmer</a></li>
+<li><strong>Description:</strong> Wasmer is a fast and secure WebAssembly runtime that enables super lightweight containers to run anywhere from Desktop to the Cloud, Edge, and IoT devices. It is written in Rust and allows embedding WebAssembly in various programming languages. WebAssembly's sandboxing features, combined with Rust's safety, make Wasmer an exciting tool for securely running untrusted code.</li>
+</ul>
+<h3 id="ripgrep"><a class="header" href="#ripgrep"><strong>ripgrep</strong></a></h3>
+<ul>
+<li><strong>GitHub:</strong> <a href="https://github.com/BurntSushi/ripgrep">https://github.com/BurntSushi/ripgrep</a></li>
+<li><strong>Description:</strong> While not a cybersecurity tool per se, ripgrep is a line-oriented search tool that recursively searches the current directory for a regex pattern. It's incredibly fast and respects your <code>.gitignore</code> files. Security professionals often use tools like ripgrep for searching through codebases, logs, or configurations for sensitive data leaks or patterns indicative of security issues.</li>
+<li><strong>Demo:</strong></li>
+</ul>
+<pre><code class="language-sh">time grep -R "main" ~/
+time rg "main" ~/
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="conclusion-safe-and-secure-coding-in-rust-vs-c"><a class="header" href="#conclusion-safe-and-secure-coding-in-rust-vs-c">Conclusion: Safe and Secure Coding in Rust vs. C++</a></h1>
+<p>In the evolving landscape of software development, the choice of programming language significantly impacts the safety, security, and efficiency of the resulting applications. This presentation has embarked on a comparative analysis of Rust and C++, two powerful systems programming languages, with a particular focus on their approaches to safe and secure coding.</p>
+<p>Rust, a language born out of the need for memory safety without sacrificing performance, introduces revolutionary concepts like ownership, borrowing, and lifetimes. These features are not mere additions to the programmer's toolkit but are deeply integrated into the language's core, enforced at compile time to eliminate a wide array of common bugs that plague systems programming, including data races, null pointer dereferences, and buffer overflows. Rust's "fearless concurrency" enables developers to write highly parallel, safe code with confidence, addressing one of the most complex challenges in modern software development.</p>
+<p>C++, with its rich history and immense flexibility, offers programmers close-to-the-metal control over system resources, which is both its strength and its Achilles' heel. The power of C++ comes with the responsibility to manually manage memory and adhere to best practices to avoid security vulnerabilities and undefined behavior. Modern C++ has introduced smart pointers, move semantics, and other features aimed at making safe programming more accessible. However, these features are opt-in rather than enforced, and the burden of safe usage ultimately falls on the developer.</p>
+<p>The comparative analysis highlights a fundamental difference in philosophy between Rust and C++: Rust opts to enforce safety at the language level, making it the default state and thus elevating the baseline of secure software development. C++, while capable of achieving similar levels of safety through disciplined use of modern features and external tools, requires a more significant investment in developer education and codebase vigilance.</p>
+<p>In conclusion, the choice between Rust and C++ is not merely a technical decision but a strategic one that encompasses team expertise, project requirements, and the prioritization of safety and security in the project's goals. Rust's guarantees of memory safety, thread safety, and its ecosystem designed around security make it an appealing choice for new projects where safety and concurrency are paramount. C++, with its unmatched ecosystem and performance, remains a viable choice, especially in contexts where existing codebases and expertise dictate its use.</p>
+<p>As we look to the future of systems programming, the lessons learned from both Rust and C++ inform a broader movement towards safer, more secure coding practices across all languages. By leveraging the strengths of these languages and understanding their weaknesses, developers can make informed decisions that lead to more reliable, secure, and efficient software systems.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="sources-and-further-reading"><a class="header" href="#sources-and-further-reading">Sources And Further Reading</a></h1>
+<ul>
+<li><a href="https://doc.rust-lang.org/book/">The Rust Programming Language Book</a></li>
+<li><a href="https://doc.rust-lang.org/stable/rust-by-example/">Rust by Example</a></li>
+<li><a href="https://anssi-fr.github.io/rust-guide/01_introduction.html">Rust Secure Coding Guide by ANSSI</a></li>
+<li><a href="https://doc.rust-lang.org/beta/unstable-book">The Unstable Book</a></li>
+<li><a href="https://google.github.io/comprehensive-rust/index.html">Comprehensive Rust</a></li>
+<li><a href="https://doc.rust-lang.org/nomicon/">The Rustonomicon</a></li>
+<li><a href="https://doc.rust-lang.org/reference/">The Rust Reference</a></li>
+<li><a href="https://github.com/nrc/r4cppp">Rust for C++ Programmers</a></li>
+<li><a href="https://doc.rust-lang.org/cargo/index.html">The Cargo Book</a></li>
+<li><a href="https://fongyoong.github.io/easy_rust/">Easy Rust</a></li>
+<li><a href="https://rust-exercises.com/">Rust-Exercises</a></li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+        <script src="ace.js"></script>
+        <script src="editor.js"></script>
+        <script src="mode-rust.js"></script>
+        <script src="theme-dawn.js"></script>
+        <script src="theme-tomorrow_night.js"></script>
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </div>
+    </body>
+</html>

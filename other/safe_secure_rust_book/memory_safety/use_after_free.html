@@ -1,0 +1,406 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Use After Free - Safe and Secure Coding in Rust: A Comparative Analysis of Rust and C/C++</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../intro/index.html"><strong aria-hidden="true">1.</strong> Introduction to The Book</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../intro/rust_overview.html"><strong aria-hidden="true">1.1.</strong> Short Rust Overview</a></li><li class="chapter-item expanded "><a href="../intro/safety_features_overview.html"><strong aria-hidden="true">1.2.</strong> Rust Safety Features</a></li><li class="chapter-item expanded "><a href="../intro/example_app.html"><strong aria-hidden="true">1.3.</strong> Example Application</a></li></ol></li><li class="chapter-item expanded "><a href="../memory_safety/index.html"><strong aria-hidden="true">2.</strong> Memory Safety in Rust</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../memory_safety/undefined_behavior.html"><strong aria-hidden="true">2.1.</strong> Undefined Behavior</a></li><li class="chapter-item expanded "><a href="../memory_safety/buffer_overflow.html"><strong aria-hidden="true">2.2.</strong> Buffer Overflow</a></li><li class="chapter-item expanded "><a href="../memory_safety/use_after_free.html" class="active"><strong aria-hidden="true">2.3.</strong> Use After Free</a></li><li class="chapter-item expanded "><a href="../memory_safety/pointers.html"><strong aria-hidden="true">2.4.</strong> Pointers</a></li><li class="chapter-item expanded "><a href="../memory_safety/memory_leaks.html"><strong aria-hidden="true">2.5.</strong> Memory Leaks</a></li><li class="chapter-item expanded "><a href="../memory_safety/double_free.html"><strong aria-hidden="true">2.6.</strong> Double Free</a></li><li class="chapter-item expanded "><a href="../memory_safety/format_string.html"><strong aria-hidden="true">2.7.</strong> Format String</a></li></ol></li><li class="chapter-item expanded "><a href="../type_safety/index.html"><strong aria-hidden="true">3.</strong> Type Safety</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../type_safety/error_handling.html"><strong aria-hidden="true">3.1.</strong> Error Handling</a></li><li class="chapter-item expanded "><a href="../type_safety/type_conversions.html"><strong aria-hidden="true">3.2.</strong> Type Conversions</a></li><li class="chapter-item expanded "><a href="../type_safety/uninitialized_variables.html"><strong aria-hidden="true">3.3.</strong> Uninitialized Variables</a></li><li class="chapter-item expanded "><a href="../type_safety/variable_overflow.html"><strong aria-hidden="true">3.4.</strong> Variable Overflow</a></li></ol></li><li class="chapter-item expanded "><a href="../concurrency/index.html"><strong aria-hidden="true">4.</strong> Concurrency Without Data Races</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concurrency/threads.html"><strong aria-hidden="true">4.1.</strong> Threads</a></li><li class="chapter-item expanded "><a href="../concurrency/message_passing.html"><strong aria-hidden="true">4.2.</strong> Message Passing</a></li><li class="chapter-item expanded "><a href="../concurrency/is_shared_pointer_thread_safe.html"><strong aria-hidden="true">4.3.</strong> Is SharedPtr thread safe</a></li></ol></li><li class="chapter-item expanded "><a href="../unsafe/index.html"><strong aria-hidden="true">5.</strong> Safe Abstraction of Unsafe Code</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../unsafe/unsafe_examples.html"><strong aria-hidden="true">5.1.</strong> Unsafe usage examples</a></li></ol></li><li class="chapter-item expanded "><a href="../rust_ecosystem/index.html"><strong aria-hidden="true">6.</strong> Rust Ecosystem</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../rust_ecosystem/rustup.html"><strong aria-hidden="true">6.1.</strong> Rustup</a></li><li class="chapter-item expanded "><a href="../rust_ecosystem/cargo.html"><strong aria-hidden="true">6.2.</strong> Cargo</a></li><li class="chapter-item expanded "><a href="../rust_ecosystem/security_features.html"><strong aria-hidden="true">6.3.</strong> Security Features</a></li></ol></li><li class="chapter-item expanded "><a href="../cybersecurity_utils/index.html"><strong aria-hidden="true">7.</strong> Cybersecurity Utilities</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cybersecurity_utils/fuzzing.html"><strong aria-hidden="true">7.1.</strong> Fuzzing</a></li><li class="chapter-item expanded "><a href="../cybersecurity_utils/cryptography.html"><strong aria-hidden="true">7.2.</strong> Cryptography</a></li><li class="chapter-item expanded "><a href="../cybersecurity_utils/scanners.html"><strong aria-hidden="true">7.3.</strong> Scanners</a></li><li class="chapter-item expanded "><a href="../cybersecurity_utils/monitoring_tools.html"><strong aria-hidden="true">7.4.</strong> Monitoring Tools</a></li><li class="chapter-item expanded "><a href="../cybersecurity_utils/others.html"><strong aria-hidden="true">7.5.</strong> Others</a></li></ol></li><li class="chapter-item expanded "><a href="../conclusion.html"><strong aria-hidden="true">8.</strong> Conclusion</a></li><li class="chapter-item expanded "><a href="../sources.html"><strong aria-hidden="true">9.</strong> Sources</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Safe and Secure Coding in Rust: A Comparative Analysis of Rust and C/C++</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="use-after-free-types-of-bugs"><a class="header" href="#use-after-free-types-of-bugs">Use After Free types of bugs</a></h2>
+<p>"Use after Free" (UAF) is a memory corruption issue where a program tries to access memory that has already been freed. This typically happens due to programming errors when referencing memory that was deallocated. It can lead to crashes, data corruption, or even security vulnerabilities. Detection is challenging, and mitigation involves proper memory management practices and programming language features that enforce memory safety, such as Rust's ownership system.</p>
+<h3 id="example-1-use-after-free"><a class="header" href="#example-1-use-after-free">Example 1: Use After Free</a></h3>
+<p><a href="https://godbolt.org/z/o6M84n5b8">GODBOLT</a></p>
+<ul>
+<li>C - This code compiles but leads to undefined behavior by accessing memory that has been freed.</li>
+</ul>
+<pre><code class="language-c">#include &lt;iostream&gt;
+
+int main() {
+    int *ptr = new int(10);
+    delete ptr;
+    // Undefined behavior: use after free
+    std::cout &lt;&lt; *ptr &lt;&lt; std::endl;
+    return 0;
+}
+</code></pre>
+<ul>
+<li>CPP - Usage of std::unique_ptr prevents from UAF</li>
+</ul>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;memory&gt;
+
+int main() {
+    auto ptr = std::make_unique&lt;int&gt;(10);
+    // delete ptr is impossible, so use after free is impossible.
+    std::cout &lt;&lt; *ptr &lt;&lt; std::endl;
+    *ptr = 11;
+    std::cout &lt;&lt; *ptr &lt;&lt; std::endl;
+    return 0;
+}
+</code></pre>
+<ul>
+<li>RUST</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust editable">fn main() {
+    let ptr = Box::new(10);
+    // Memory is automatically cleaned up when `ptr` goes out of scope
+    // Attempting to use `ptr` after this point would result in a compile-time error
+    println!("{}", ptr);
+    // Rust's ownership system prevents "use after free" by design
+}</code></pre></pre>
+<h3 id="example-2-memory-bounds-dangling-pointer-or-even-use-after-free"><a class="header" href="#example-2-memory-bounds-dangling-pointer-or-even-use-after-free">Example 2: Memory bounds, dangling pointer or even use after free</a></h3>
+<p><a href="https://godbolt.org/z/dvGP1f6aa">GODBOLT</a></p>
+<ul>
+<li>CPP</li>
+</ul>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;optional&gt;
+#include &lt;exception&gt;
+
+// Function to modify the vector by adding a new value
+void modify(std::vector&lt;int&gt;&amp; vec, int value) {
+    vec.push_back(value);
+}
+
+
+// Function to safely get a value from the vector by index, returns std::optional
+std::optional&lt;int&gt; get(const std::vector&lt;int&gt;&amp; vec, size_t index) {
+    if (index &lt; vec.size()) { // You need to write THIS
+        return vec[index];
+    } else {
+        return std::nullopt;
+    }
+}
+
+
+int unsafe_get(const std::vector&lt;int&gt;&amp; vec, size_t index) {
+    return vec[index];
+}
+
+int safe_get(const std::vector&lt;int&gt;&amp; vec, size_t index) {
+    return vec.at(index);
+}
+
+int main() {
+    std::vector&lt;int&gt; data = {1, 2, 3};
+
+<span class="boring">    //// 4) Get an internal data reference
+</span><span class="boring">    // auto &amp;x = data[0];
+</span><span class="boring">    // //auto *x = &amp;data[0];
+</span><span class="boring">    // std::cout &lt;&lt; "x(1) = " &lt;&lt; x &lt;&lt; ", &amp;data[0] = " &lt;&lt; &amp;data[0] &lt;&lt; std::endl;
+</span><span class="boring">    //// `modify (vec.push_back)` will might cause the backing storage of `data` to be reallocated. Dangling pointer and use after free issue, Does this compile in CPP ?
+</span><span class="boring">    // data.push_back(4);
+</span>
+    // 1) Modifying the vector
+    modify(data, 10);
+    std::cout &lt;&lt; "Modified data: ";
+    for (auto&amp; n : data) {
+        std::cout &lt;&lt; n &lt;&lt; " ";
+    }
+    std::cout &lt;&lt; "\n";
+
+    // 2) Attempt to get a value from the vector by index
+    const size_t index = 42;
+    auto result = get(data, index);
+    if (result.has_value()) {
+        std::cout &lt;&lt; "Valid data returned: " &lt;&lt; result.value() &lt;&lt; std::endl;
+    } else {
+        std::cout &lt;&lt; "No data exists for index: " &lt;&lt; index &lt;&lt; std::endl;
+    }
+
+    // 3) Use automatic bounds checked access employing exceptions
+    try {
+        safe_get(data, index);
+    }
+    catch (std::out_of_range &amp;e) {
+        std::cout &lt;&lt; "No data exists for index: " &lt;&lt; index &lt;&lt; std::endl;
+    }
+
+    // 4) Will this fail ?
+    std::cout &lt;&lt; unsafe_get(data, index) &lt;&lt; std::endl;
+
+<span class="boring">    //// 5) Modify the reference
+</span><span class="boring">    // x = 11;
+</span><span class="boring">    // std::cout &lt;&lt; "x(2) = " &lt;&lt; x &lt;&lt; ", &amp;data[0] = " &lt;&lt; &amp;data[0] &lt;&lt; std::endl;
+</span><span class="boring">    // std::cout &lt;&lt; "Modified data once again: ";
+</span><span class="boring">    // for (auto&amp; n : data) {
+</span><span class="boring">    //     std::cout &lt;&lt; n &lt;&lt; " ";
+</span><span class="boring">    // }
+</span><span class="boring">    // std::cout &lt;&lt; "\n";
+</span>
+    return 0;
+}
+</code></pre>
+<ul>
+<li>RUST</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust editable">fn modify(vec: &amp;mut Vec&lt;i32&gt;, value: i32) -&gt; () {
+    vec.push(value);
+    ()
+}
+
+fn get(vec: &amp;Vec&lt;i32&gt;,index: usize) -&gt; Option&lt;&amp;i32&gt; {
+    vec.get(index)
+}
+
+fn not_best_get(vec: &amp;Vec&lt;i32&gt;,index: usize) -&gt; i32 {
+    vec[index]
+}
+
+
+fn main() {
+
+    let mut data = vec![1, 2, 3];
+
+<span class="boring">    //// 4) Get an internal reference
+</span><span class="boring">    //let x = &amp;data[0];
+</span><span class="boring">    //// This does not compile in rust
+</span><span class="boring">    //data.push(4);
+</span>
+    // 1) Modifying the vector
+    modify(&amp;mut data, 10);
+    println!("{:?}", data);
+    // 2) Attempt to get a value from the vector by index
+    let index: usize = 42;
+    match get(&amp;data, index) {
+        Some(x) =&gt; {
+            println!("Valid data returned: {}", x);
+        },
+        None =&gt; {
+            println!("No data exists for index:{}", index);
+        }
+    }
+
+    // 3) Will this fail ?
+    //println!("{}", not_best_get(&amp;data, index));
+
+<span class="boring">    //// 4) Modify the reference
+</span><span class="boring">    //x = 11;
+</span><span class="boring">    //println!("{}", x);
+</span><span class="boring">    //println!("{:?}", data);
+</span>}</code></pre></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../memory_safety/buffer_overflow.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../memory_safety/pointers.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../memory_safety/buffer_overflow.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../memory_safety/pointers.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+        <script src="../ace.js"></script>
+        <script src="../editor.js"></script>
+        <script src="../mode-rust.js"></script>
+        <script src="../theme-dawn.js"></script>
+        <script src="../theme-tomorrow_night.js"></script>
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

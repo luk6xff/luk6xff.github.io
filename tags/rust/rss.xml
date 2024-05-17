@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+      <title>luk6xff&#x27;s tech blog - rust</title>
+      <link>https://luk6xff.github.io</link>
+      <description>A simple blog theme focused on writing powered by Bulma and Zola based on [deepthought](https:&#x2F;&#x2F;github.com&#x2F;RatanShreshtha&#x2F;DeepThought&#x2F;)</description>
+      <generator>Zola</generator>
+      <language>en</language>
+      <atom:link href="https://luk6xff.github.io/tags/rust/rss.xml" rel="self" type="application/rss+xml"/>
+      <lastBuildDate>Tue, 13 Feb 2024 00:00:00 +0000</lastBuildDate>
+      <item>
+          <title>Safe and Secure Coding in Rust Book</title>
+          <pubDate>Tue, 13 Feb 2024 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://luk6xff.github.io/posts/safe-secure-rust/</link>
+          <guid>https://luk6xff.github.io/posts/safe-secure-rust/</guid>
+          <description xml:base="https://luk6xff.github.io/posts/safe-secure-rust/">&lt;h4 id=&quot;safe-and-secure-coding-in-rust-a-comparative-analysis-of-rust-and-c-c&quot;&gt;Safe and Secure Coding in Rust: A Comparative Analysis of Rust and C&#x2F;C++&lt;&#x2F;h4&gt;
+&lt;p&gt;Today, I am pleased to introduce a book I&#x27;ve authored, which delves into the utilization of Rust for building robust and secure applications. You can access the book by clicking &lt;a href=&quot;&#x2F;other&#x2F;safe_secure_rust_book&#x2F;index.html&quot;&gt;HERE&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Happy reading!&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>mdBook</title>
+          <pubDate>Wed, 13 Dec 2023 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://luk6xff.github.io/posts/md-book/</link>
+          <guid>https://luk6xff.github.io/posts/md-book/</guid>
+          <description xml:base="https://luk6xff.github.io/posts/md-book/">&lt;h2 id=&quot;how-to-create-a-presentation-using-mdbook&quot;&gt;How to create a presentation using mdBook&lt;&#x2F;h2&gt;
+&lt;p&gt;Creating an mdBook for your presentation involves organizing the content into Markdown files structured in a way that mdBook can compile into a book format.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;a-book-format&quot;&gt;A book format&lt;&#x2F;h2&gt;
+&lt;p&gt;I&#x27;ll provide you with a basic setup and some content following the outline I previously shared. For a full &lt;code&gt;mdBook&lt;&#x2F;code&gt;, you would typically set up a directory structure like this:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#1e1e1e;color:#dcdcdc;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span&gt;presentation&#x2F;
+&lt;&#x2F;span&gt;&lt;span&gt;├── book.toml
+&lt;&#x2F;span&gt;&lt;span&gt;└── src
+&lt;&#x2F;span&gt;&lt;span&gt;    ├── chapter_1.md
+&lt;&#x2F;span&gt;&lt;span&gt;    ├── chapter_2.md
+&lt;&#x2F;span&gt;&lt;span&gt;    ├── chapter_3.md
+&lt;&#x2F;span&gt;&lt;span&gt;    ├── chapter_4.md
+&lt;&#x2F;span&gt;&lt;span&gt;    ├── chapter_5.md
+&lt;&#x2F;span&gt;&lt;span&gt;    ├── chapter_6.md
+&lt;&#x2F;span&gt;&lt;span&gt;    ├── SUMMARY.md
+&lt;&#x2F;span&gt;&lt;span&gt;    └── conclusion.md
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;step1-book-toml&quot;&gt;Step1: book.toml&lt;&#x2F;h3&gt;
+&lt;p&gt;This file contains metadata about your book. For simplicity, here&#x27;s a basic example:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;toml&quot; style=&quot;background-color:#1e1e1e;color:#dcdcdc;&quot; class=&quot;language-toml &quot;&gt;&lt;code class=&quot;language-toml&quot; data-lang=&quot;toml&quot;&gt;&lt;span&gt;[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#808080;&quot;&gt;book&lt;&#x2F;span&gt;&lt;span&gt;]
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#569cd6;&quot;&gt;title &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d69d85;&quot;&gt;&amp;quot;Your mdBook name&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#569cd6;&quot;&gt;authors &lt;&#x2F;span&gt;&lt;span&gt;= [&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d69d85;&quot;&gt;&amp;quot;Your Name&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;]
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#569cd6;&quot;&gt;language &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d69d85;&quot;&gt;&amp;quot;en&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#808080;&quot;&gt;build&lt;&#x2F;span&gt;&lt;span&gt;]
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#569cd6;&quot;&gt;build-dir &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d69d85;&quot;&gt;&amp;quot;book&amp;quot;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;step-2-summary-md&quot;&gt;Step 2: SUMMARY.md&lt;&#x2F;h3&gt;
+&lt;p&gt;This file outlines the structure of your book. It links all chapters together.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;md&quot; style=&quot;background-color:#1e1e1e;color:#dcdcdc;&quot; class=&quot;language-md &quot;&gt;&lt;code class=&quot;language-md&quot; data-lang=&quot;md&quot;&gt;&lt;span style=&quot;color:#569cd6;&quot;&gt;# Summary
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;- [Intro](.&#x2F;chapter_1.md)
+&lt;&#x2F;span&gt;&lt;span&gt;- [How to program in C](.&#x2F;chapter_2.md)
+&lt;&#x2F;span&gt;&lt;span&gt;- [How to program in C++](.&#x2F;chapter_3.md)
+&lt;&#x2F;span&gt;&lt;span&gt;- [How to program in Java](.&#x2F;chapter_4.md)
+&lt;&#x2F;span&gt;&lt;span&gt;- [How to program in Rust](.&#x2F;chapter_5.md)
+&lt;&#x2F;span&gt;&lt;span&gt;- [How to program in Python](.&#x2F;chapter_6.md)
+&lt;&#x2F;span&gt;&lt;span&gt;- [Conclusion](.&#x2F;conclusion.md)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;step-3-chapter-files&quot;&gt;Step 3: Chapter Files&lt;&#x2F;h3&gt;
+&lt;p&gt;Each chapter file (chapter_1.md, chapter_2.md, etc.) will contain the markdown content for that section of the presentation. Here&#x27;s an example for the first chapter:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;md&quot; style=&quot;background-color:#1e1e1e;color:#dcdcdc;&quot; class=&quot;language-md &quot;&gt;&lt;code class=&quot;language-md&quot; data-lang=&quot;md&quot;&gt;&lt;span style=&quot;color:#569cd6;&quot;&gt;# Intro
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;Hey It&amp;#39;s my book written in `markdown`.
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#569cd6;&quot;&gt;## Background and Motivation
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;I was very motivated to create markdown stuff.
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#569cd6;&quot;&gt;## Conclussion
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;All is fine in my **book**.
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Continue creating Markdown files for each chapter following the outline, filling in the content as necessary.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;step-4-compile-the-mdbook&quot;&gt;Step 4: Compile the mdBook&lt;&#x2F;h3&gt;
+&lt;p&gt;After setting up your mdBook structure and writing your content, you can compile it into a book format using the mdBook tool. If you haven&#x27;t already, you&#x27;ll need to install mdBook:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#1e1e1e;color:#dcdcdc;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span&gt;cargo install mdbook
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Then, navigate to your book directory and run:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#1e1e1e;color:#dcdcdc;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span&gt;mdbook build
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;This command compiles your Markdown files into a static website that you can host or view locally.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;step-5-final-step-viewing-your-book&quot;&gt;Step 5: Final Step: Viewing Your Book&lt;&#x2F;h3&gt;
+&lt;p&gt;After building, you can view your book by opening the index.html file in the book directory with a web browser, or you can serve it locally with:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#1e1e1e;color:#dcdcdc;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span&gt;mdbook serve
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;This command starts a local web server. You can view your book by visiting http:&#x2F;&#x2F;localhost:3000 in your web browser.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;summary&quot;&gt;Summary&lt;&#x2F;h2&gt;
+&lt;p&gt;This setup gives you a solid foundation to create a comprehensive mdBook for your presentation :)&lt;&#x2F;p&gt;
+</description>
+      </item>
+    </channel>
+</rss>

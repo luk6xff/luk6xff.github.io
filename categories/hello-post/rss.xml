@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+      <title>luk6xff&#x27;s tech blog - Hello Post</title>
+      <link>https://luk6xff.github.io</link>
+      <description>A simple blog theme focused on writing powered by Bulma and Zola based on [deepthought](https:&#x2F;&#x2F;github.com&#x2F;RatanShreshtha&#x2F;DeepThought&#x2F;)</description>
+      <generator>Zola</generator>
+      <language>en</language>
+      <atom:link href="https://luk6xff.github.io/categories/hello-post/rss.xml" rel="self" type="application/rss+xml"/>
+      <lastBuildDate>Fri, 13 Mar 2020 00:00:00 +0000</lastBuildDate>
+      <item>
+          <title>Zeroth Post</title>
+          <pubDate>Fri, 13 Mar 2020 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://luk6xff.github.io/posts/post-0/</link>
+          <guid>https://luk6xff.github.io/posts/post-0/</guid>
+          <description xml:base="https://luk6xff.github.io/posts/post-0/">&lt;h2 id=&quot;the-zeroth-post&quot;&gt;The Zeroth post&lt;&#x2F;h2&gt;
+&lt;p&gt;Welcome to my blog dedicated to exploring the cutting-edge of software engineering within the realms of automotive systems, the Internet of Things (IoT), and cybersecurity. As a software engineer deeply embedded in the automotive industry, I&#x27;ve carved out a niche at the intersection of technology and motion, leveraging the power of programming languages like C++, Rust, Python, and Go to drive innovation and secure the future of mobility.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;an-idea&quot;&gt;An idea&lt;&#x2F;h2&gt;
+&lt;p&gt;The blog is about sharing knowledge, from technical tutorials and programming insights to industry trends and security practices. Whether you&#x27;re in the tech industry, a coding enthusiast, or curious about the digital transformation of automotive systems, this blog offers a concise look into the technologies shaping our future.&lt;&#x2F;p&gt;
+&lt;p&gt;Join me as we navigate the complexities of software development, uncover the potential of IoT, and tackle the challenges of cybersecurity together. Let&#x27;s drive innovation, one line of code at a time :)&lt;&#x2F;p&gt;
+&lt;p&gt;Happy coding!
+Lukasz&lt;&#x2F;p&gt;
+</description>
+      </item>
+    </channel>
+</rss>

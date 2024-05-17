@@ -1,0 +1,451 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Example Application - Safe and Secure Coding in Rust: A Comparative Analysis of Rust and C/C++</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../intro/index.html"><strong aria-hidden="true">1.</strong> Introduction to The Book</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../intro/rust_overview.html"><strong aria-hidden="true">1.1.</strong> Short Rust Overview</a></li><li class="chapter-item expanded "><a href="../intro/safety_features_overview.html"><strong aria-hidden="true">1.2.</strong> Rust Safety Features</a></li><li class="chapter-item expanded "><a href="../intro/example_app.html" class="active"><strong aria-hidden="true">1.3.</strong> Example Application</a></li></ol></li><li class="chapter-item expanded "><a href="../memory_safety/index.html"><strong aria-hidden="true">2.</strong> Memory Safety in Rust</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../memory_safety/undefined_behavior.html"><strong aria-hidden="true">2.1.</strong> Undefined Behavior</a></li><li class="chapter-item expanded "><a href="../memory_safety/buffer_overflow.html"><strong aria-hidden="true">2.2.</strong> Buffer Overflow</a></li><li class="chapter-item expanded "><a href="../memory_safety/use_after_free.html"><strong aria-hidden="true">2.3.</strong> Use After Free</a></li><li class="chapter-item expanded "><a href="../memory_safety/pointers.html"><strong aria-hidden="true">2.4.</strong> Pointers</a></li><li class="chapter-item expanded "><a href="../memory_safety/memory_leaks.html"><strong aria-hidden="true">2.5.</strong> Memory Leaks</a></li><li class="chapter-item expanded "><a href="../memory_safety/double_free.html"><strong aria-hidden="true">2.6.</strong> Double Free</a></li><li class="chapter-item expanded "><a href="../memory_safety/format_string.html"><strong aria-hidden="true">2.7.</strong> Format String</a></li></ol></li><li class="chapter-item expanded "><a href="../type_safety/index.html"><strong aria-hidden="true">3.</strong> Type Safety</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../type_safety/error_handling.html"><strong aria-hidden="true">3.1.</strong> Error Handling</a></li><li class="chapter-item expanded "><a href="../type_safety/type_conversions.html"><strong aria-hidden="true">3.2.</strong> Type Conversions</a></li><li class="chapter-item expanded "><a href="../type_safety/uninitialized_variables.html"><strong aria-hidden="true">3.3.</strong> Uninitialized Variables</a></li><li class="chapter-item expanded "><a href="../type_safety/variable_overflow.html"><strong aria-hidden="true">3.4.</strong> Variable Overflow</a></li></ol></li><li class="chapter-item expanded "><a href="../concurrency/index.html"><strong aria-hidden="true">4.</strong> Concurrency Without Data Races</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concurrency/threads.html"><strong aria-hidden="true">4.1.</strong> Threads</a></li><li class="chapter-item expanded "><a href="../concurrency/message_passing.html"><strong aria-hidden="true">4.2.</strong> Message Passing</a></li><li class="chapter-item expanded "><a href="../concurrency/is_shared_pointer_thread_safe.html"><strong aria-hidden="true">4.3.</strong> Is SharedPtr thread safe</a></li></ol></li><li class="chapter-item expanded "><a href="../unsafe/index.html"><strong aria-hidden="true">5.</strong> Safe Abstraction of Unsafe Code</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../unsafe/unsafe_examples.html"><strong aria-hidden="true">5.1.</strong> Unsafe usage examples</a></li></ol></li><li class="chapter-item expanded "><a href="../rust_ecosystem/index.html"><strong aria-hidden="true">6.</strong> Rust Ecosystem</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../rust_ecosystem/rustup.html"><strong aria-hidden="true">6.1.</strong> Rustup</a></li><li class="chapter-item expanded "><a href="../rust_ecosystem/cargo.html"><strong aria-hidden="true">6.2.</strong> Cargo</a></li><li class="chapter-item expanded "><a href="../rust_ecosystem/security_features.html"><strong aria-hidden="true">6.3.</strong> Security Features</a></li></ol></li><li class="chapter-item expanded "><a href="../cybersecurity_utils/index.html"><strong aria-hidden="true">7.</strong> Cybersecurity Utilities</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cybersecurity_utils/fuzzing.html"><strong aria-hidden="true">7.1.</strong> Fuzzing</a></li><li class="chapter-item expanded "><a href="../cybersecurity_utils/cryptography.html"><strong aria-hidden="true">7.2.</strong> Cryptography</a></li><li class="chapter-item expanded "><a href="../cybersecurity_utils/scanners.html"><strong aria-hidden="true">7.3.</strong> Scanners</a></li><li class="chapter-item expanded "><a href="../cybersecurity_utils/monitoring_tools.html"><strong aria-hidden="true">7.4.</strong> Monitoring Tools</a></li><li class="chapter-item expanded "><a href="../cybersecurity_utils/others.html"><strong aria-hidden="true">7.5.</strong> Others</a></li></ol></li><li class="chapter-item expanded "><a href="../conclusion.html"><strong aria-hidden="true">8.</strong> Conclusion</a></li><li class="chapter-item expanded "><a href="../sources.html"><strong aria-hidden="true">9.</strong> Sources</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Safe and Secure Coding in Rust: A Comparative Analysis of Rust and C/C++</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="rust-example-app-syntax-overview"><a class="header" href="#rust-example-app-syntax-overview">Rust example app, syntax overview</a></h2>
+<ul>
+<li><a href="https://github.com/luk6xff/luk6xff.github.io/tree/master/content/other/safe_secure_rust_book/examples/intro/example_app">DEMO</a></li>
+</ul>
+<pre><pre class="playground"><code class="language-rust editable">use std::fmt::{self, Display, Formatter};
+use std::sync::mpsc::{self, Receiver};
+use std::thread;
+use std::time::{Duration, Instant};
+
+// Define an enum to represent the status of an sensor, showcasing Rust's enum and pattern matching.
+enum SensorStatus {
+    Running,
+    Stopped,
+    Error(String),
+}
+
+// Implement the Display trait for SensorStatus to enable easy printing.
+impl Display for SensorStatus {
+    fn fmt(&amp;self, f: &amp;mut Formatter) -&gt; fmt::Result {
+        match self {
+            SensorStatus::Running =&gt; write!(f, "Sensor is running"),
+            SensorStatus::Stopped =&gt; write!(f, "Sensor is stopped"),
+            SensorStatus::Error(msg) =&gt; write!(f, "Sensor error: {}", msg),
+        }
+    }
+}
+
+// A struct representing a vehicle temperature sensor.
+struct TemperatureSensor {
+    name: &amp;'static str,
+    value: i32,
+}
+
+impl TemperatureSensor {
+    const MIN_TEMP: i32 = -30;
+    const MAX_TEMP: i32 = 150;
+}
+
+// A struct representing a vehicle speed sensor.
+struct SpeedSensor {
+    name: &amp;'static str,
+    value: u32,
+}
+
+impl SpeedSensor {
+    const MAX_SPEED_LIMIT: u32 = 180;
+}
+
+// Implement the Display trait for Sensors, enabling descriptive output.
+impl Display for TemperatureSensor {
+    fn fmt(&amp;self, f: &amp;mut Formatter) -&gt; fmt::Result {
+        write!(f, "[{}] TemperatureSensor: {}", self.name, self.value)
+    }
+}
+
+impl Display for SpeedSensor {
+    fn fmt(&amp;self, f: &amp;mut Formatter) -&gt; fmt::Result {
+        write!(f, "[{}] SpeedSensor: {}", self.name, self.value)
+    }
+}
+
+// Define a trait for diagnostic tools, demonstrating Rust's trait system for polymorphism.
+trait DiagnosticTool {
+    fn diagnose(&amp;self) -&gt; SensorStatus;
+}
+
+// Implement the DiagnosticTool trait for Sensors, showcasing trait implementations.
+impl DiagnosticTool for TemperatureSensor {
+    fn diagnose(&amp;self) -&gt; SensorStatus {
+        if self.value &gt; TemperatureSensor::MAX_TEMP {
+            SensorStatus::Error(format!("{} sensor exceeds max limit:{} over {} [C]!", self.name, self.value, (self.value - TemperatureSensor::MAX_TEMP)))
+        } else if self.value &lt; TemperatureSensor::MIN_TEMP {
+            SensorStatus::Error(format!("{} sensor reached below min limit:{} over {} [C]!", self.name, self.value, (self.value - TemperatureSensor::MIN_TEMP)))
+        } else {
+            SensorStatus::Running
+        }
+    }
+}
+
+impl DiagnosticTool for SpeedSensor {
+    fn diagnose(&amp;self) -&gt; SensorStatus {
+        if self.value &gt; SpeedSensor::MAX_SPEED_LIMIT {
+            SensorStatus::Error(format!("[{}] sensor exceeds max limit:{} over {} [km/h]!", self.name, self.value, (self.value - SpeedSensor::MAX_SPEED_LIMIT)))
+        } else {
+            SensorStatus::Running
+        }
+    }
+}
+
+// A function taking a dynamic trait object, demonstrating dynamic polymorphism.
+fn run_diagnostic(tool: &amp;dyn DiagnosticTool) -&gt; SensorStatus {
+    tool.diagnose()
+}
+
+
+// Define a struct for processing rear camera images, illustrating Rust's generic type parameters.
+struct RearCameraImageProcessor&lt;T&gt; {
+    data: T,
+}
+
+// Define a trait for image processing functionality.
+trait ImageProcessing {
+    fn process(&amp;mut self);
+}
+
+// Implement methods for RearCameraImageProcessor, demonstrating ownership and borrowing.
+impl&lt;T: Display + Clone&gt; RearCameraImageProcessor&lt;T&gt; {
+    // Constructor method takes ownership of data.
+    fn new(data: T) -&gt; Self {
+        RearCameraImageProcessor { data }
+    }
+
+    // Borrow self immutably to read data.
+    fn read(&amp;self) -&gt; &amp;T {
+        &amp;self.data
+    }
+
+    // Borrow self mutably to modify data.
+    fn write(&amp;mut self, data: T) {
+        self.data = data;
+    }
+}
+
+// Implement the ImageProcessing trait for RearCameraImageProcessor.
+impl&lt;T: Display + Clone&gt; ImageProcessing for RearCameraImageProcessor&lt;T&gt; {
+    // Sample processing method which just clones and displays the data.
+    fn process(&amp;mut self) {
+        let processed_data = self.data.clone();
+        println!("Processing image data: {}", processed_data);
+    }
+}
+
+// Demonstrates the use of closures to modify data, showcasing Rust's closure capabilities.
+fn adjust_brightness&lt;F, T&gt;(adjustment_closure: F, processor: &amp;mut RearCameraImageProcessor&lt;T&gt;)
+where
+    F: Fn(T) -&gt; T,
+    T: Display + Clone,
+{
+    let current_data = processor.read().clone();
+    println!("Current image brightness: {}", current_data);
+    let adjusted_data = adjustment_closure(current_data);
+    processor.write(adjusted_data);
+}
+
+
+
+fn main() {
+    // Simulate a sensor that continuously sends data for 10 seconds.
+    let (tx_temp, rx_temp): (mpsc::Sender&lt;TemperatureSensor&gt;, Receiver&lt;TemperatureSensor&gt;) = mpsc::channel();
+    let (tx_speed, rx_speed): (mpsc::Sender&lt;SpeedSensor&gt;, Receiver&lt;SpeedSensor&gt;) = mpsc::channel();
+    // Spawn a thread for the temp_sensor
+    let tx_temp_clone = tx_temp.clone();
+    let temp_handle = thread::spawn(move || {
+        let start = Instant::now();
+        while start.elapsed() &lt; Duration::new(5, 0) {
+            let value = (start.elapsed().as_secs() * 10) as i32; // Simulate increasing temp
+            let sensor = TemperatureSensor { name: "Engine Temperature", value: value };
+            if let Err(e) = tx_temp_clone.send(sensor) {
+                eprintln!("Error sending temp data: {}", e);
+                break;
+            }
+            thread::sleep(Duration::from_millis(500)); // Simulate data sent every 500ms
+        }
+    });
+    // Spawn a thread for the car_speed_sensor
+    let tx_speed_clone = tx_speed.clone();
+    let speed_handle = thread::spawn(move || {
+        let start = Instant::now();
+        let mut factor: u64 = 1;
+        while start.elapsed() &lt; Duration::new(5, 0) {
+            let value = (start.elapsed().as_secs() * 1 * factor) as u32; // Simulate increasing speed
+            let sensor = SpeedSensor { name: "Car Speed", value: value };
+            if let Err(e) = tx_speed_clone.send(sensor) {
+                eprintln!("Error sending car speed data: {}", e);
+                break;
+            }
+            factor = factor + 1;
+            thread::sleep(Duration::from_millis(100)); // Simulate data sent every 100ms
+        }
+    });
+
+    // Main thread acts as a diagnostic tool that processes sensors data
+    let start = Instant::now();
+    while start.elapsed() &lt; Duration::new(5, 0) {
+        if let Ok(sensor) = rx_temp.try_recv() {
+            println!("Received {}: {}", sensor.name, sensor.value);
+            // Here you can also run diagnostics on the received sensor data
+            let status = run_diagnostic(&amp;sensor);
+            println!("Diagnostic result: {}", status);
+        }
+        if let Ok(sensor) = rx_speed.try_recv() {
+            println!("Received {}: {}", sensor.name, sensor.value);
+            // Here you can also run diagnostics on the received sensor data
+            let status = run_diagnostic(&amp;sensor);
+            println!("Diagnostic result: {}", status);
+        }
+        // Simulate processing other tasks in the main thread
+        thread::sleep(Duration::from_millis(100));
+    }
+
+    // Instantiate a RearCameraImageProcessor and demonstrate processing.
+    let mut camera_processor = RearCameraImageProcessor::new("Initial image data".to_string());
+    camera_processor.process();
+
+    // Use a closure to adjust the brightness of the image data.
+    adjust_brightness(|data| format!("{} + brightness adjusted", data), &amp;mut camera_processor);
+    println!("After adjustment: {}", camera_processor.read());
+
+    // Join threads here
+    if let Err(e) = temp_handle.join() {
+        eprintln!("Error joining temperature sensor thread: {:?}", e);
+    }
+
+    if let Err(e) = speed_handle.join() {
+        eprintln!("Error joining speed sensor thread: {:?}", e);
+    }
+
+    println!("Simulation completed.");
+}</code></pre></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../intro/safety_features_overview.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../memory_safety/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../intro/safety_features_overview.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../memory_safety/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+        <script src="../ace.js"></script>
+        <script src="../editor.js"></script>
+        <script src="../mode-rust.js"></script>
+        <script src="../theme-dawn.js"></script>
+        <script src="../theme-tomorrow_night.js"></script>
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

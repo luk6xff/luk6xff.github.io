@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+      <title>luk6xff&#x27;s tech blog - linux</title>
+      <link>https://luk6xff.github.io</link>
+      <description>A simple blog theme focused on writing powered by Bulma and Zola based on [deepthought](https:&#x2F;&#x2F;github.com&#x2F;RatanShreshtha&#x2F;DeepThought&#x2F;)</description>
+      <generator>Zola</generator>
+      <language>en</language>
+      <atom:link href="https://luk6xff.github.io/categories/linux/rss.xml" rel="self" type="application/rss+xml"/>
+      <lastBuildDate>Mon, 18 Sep 2023 00:00:00 +0000</lastBuildDate>
+      <item>
+          <title>The Ultimate Command List for Linux Power Users</title>
+          <pubDate>Mon, 18 Sep 2023 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://luk6xff.github.io/posts/linux-commands/</link>
+          <guid>https://luk6xff.github.io/posts/linux-commands/</guid>
+          <description xml:base="https://luk6xff.github.io/posts/linux-commands/">&lt;h2 id=&quot;mastering-linux-the-ultimate-command-list-for-power-users-by-luk6xff&quot;&gt;Mastering Linux: The Ultimate Command List for Power Users by luk6xff&lt;&#x2F;h2&gt;
+&lt;p&gt;Linux, the powerhouse behind countless servers and systems, offers an unparalleled level of control to those who know how to navigate its depths. Whether you&#x27;re a seasoned system administrator, a developer, or just a Linux enthusiast, having a comprehensive command list at your disposal can drastically increase your productivity and understanding of your system. In this post, we&#x27;ll dive into an expansive list of Linux commands curated by me for my personal daily use, covering everything from basic file management to advanced networking and security measures. This guide is designed to be your go-to resource for Linux commands, enhancing your command-line proficiency and helping you unlock the full potential of Linux.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;full-commands-list&quot;&gt;Full commands list&lt;&#x2F;h2&gt;
+&lt;p&gt;All the commands available on &lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;luk6xff&#x2F;linux-commands&#x2F;blob&#x2F;master&#x2F;README.md&quot;&gt;my github repository&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;short-overview-what-you-can-find-in-the-list&quot;&gt;Short Overview what you can find in the list&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;user&quot;&gt;User&lt;&#x2F;h3&gt;
+&lt;p&gt;Explore essential commands for managing users, including creating users, changing passwords, and modifying user privileges.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;docker&quot;&gt;Docker&lt;&#x2F;h3&gt;
+&lt;p&gt;Dive into Docker commands for container management, image handling, and deploying applications in containers.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;hardware&quot;&gt;Hardware&lt;&#x2F;h3&gt;
+&lt;p&gt;Learn how to interrogate and monitor your system&#x27;s hardware components with commands that reveal connected devices and their statuses.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;file-system&quot;&gt;File System&lt;&#x2F;h3&gt;
+&lt;p&gt;Understand commands for navigating the Linux file system, managing files and directories, and assessing disk usage.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;performance&quot;&gt;Performance&lt;&#x2F;h3&gt;
+&lt;p&gt;Discover commands to monitor system performance, manage processes, and optimize resource usage for better efficiency.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;bash&quot;&gt;Bash&lt;&#x2F;h3&gt;
+&lt;p&gt;Uncover the power of Bash scripting and command-line tips to automate tasks and streamline your workflow.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;cron&quot;&gt;Cron&lt;&#x2F;h3&gt;
+&lt;p&gt;Master scheduling with cron commands to automate and run scripts at specified times or intervals.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;ssh&quot;&gt;SSH&lt;&#x2F;h3&gt;
+&lt;p&gt;Securely manage remote systems using SSH commands for secure connections, file transfers, and remote command execution.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;python&quot;&gt;Python&lt;&#x2F;h3&gt;
+&lt;p&gt;Navigate Python environments and manage Python-specific tasks, including running scripts and managing packages.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;tmux&quot;&gt;Tmux&lt;&#x2F;h3&gt;
+&lt;p&gt;Enhance terminal usage with Tmux commands for session management, window splitting, and maintaining persistent workspaces.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;git&quot;&gt;Git&lt;&#x2F;h3&gt;
+&lt;p&gt;Control versioning and collaborate on projects with Git commands for managing changes, branches, and merges in your codebase.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;ffmpeg&quot;&gt;FFmpeg&lt;&#x2F;h3&gt;
+&lt;p&gt;Manipulate audio and video files with FFmpeg commands for format conversion, streaming, and editing multimedia content.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;system-administration&quot;&gt;System Administration&lt;&#x2F;h3&gt;
+&lt;p&gt;Handle system-wide configurations, user management, and essential administrative tasks to maintain and secure Linux systems.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;security&quot;&gt;Security&lt;&#x2F;h3&gt;
+&lt;p&gt;Implement security measures with commands for firewall management, secure file transfers, and applying security patches.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;package-management&quot;&gt;Package Management&lt;&#x2F;h3&gt;
+&lt;p&gt;Efficiently install, update, and manage software packages across different Linux distributions with package management commands.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;networking-and-internet&quot;&gt;Networking and Internet&lt;&#x2F;h3&gt;
+&lt;p&gt;Configure network settings, troubleshoot connections, and ensure optimal networking performance with networking commands.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;netcat&quot;&gt;Netcat&lt;&#x2F;h3&gt;
+&lt;p&gt;Utilize Netcat for versatile networking tasks, including port scanning, file transfers, and creating simple servers.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;file-and-disk-management&quot;&gt;File and Disk Management&lt;&#x2F;h3&gt;
+&lt;p&gt;Manage storage with commands for checking disk health, managing file permissions, and ensuring file system integrity.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;advanced-command-line-tricks&quot;&gt;Advanced Command Line Tricks&lt;&#x2F;h3&gt;
+&lt;p&gt;Discover advanced command-line techniques and shortcuts to elevate your terminal use, making it more powerful and efficient.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;expanding-your-linux-mastery&quot;&gt;Expanding Your Linux Mastery&lt;&#x2F;h2&gt;
+&lt;p&gt;The commands listed here represent just the tip of the iceberg when it comes to harnessing the power of Linux. As you become more comfortable with these commands, you&#x27;ll discover even more ways to optimize, secure, and explore your Linux environment. Whether you&#x27;re automating tasks with &lt;code&gt;bash&lt;&#x2F;code&gt; scripts, setting up secure network connections, or managing virtual machines, Linux commands empower you to take full control of your computing environment.&lt;&#x2F;p&gt;
+&lt;p&gt;Embrace the command line, and let the vast world of Linux commands unlock new potentials for your projects and systems. Remember, the more you practice, the more intuitive these commands will become.&lt;&#x2F;p&gt;
+&lt;p&gt;Happy Linux-ing!&lt;&#x2F;p&gt;
+</description>
+      </item>
+    </channel>
+</rss>

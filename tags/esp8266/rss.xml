@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+      <title>luk6xff&#x27;s tech blog - esp8266</title>
+      <link>https://luk6xff.github.io</link>
+      <description>A simple blog theme focused on writing powered by Bulma and Zola based on [deepthought](https:&#x2F;&#x2F;github.com&#x2F;RatanShreshtha&#x2F;DeepThought&#x2F;)</description>
+      <generator>Zola</generator>
+      <language>en</language>
+      <atom:link href="https://luk6xff.github.io/tags/esp8266/rss.xml" rel="self" type="application/rss+xml"/>
+      <lastBuildDate>Tue, 22 Sep 2020 00:00:00 +0000</lastBuildDate>
+      <item>
+          <title>UsbMux And Relay Remote Controller</title>
+          <pubDate>Tue, 22 Sep 2020 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://luk6xff.github.io/posts/usbmux/</link>
+          <guid>https://luk6xff.github.io/posts/usbmux/</guid>
+          <description xml:base="https://luk6xff.github.io/posts/usbmux/">&lt;h2 id=&quot;project-overview&quot;&gt;Project Overview&lt;&#x2F;h2&gt;
+&lt;p&gt;This project tackles the need for remote device control using a single USB connection for both firmware flashing and serial communication, a challenge highlighted during the pandemic. For source code, hardware schematics, build instructions, and additional images, visit the &lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;luk6xff&#x2F;usbmux&#x2F;tree&#x2F;master&quot;&gt;project&#x27;s GitHub repository&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;core-features&quot;&gt;Core Features&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Dual-Function USB Port:&lt;&#x2F;strong&gt; Utilizing a USB 2.0 multiplexer, the device switches between:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Flashing Mode (Bootloader):&lt;&#x2F;strong&gt; Activated when a USB pin (USB_ID) is high, enabling firmware updates.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;Operational Mode:&lt;&#x2F;strong&gt; Engages when USB_ID is low, starting the device normally for serial communication over USB.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;Power Management:&lt;&#x2F;strong&gt; Integrates a power relay for remote power toggling.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;Control Interfaces:&lt;&#x2F;strong&gt; Offers UART CLI and an HTTP server for device management through serial commands or web requests.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;development-insights&quot;&gt;Development Insights&lt;&#x2F;h2&gt;
+&lt;p&gt;Developed with &lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;platformio.org&#x2F;&quot;&gt;PlatformIO&lt;&#x2F;a&gt; for C++ programming on the ESP8266 microcontroller, focusing on cost-efficiency and compact design. The TS3USB221 USB 2.0 two-channel multiplexer facilitates the USB port&#x27;s dual functionality. The development prioritized technical efficacy to achieve reliable remote control and adaptable usage.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;advantages&quot;&gt;Advantages&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Remote Management:&lt;&#x2F;strong&gt; Enhances the capability to remotely switch device modes, manage power, and adjust settings via both serial and web interfaces.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;Flexibility:&lt;&#x2F;strong&gt; The USB port&#x27;s dual use and varied control interfaces provide versatile options for firmware updates and device management.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;expanded-capabilities&quot;&gt;Expanded Capabilities&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Relay Control Extension:&lt;&#x2F;strong&gt; The &lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;luk6xff&#x2F;usbmux&#x2F;tree&#x2F;power_relays&quot;&gt;power_relays branch&lt;&#x2F;a&gt; extends functionality to manage up to 8 relays simultaneously, expanding device control capabilities.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;summary&quot;&gt;Summary&lt;&#x2F;h2&gt;
+&lt;p&gt;Focused on the TS3USB221 for its USB multiplexing capabilities, this project employs the ESP8266 microcontroller for its balance of cost and performance, streamlined for remote device control. Utilizing the PlatformIO ecosystem for C++ development ensures a streamlined, technically grounded approach to device management and firmware deployment. Further information and visuals will be updated in the project repository.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;em&gt;Figure 1: USB Mux case ver 1.0.&lt;&#x2F;em&gt;&lt;br &#x2F;&gt;
+&lt;img src=&quot;https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;luk6xff&#x2F;luk6xff.github.io&#x2F;master&#x2F;content&#x2F;other&#x2F;media&#x2F;usbmux&#x2F;usb_mux_case.png&quot; alt=&quot;Usb Mux Case&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;em&gt;Figure 2: USB Mux case ver 1.1 - branch power_relays&lt;&#x2F;em&gt;&lt;br &#x2F;&gt;
+&lt;img src=&quot;https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;luk6xff&#x2F;luk6xff.github.io&#x2F;master&#x2F;content&#x2F;other&#x2F;media&#x2F;usbmux&#x2F;usb_mux_power_relays.png&quot; alt=&quot;Usb Mux Case - Power relays&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;em&gt;Figure 3: USB Mux UART CLI.&lt;&#x2F;em&gt;&lt;br &#x2F;&gt;
+&lt;img src=&quot;https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;luk6xff&#x2F;luk6xff.github.io&#x2F;master&#x2F;content&#x2F;other&#x2F;media&#x2F;usbmux&#x2F;usb_mux_uart_cli.png&quot; alt=&quot;Usb Mux Case - UART CLI&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;em&gt;Figure 4: USB Mux HTTP Server.&lt;&#x2F;em&gt;&lt;br &#x2F;&gt;
+&lt;img src=&quot;https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;luk6xff&#x2F;luk6xff.github.io&#x2F;master&#x2F;content&#x2F;other&#x2F;media&#x2F;usbmux&#x2F;usb_mux_http_server.png&quot; alt=&quot;Usb Mux Case - HTTP Server&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+</description>
+      </item>
+    </channel>
+</rss>

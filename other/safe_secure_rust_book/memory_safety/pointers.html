@@ -1,0 +1,552 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Pointers - Safe and Secure Coding in Rust: A Comparative Analysis of Rust and C/C++</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../intro/index.html"><strong aria-hidden="true">1.</strong> Introduction to The Book</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../intro/rust_overview.html"><strong aria-hidden="true">1.1.</strong> Short Rust Overview</a></li><li class="chapter-item expanded "><a href="../intro/safety_features_overview.html"><strong aria-hidden="true">1.2.</strong> Rust Safety Features</a></li><li class="chapter-item expanded "><a href="../intro/example_app.html"><strong aria-hidden="true">1.3.</strong> Example Application</a></li></ol></li><li class="chapter-item expanded "><a href="../memory_safety/index.html"><strong aria-hidden="true">2.</strong> Memory Safety in Rust</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../memory_safety/undefined_behavior.html"><strong aria-hidden="true">2.1.</strong> Undefined Behavior</a></li><li class="chapter-item expanded "><a href="../memory_safety/buffer_overflow.html"><strong aria-hidden="true">2.2.</strong> Buffer Overflow</a></li><li class="chapter-item expanded "><a href="../memory_safety/use_after_free.html"><strong aria-hidden="true">2.3.</strong> Use After Free</a></li><li class="chapter-item expanded "><a href="../memory_safety/pointers.html" class="active"><strong aria-hidden="true">2.4.</strong> Pointers</a></li><li class="chapter-item expanded "><a href="../memory_safety/memory_leaks.html"><strong aria-hidden="true">2.5.</strong> Memory Leaks</a></li><li class="chapter-item expanded "><a href="../memory_safety/double_free.html"><strong aria-hidden="true">2.6.</strong> Double Free</a></li><li class="chapter-item expanded "><a href="../memory_safety/format_string.html"><strong aria-hidden="true">2.7.</strong> Format String</a></li></ol></li><li class="chapter-item expanded "><a href="../type_safety/index.html"><strong aria-hidden="true">3.</strong> Type Safety</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../type_safety/error_handling.html"><strong aria-hidden="true">3.1.</strong> Error Handling</a></li><li class="chapter-item expanded "><a href="../type_safety/type_conversions.html"><strong aria-hidden="true">3.2.</strong> Type Conversions</a></li><li class="chapter-item expanded "><a href="../type_safety/uninitialized_variables.html"><strong aria-hidden="true">3.3.</strong> Uninitialized Variables</a></li><li class="chapter-item expanded "><a href="../type_safety/variable_overflow.html"><strong aria-hidden="true">3.4.</strong> Variable Overflow</a></li></ol></li><li class="chapter-item expanded "><a href="../concurrency/index.html"><strong aria-hidden="true">4.</strong> Concurrency Without Data Races</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concurrency/threads.html"><strong aria-hidden="true">4.1.</strong> Threads</a></li><li class="chapter-item expanded "><a href="../concurrency/message_passing.html"><strong aria-hidden="true">4.2.</strong> Message Passing</a></li><li class="chapter-item expanded "><a href="../concurrency/is_shared_pointer_thread_safe.html"><strong aria-hidden="true">4.3.</strong> Is SharedPtr thread safe</a></li></ol></li><li class="chapter-item expanded "><a href="../unsafe/index.html"><strong aria-hidden="true">5.</strong> Safe Abstraction of Unsafe Code</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../unsafe/unsafe_examples.html"><strong aria-hidden="true">5.1.</strong> Unsafe usage examples</a></li></ol></li><li class="chapter-item expanded "><a href="../rust_ecosystem/index.html"><strong aria-hidden="true">6.</strong> Rust Ecosystem</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../rust_ecosystem/rustup.html"><strong aria-hidden="true">6.1.</strong> Rustup</a></li><li class="chapter-item expanded "><a href="../rust_ecosystem/cargo.html"><strong aria-hidden="true">6.2.</strong> Cargo</a></li><li class="chapter-item expanded "><a href="../rust_ecosystem/security_features.html"><strong aria-hidden="true">6.3.</strong> Security Features</a></li></ol></li><li class="chapter-item expanded "><a href="../cybersecurity_utils/index.html"><strong aria-hidden="true">7.</strong> Cybersecurity Utilities</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cybersecurity_utils/fuzzing.html"><strong aria-hidden="true">7.1.</strong> Fuzzing</a></li><li class="chapter-item expanded "><a href="../cybersecurity_utils/cryptography.html"><strong aria-hidden="true">7.2.</strong> Cryptography</a></li><li class="chapter-item expanded "><a href="../cybersecurity_utils/scanners.html"><strong aria-hidden="true">7.3.</strong> Scanners</a></li><li class="chapter-item expanded "><a href="../cybersecurity_utils/monitoring_tools.html"><strong aria-hidden="true">7.4.</strong> Monitoring Tools</a></li><li class="chapter-item expanded "><a href="../cybersecurity_utils/others.html"><strong aria-hidden="true">7.5.</strong> Others</a></li></ol></li><li class="chapter-item expanded "><a href="../conclusion.html"><strong aria-hidden="true">8.</strong> Conclusion</a></li><li class="chapter-item expanded "><a href="../sources.html"><strong aria-hidden="true">9.</strong> Sources</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Safe and Secure Coding in Rust: A Comparative Analysis of Rust and C/C++</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="problems-with-pointers"><a class="header" href="#problems-with-pointers">Problems with pointers</a></h1>
+<p>Pointers are a powerful feature in programming languages like C and C++, providing the flexibility to directly manipulate memory addresses. They are essential for a range of programming tasks, from creating efficient data structures to interfacing with hardware and operating systems. However, their power comes with significant complexity and potential pitfalls. Improper use of pointers can lead to memory leaks, dangling pointers, null pointer dereferences, and undefined behavior, making programs unstable, insecure, and prone to crashes.</p>
+<h3 id="example-1-dangling-pointer"><a class="header" href="#example-1-dangling-pointer">Example 1: Dangling Pointer</a></h3>
+<p><a href="https://godbolt.org/z/anc5sdbqE">GODBOLT</a></p>
+<ul>
+<li>C</li>
+</ul>
+<pre><code class="language-c">#include "stdio.h"
+
+int main() {
+    int* a = NULL;
+    {
+        int b = 5;
+        a = &amp;b;
+    }
+    int c = 10;
+    // At this point, b goes out of scope, but the memory allocated to it does not
+    printf("a: %d\n", *a);
+
+    return 0;
+}
+</code></pre>
+<ul>
+<li>CPP</li>
+</ul>
+<pre><code class="language-c">#include &lt;iostream&gt;
+#include &lt;memory&gt;
+
+int main() {
+    std::unique_ptr&lt;int&gt; a;
+    {
+        auto b = std::make_unique&lt;int&gt;(5);
+        a = std::move(b);  // Move the ownership of the unique_ptr&lt;int&gt; from 'b' to 'a'
+    } // 'b' goes out of scope here, but its value is safely stored in 'a'
+
+    int _c = 10;
+    // At this point, 'b' has gone out of scope, but its value is safely stored in 'a'
+    std::cout &lt;&lt; *a &lt;&lt; std::endl;
+
+    return 0;
+}
+    
+</code></pre>
+<ul>
+<li>RUST</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust editable">pub fn main() {
+    let a: Box&lt;i32&gt;;
+    {
+        let b = Box::new(5);
+        a = b; // Move the ownership of the Box&lt;i32&gt; from 'b' to 'a'
+    } // 'b' goes out of scope here, but its value is safely stored in 'a'
+
+    let _c = 10;
+    // At this point, 'b' has gone out of scope, but its value is safely stored in 'a'
+    println!("a: {}", a);
+}
+
+
+<span class="boring">// pub fn main() {
+</span><span class="boring">//     let a: *const i32;
+</span><span class="boring">//     {
+</span><span class="boring">//         let b = 5;
+</span><span class="boring">//         a = &amp;b as *const i32; // Assign the address of 'b' to 'a'
+</span><span class="boring">//     } // 'b' goes out of scope here, but the memory allocated to it does not
+</span>
+<span class="boring">//     let c = 10;
+</span><span class="boring">//     // At this point, 'b' has gone out of scope, so 'a' is a dangling pointer
+</span><span class="boring">//     unsafe {
+</span><span class="boring">//         println!("a: {}", *a); // Unsafe: accessing potentially invalid memory
+</span><span class="boring">//     }
+</span><span class="boring">// }</span></code></pre></pre>
+<h3 id="example-2-null-pointer-dereference"><a class="header" href="#example-2-null-pointer-dereference">Example 2: Null Pointer Dereference</a></h3>
+<p><a href="https://godbolt.org/z/5EMEsGar8">GODBOLT</a></p>
+<ul>
+<li>C</li>
+</ul>
+<pre><code class="language-c">#include "stdio.h"
+
+void process(int* ptr) {
+    // Unsafe: dereferencing a null pointer leads to undefined behavior.
+    printf("Data:%d\n", *ptr);
+}
+
+int main() {
+    int* ptr = NULL;
+    process(ptr);
+    return 0;
+}
+</code></pre>
+<ul>
+<li>CPP</li>
+</ul>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;memory&gt;
+#include &lt;optional&gt;
+#include &lt;exceptions&gt;
+
+void process1(std::unique_ptr&lt;int&gt; ptr) {
+    std::cout &lt;&lt; "Data: " &lt;&lt; *ptr &lt;&lt; std::endl;
+}
+
+void process2(std::optional&lt;int&gt; ptr) {
+    int v = ptr.value();
+    std::cout &lt;&lt; "Data: " &lt;&lt; v &lt;&lt; std::endl;
+}
+
+void process3(std::optional&lt;int&gt; ptr) {
+    auto msg = ptr.transform(
+            [](auto p){ return std::format("Data: {}", p); }
+        ).value_or(
+            "No value"
+        );
+    std::cout &lt;&lt; msg &lt;&lt; std::endl;
+}
+
+int main() {
+    std::optional&lt;int&gt; a;
+    try {
+        process2(a);  // will throw an exception
+    }
+    catch (std::bad_optional_access &amp;ex) {
+        std::cout &lt;&lt; "Received a null pointer (None value)." &lt;&lt; std::endl;
+    }
+
+    process3(a); // will work as expected with no exceptions.
+
+    std::unique_ptr&lt;int&gt; b;
+    process1(std::move(b)); // will panic.
+
+    return 0;
+}
+</code></pre>
+<ul>
+<li>RUST</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust editable">fn process(ptr: Option&lt;&amp;i32&gt;) {
+    match ptr {
+        Some(val) =&gt; println!("Data:{}", val),
+        None =&gt; println!("Received a null pointer (None value)."),
+    }
+}
+
+fn main() {
+    let ptr: Option&lt;&amp;i32&gt; = None;
+    process(ptr);
+}</code></pre></pre>
+<h3 id="example-3-dangling-pointer"><a class="header" href="#example-3-dangling-pointer">Example 3: Dangling Pointer</a></h3>
+<p><a href="https://godbolt.org/z/Mb5T48azz">GODBOLT</a></p>
+<ul>
+<li>C</li>
+</ul>
+<pre><code class="language-c">#include "stdio.h"
+#include "stdlib.h"
+
+int* dangling_pointer() {
+    int value = 42;
+    return &amp;value; // Returning address of the local variable, which will be deallocated
+}
+
+int main() {
+    int* ptr = dangling_pointer();
+    printf("Data: %d\n", *ptr); // Undefined behavior: accessing a deallocated stack frame
+    return 0;
+}
+</code></pre>
+<ul>
+<li>CPP</li>
+</ul>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;memory&gt;
+
+std::unique_ptr&lt;int&gt; dangling_pointer() {
+    return std::make_unique&lt;int&gt;(42);
+}
+
+int main() {
+    auto val = dangling_pointer();
+    std::cout &lt;&lt; "Data: " &lt;&lt; *val &lt;&lt; std::endl;  // Safe: `val` owns the data directly.
+}
+
+</code></pre>
+<ul>
+<li>RUST</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust editable">fn dangling_pointer() -&gt; Box&lt;i32&gt; {
+    let value = Box::new(42);
+    value
+}
+
+pub fn main() {
+    let val = dangling_pointer();
+    println!("Data:{}", *val); // Safe: `val` owns the data directly.
+}</code></pre></pre>
+<h3 id="example-4-stdunique_ptr"><a class="header" href="#example-4-stdunique_ptr">Example 4: <code>std::unique_ptr</code></a></h3>
+<p><a href="https://godbolt.org/z/facc59MoM">GODBOLT</a></p>
+<ul>
+<li>CPP</li>
+</ul>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;memory&gt;
+
+void process(std::unique_ptr&lt;int&gt; ptr) {
+    std::cout &lt;&lt; "1) Data: " &lt;&lt; *ptr &lt;&lt; std::endl;
+}
+
+int main() {
+    auto ptr = std::make_unique&lt;int&gt;(10);
+    process(std::move(ptr)); // Ownership is transferred to process()
+
+    // ptr is now moved; accessing *ptr would result in undefined behavior
+    std::cout &lt;&lt; "2) Data: " &lt;&lt; *ptr &lt;&lt; std::endl;
+
+    return 0;
+}
+</code></pre>
+<p>This example demonstrates <code>std::unique_ptr</code> for managing dynamic memory and transferring ownership. When <code>ptr</code> is passed to <code>process</code>, its ownership is moved, preventing <code>ptr</code> from being accidentally used after the transfer, which would lead to undefined behavior.</p>
+<ul>
+<li>RUST</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust editable">fn process(ptr: Box&lt;i32&gt;) {
+    println!("1) Data: {}", ptr);
+}
+
+fn main() {
+    let ptr = Box::new(10);
+    process(ptr); // Ownership is moved to process()
+
+    // Rust's compiler will prevent us from using ptr here since its ownership has been moved
+    // Compile-time error: value borrowed here after move
+    println!("2) Data: {}", ptr);
+}</code></pre></pre>
+<p>Rust naturally avoids these issues through its ownership system. Once a value's ownership is moved, the original variable cannot be used, preventing dangling pointers or undefined behavior. This is enforced at compile time, making Rust programs safer by design.</p>
+<h3 id="example-5-stdshared_ptr"><a class="header" href="#example-5-stdshared_ptr">Example 5: <code>std::shared_ptr</code></a></h3>
+<p><a href="https://godbolt.org/z/dKEax8x4o">GODBOLT</a></p>
+<ul>
+<li>CPP</li>
+</ul>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;memory&gt;
+
+void process(std::shared_ptr&lt;int&gt; ptr) {
+    std::cout &lt;&lt; "Data: " &lt;&lt; *ptr &lt;&lt; " (count: " &lt;&lt; ptr.use_count() &lt;&lt; ")" &lt;&lt; std::endl;
+}
+
+int main() {
+    auto ptr = std::make_shared&lt;int&gt;(10);
+    process(ptr); // Shared ownership allows ptr to be used after being passed
+
+    std::cout &lt;&lt; "Main still owns ptr with data: " &lt;&lt; *ptr &lt;&lt; " (count: " &lt;&lt; ptr.use_count() &lt;&lt; ")" &lt;&lt; std::endl;
+
+    return 0;
+}
+</code></pre>
+<p>This example illustrates the use of <code>std::shared_ptr</code> for shared ownership scenarios. The reference count mechanism ensures that the memory is only freed when the last owner goes out of scope, avoiding premature deallocation.</p>
+<ul>
+<li>RUST</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust editable">use std::rc::Rc;
+
+fn process(ptr: Rc&lt;i32&gt;) {
+    println!("Data: {} (count: {})", ptr, Rc::strong_count(&amp;ptr));
+}
+
+fn main() {
+    let ptr = Rc::new(10);
+    process(ptr.clone()); // The Rc type allows for shared ownership through reference counting
+
+    println!("Main still owns ptr with data: {} (count: {})", ptr, Rc::strong_count(&amp;ptr));
+}</code></pre></pre>
+<p>Rust's <code>Rc&lt;T&gt;</code> type provides shared ownership with reference counting, similar to <code>std::shared_ptr</code>. It ensures that the memory is deallocated only when the last reference goes out of scope. Rust further prevents data races by ensuring <code>Rc&lt;T&gt;</code> is only used in single-threaded scenarios, with <code>Arc&lt;T&gt;</code> available for multi-threaded contexts.</p>
+<h3 id="example-6-moving-stdshared_ptr"><a class="header" href="#example-6-moving-stdshared_ptr">Example 6: Moving <code>std::shared_ptr</code></a></h3>
+<p><a href="https://godbolt.org/z/nMxcTx5ns">GODBOLT</a></p>
+<ul>
+<li>CPP</li>
+</ul>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;memory&gt;
+
+void process(std::shared_ptr&lt;int&gt; ptr) {
+    std::cout &lt;&lt; "Data: " &lt;&lt; *ptr &lt;&lt; " (count: " &lt;&lt; ptr.use_count() &lt;&lt; ")" &lt;&lt; std::endl;
+}
+
+int main() {
+    auto ptr = std::make_shared&lt;int&gt;(10);
+    process(ptr); // Shared ownership allows ptr to be used after being passed
+
+    std::cout &lt;&lt; "Main still owns ptr with data: " &lt;&lt; *ptr &lt;&lt; " (count: " &lt;&lt; ptr.use_count() &lt;&lt; ")" &lt;&lt; std::endl;
+
+    std::shared_ptr&lt;int&gt; moved = std::move(ptr);
+    std::cout &lt;&lt; "Moved use count: " &lt;&lt; *moved &lt;&lt; " (count: " &lt;&lt; moved.use_count() &lt;&lt; ")" &lt;&lt; std::endl;
+    std::cout &lt;&lt; "Original after move: "&lt;&lt; *ptr &lt;&lt; " " &lt;&lt; ptr.use_count() &lt;&lt; std::endl; // ptr is now nullptr, UB
+
+    return 0;
+}
+</code></pre>
+<p>This example demonstrates moving a <code>std::shared_ptr</code> in C++. Moving transfers ownership of the managed object to another <code>std::shared_ptr</code>, effectively nullifying the original pointer without altering the reference count. This operation is useful for avoiding unnecessary atomic operations associated with incrementing and decrementing the reference count, improving performance in certain scenarios.</p>
+<ul>
+<li>RUST</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust editable">use std::rc::Rc;
+
+fn process(ptr: Rc&lt;i32&gt;) {
+    println!("Data: {} (count: {})", *ptr, Rc::strong_count(&amp;ptr));
+}
+
+pub fn main() {
+    let ptr = Rc::new(10);
+    process(Rc::clone(&amp;ptr)); // Simulates shared ownership by increasing the reference count
+
+    println!("Main still owns ptr with data: {} (count: {})", *ptr, Rc::strong_count(&amp;ptr));
+
+    // Note: Direct move in Rust transfers ownership and makes the original variable inaccessible
+    let moved = ptr.clone();
+
+    println!("Moved use count: {} (count: {})", *moved, Rc::strong_count(&amp;moved));
+    // Note: This will NOT compile, ptr is not longer accessible
+    //println!("Original after move: {} (count: {})", *ptr, Rc::strong_count(&amp;ptr));
+}</code></pre></pre>
+<p>In Rust, the concept of moving a <code>Rc&lt;T&gt;</code> doesn't directly translate from C++ because Rust's ownership model ensures safety by preventing access to moved values. Cloning an <code>Rc&lt;T&gt;</code> increases the reference count, simulating shared ownership similar to <code>std::shared_ptr</code>. However, Rust's compile-time checks prevent the use of moved values, avoiding the risk of null pointer dereferences and undefined behavior, showcasing Rust's approach to memory safety.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../memory_safety/use_after_free.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../memory_safety/memory_leaks.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../memory_safety/use_after_free.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../memory_safety/memory_leaks.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+        <script src="../ace.js"></script>
+        <script src="../editor.js"></script>
+        <script src="../mode-rust.js"></script>
+        <script src="../theme-dawn.js"></script>
+        <script src="../theme-tomorrow_night.js"></script>
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

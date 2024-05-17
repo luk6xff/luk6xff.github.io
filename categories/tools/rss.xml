@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+      <title>luk6xff&#x27;s tech blog - tools</title>
+      <link>https://luk6xff.github.io</link>
+      <description>A simple blog theme focused on writing powered by Bulma and Zola based on [deepthought](https:&#x2F;&#x2F;github.com&#x2F;RatanShreshtha&#x2F;DeepThought&#x2F;)</description>
+      <generator>Zola</generator>
+      <language>en</language>
+      <atom:link href="https://luk6xff.github.io/categories/tools/rss.xml" rel="self" type="application/rss+xml"/>
+      <lastBuildDate>Tue, 18 Oct 2022 00:00:00 +0000</lastBuildDate>
+      <item>
+          <title>GEF - A better GDB</title>
+          <pubDate>Tue, 18 Oct 2022 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://luk6xff.github.io/posts/gef-tool/</link>
+          <guid>https://luk6xff.github.io/posts/gef-tool/</guid>
+          <description xml:base="https://luk6xff.github.io/posts/gef-tool/">&lt;h2 id=&quot;a-quick-guide-to-using-gef-for-debugging&quot;&gt;A Quick Guide to Using GEF for Debugging&lt;&#x2F;h2&gt;
+&lt;p&gt;Debugging is like being a detective for software, where you hunt for clues to fix problems in code. GEF makes this detective work easier and more effective, especially when you&#x27;re dealing with tricky bugs or trying to understand how a program really works. Let&#x27;s break down how GEF can help you and how to get started with it.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;what-is-gef&quot;&gt;What is GEF?&lt;&#x2F;h2&gt;
+&lt;p&gt;GEF is a tool that adds extra powers to GDB, the GNU Debugger, which is a tool many developers use to find bugs in their programs. GEF makes GDB more user-friendly and powerful by adding new features, such as better visuals, more information about your program&#x27;s status, and tools to check the security of your software.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;why-should-you-use-gef&quot;&gt;Why Should You Use GEF?&lt;&#x2F;h2&gt;
+&lt;p&gt;GEF makes your life easier when you&#x27;re debugging:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Clearer Information&lt;&#x2F;strong&gt;: It shows you what&#x27;s going on in your program more clearly, making it easier to understand problems.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;Better Control&lt;&#x2F;strong&gt;: You get more ways to stop and inspect your program exactly where and when you need to.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;Find Bugs Faster&lt;&#x2F;strong&gt;: GEF has special features to help spot common mistakes that can lead to bugs.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;getting-started-with-gef&quot;&gt;Getting Started with GEF&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;setting-up&quot;&gt;Setting Up&lt;&#x2F;h3&gt;
+&lt;p&gt;First, you need GDB installed. Then, to add GEF, you run a simple command in your terminal:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#1e1e1e;color:#dcdcdc;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span&gt;bash -c &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d69d85;&quot;&gt;&amp;quot;$(&lt;&#x2F;span&gt;&lt;span&gt;curl -fsSL&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d69d85;&quot;&gt; http:&#x2F;&#x2F;gef.blah.cat&#x2F;sh)&amp;quot;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;This command gets GEF set up with your GDB, and you&#x27;re ready to go!&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;using-gef&quot;&gt;Using GEF&lt;&#x2F;h3&gt;
+&lt;p&gt;To start debugging a program with GEF, you open your terminal and type:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#1e1e1e;color:#dcdcdc;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span&gt;gdb -q .&#x2F;your_program
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;This command starts GDB like usual, but you&#x27;ll notice GEF&#x27;s improvements right away.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;helpful-features&quot;&gt;Helpful Features&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;context&lt;&#x2F;code&gt;&lt;&#x2F;strong&gt;: This shows a snapshot of what&#x27;s happening in your program, like what the computer is currently working on and what data it&#x27;s handling.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;heap&lt;&#x2F;code&gt;&lt;&#x2F;strong&gt;: If your program uses dynamic memory (allocating memory during runtime), this command helps you see how that memory is being used or misused.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;pattern create&lt;&#x2F;code&gt; &#x2F; &lt;code&gt;pattern search&lt;&#x2F;code&gt;&lt;&#x2F;strong&gt;: These commands help you figure out how data is laid out in memory, which is super useful for finding certain types of bugs.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;checksec&lt;&#x2F;code&gt;&lt;&#x2F;strong&gt;: This command checks the security properties of your executable, providing insights into potential vulnerabilities, such as stack canaries or NX bits.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;gef config &#x2F; gef save&lt;&#x2F;code&gt;&lt;&#x2F;strong&gt;: Customize and save your GEF environment to streamline your debugging sessions, tailoring the tool to your needs.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;dereference&lt;&#x2F;code&gt;&lt;&#x2F;strong&gt;: Offers a more intuitive view of pointers and memory addresses, making it easier to navigate through complex structures.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;registers&lt;&#x2F;code&gt;&lt;&#x2F;strong&gt;: Get a quick overview of the current state of CPU registers, which is crucial for low-level debugging&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;debugging-with-gef-a-quick-example&quot;&gt;Debugging with GEF: A Quick Example&lt;&#x2F;h3&gt;
+&lt;p&gt;Imagine you have a program that&#x27;s not working right, and you suspect it&#x27;s due to a bug where the program is trying to access memory it shouldn&#x27;t. Here&#x27;s how you might use GEF to find that bug:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Start GEF with your program&lt;&#x2F;strong&gt;: &lt;code&gt;gdb -q .&#x2F;buggy_program&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;Set a breakpoint&lt;&#x2F;strong&gt;: This is like telling GEF, &amp;quot;Pause here; I want to check something.&amp;quot; You can do this with the command &lt;code&gt;break main&lt;&#x2F;code&gt; if you want to stop right when the main function starts.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;Run the program&lt;&#x2F;strong&gt;: Just type &lt;code&gt;run&lt;&#x2F;code&gt; and hit enter. The program will start and then pause where you set the breakpoint.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;Step through the code&lt;&#x2F;strong&gt;: Use the &lt;code&gt;next&lt;&#x2F;code&gt; command to go through your program one line at a time. Watch the &lt;code&gt;context&lt;&#x2F;code&gt; information GEF gives you to see what the program is doing.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;Inspect memory&lt;&#x2F;strong&gt;: If you think the bug is happening because the program is accessing memory it shouldn&#x27;t, you can use commands like &lt;code&gt;x&#x2F;gx&lt;&#x2F;code&gt;, &lt;code&gt;heap chunks&lt;&#x2F;code&gt;, and &lt;code&gt;search-pattern&lt;&#x2F;code&gt; to explore and manipulate memory at runtime, helping uncover issues like memory leaks or corruption.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;Scripting&lt;&#x2F;strong&gt;: Automate repetitive analysis tasks or implement custom logic for complex debugging scenarios using Python scripts.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;Through this process, GEF gives you a clearer view of what&#x27;s happening inside your program, helping you spot and fix the bug.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;real-world-example&quot;&gt;Real world example&lt;&#x2F;h2&gt;
+&lt;p&gt;Let&#x27;s try to use &lt;code&gt;gef&lt;&#x2F;code&gt; in action:
+I have a following code simulating buffer overflow issue:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;cpp&quot; style=&quot;background-color:#1e1e1e;color:#dcdcdc;&quot; class=&quot;language-cpp &quot;&gt;&lt;code class=&quot;language-cpp&quot; data-lang=&quot;cpp&quot;&gt;&lt;span style=&quot;color:#9b9b9b;&quot;&gt;#include &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d69d85;&quot;&gt;&amp;lt;iostream&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9b9b9b;&quot;&gt;#include &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d69d85;&quot;&gt;&amp;lt;string&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9b9b9b;&quot;&gt;#include &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d69d85;&quot;&gt;&amp;lt;cstring&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9b9b9b;&quot;&gt;#include &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d69d85;&quot;&gt;&amp;lt;limits&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#569cd6;&quot;&gt;void &lt;&#x2F;span&gt;&lt;span&gt;admin_panel() {
+&lt;&#x2F;span&gt;&lt;span&gt;    std::cout &amp;lt;&amp;lt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d69d85;&quot;&gt;&amp;quot;&amp;lt;&amp;lt;&amp;lt; Setting up Admin Panel &amp;gt;&amp;gt;&amp;gt;&amp;quot; &lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;&amp;lt; std::endl;
+&lt;&#x2F;span&gt;&lt;span&gt;    std::system(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d69d85;&quot;&gt;&amp;quot;&#x2F;bin&#x2F;sh&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#569cd6;&quot;&gt;void &lt;&#x2F;span&gt;&lt;span&gt;store_credentials_into_db(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#569cd6;&quot;&gt;const char* &lt;&#x2F;span&gt;&lt;span&gt;buf, size_t buf_len) {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#569cd6;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;(buf == &lt;&#x2F;span&gt;&lt;span style=&quot;color:#569cd6;&quot;&gt;nullptr &lt;&#x2F;span&gt;&lt;span&gt;|| buf_len == &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b5cea8;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#569cd6;&quot;&gt;return&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#608b4e;&quot;&gt;&#x2F;&#x2F; Store data ...
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#569cd6;&quot;&gt;void &lt;&#x2F;span&gt;&lt;span&gt;process_credentials() {
+&lt;&#x2F;span&gt;&lt;span&gt;    std::cout &amp;lt;&amp;lt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d69d85;&quot;&gt;&amp;quot;&amp;gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;    std::flush(std::cout);
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#569cd6;&quot;&gt;char&lt;&#x2F;span&gt;&lt;span&gt; buffer[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b5cea8;&quot;&gt;128&lt;&#x2F;span&gt;&lt;span&gt;];
+&lt;&#x2F;span&gt;&lt;span&gt;    std::cin &amp;gt;&amp;gt; buffer;
+&lt;&#x2F;span&gt;&lt;span&gt;    buffer[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#569cd6;&quot;&gt;sizeof&lt;&#x2F;span&gt;&lt;span&gt;(buffer) - &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b5cea8;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;] = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d69d85;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e3bbab;&quot;&gt;\0&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d69d85;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;    store_credentials_into_db(buffer, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#569cd6;&quot;&gt;sizeof&lt;&#x2F;span&gt;&lt;span&gt;(buffer));
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#569cd6;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span&gt;main() {
+&lt;&#x2F;span&gt;&lt;span&gt;    process_credentials();
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#569cd6;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b5cea8;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Debugging the provided C++ code with GEF (GDB Enhanced Features) will allow you to understand the execution flow, examine variables, and potentially identify vulnerabilities or logical errors. Below are steps on how to debug this C++ program using GEF, focusing on key points like setting breakpoints, stepping through the code, and inspecting the memory and variables.&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;step-1-compile-the-program-with-debugging-information&quot;&gt;Step 1: Compile the Program with Debugging Information&lt;&#x2F;h4&gt;
+&lt;p&gt;First, compile the C++ program (full example available:&lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;luk6xff&#x2F;luk6xff.github.io&#x2F;tree&#x2F;master&#x2F;content&#x2F;other&#x2F;code&#x2F;gef_tool&quot;&gt;HERE&lt;&#x2F;a&gt;): with debugging information enabled (&lt;code&gt;-g&lt;&#x2F;code&gt;) and disable optimizations (&lt;code&gt;-O0&lt;&#x2F;code&gt;) to ensure that you can inspect the source code as is during debugging.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#1e1e1e;color:#dcdcdc;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span&gt;cd gef_tool &lt;&#x2F;span&gt;&lt;span style=&quot;color:#569cd6;&quot;&gt;&amp;amp;&amp;amp; &lt;&#x2F;span&gt;&lt;span&gt;.&#x2F;build.sh
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h4 id=&quot;step-2-start-and-analyze-gef-with-the-program&quot;&gt;Step 2: Start and analyze GEF with the Program&lt;&#x2F;h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Open a terminal and start GEF with your compiled program:&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#1e1e1e;color:#dcdcdc;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span&gt;gdb -q .&#x2F;build&#x2F;credentials_demo
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;ul&gt;
+&lt;li&gt;Check the binary security flags by &lt;code&gt;checksec&lt;&#x2F;code&gt;:&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#1e1e1e;color:#dcdcdc;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span&gt;checksec
+&lt;&#x2F;span&gt;&lt;span&gt;    Canary                        : ✘
+&lt;&#x2F;span&gt;&lt;span&gt;    NX                            : ✘
+&lt;&#x2F;span&gt;&lt;span&gt;    PIE                           : ✘
+&lt;&#x2F;span&gt;&lt;span&gt;    Fortify                       : ✘
+&lt;&#x2F;span&gt;&lt;span&gt;    RelRO                         : Partial
+&lt;&#x2F;span&gt;&lt;span&gt;elf-info
+&lt;&#x2F;span&gt;&lt;span&gt;    Magic                 : 7f 45 4c 46
+&lt;&#x2F;span&gt;&lt;span&gt;    Class                 : 0x2 - ELF_64_BITS
+&lt;&#x2F;span&gt;&lt;span&gt;    Endianness            : 0x1 - LITTLE_ENDIAN
+&lt;&#x2F;span&gt;&lt;span&gt;    Version               : 0x1
+&lt;&#x2F;span&gt;&lt;span&gt;    OS ABI                : 0x0 - SYSTEMV
+&lt;&#x2F;span&gt;&lt;span&gt;    ABI Version           : 0x0
+&lt;&#x2F;span&gt;&lt;span&gt;    Type                  : 0x3 - ET_DYN
+&lt;&#x2F;span&gt;&lt;span&gt;    Machine               : 0x3e - X86_64
+&lt;&#x2F;span&gt;&lt;span&gt;    Program Header Table  : 0x0000000000000040
+&lt;&#x2F;span&gt;&lt;span&gt;    Section Header Table  : 0x0000000000011150
+&lt;&#x2F;span&gt;&lt;span&gt;    Header Table          : 0x0000000000000040
+&lt;&#x2F;span&gt;&lt;span&gt;    ELF Version           : 0x1
+&lt;&#x2F;span&gt;&lt;span&gt;    Header size           : 64 (0x40)
+&lt;&#x2F;span&gt;&lt;span&gt;    Entry point           : 0x0000000000001220
+&lt;&#x2F;span&gt;&lt;span&gt;    ...
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h4 id=&quot;step-3-set-breakpoints&quot;&gt;Step 3: Set Breakpoints&lt;&#x2F;h4&gt;
+&lt;p&gt;Set breakpoints at key functions to inspect their behavior. For instance, you might want to break at &lt;code&gt;process_credentials&lt;&#x2F;code&gt; to observe how input is handled and at &lt;code&gt;admin_panel&lt;&#x2F;code&gt; to see if it&#x27;s possible to reach that function.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#1e1e1e;color:#dcdcdc;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span&gt;(gef) b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#569cd6;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;(&amp;amp;process_credentials)
+&lt;&#x2F;span&gt;&lt;span&gt;(gef) b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#569cd6;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;(&amp;amp;admin_panel)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h4 id=&quot;step-4-run-the-program&quot;&gt;Step 4: Run the Program&lt;&#x2F;h4&gt;
+&lt;p&gt;Start the program within GEF by typing &lt;code&gt;r&lt;&#x2F;code&gt; or &lt;code&gt;run&lt;&#x2F;code&gt;. The program will start and stop at the first breakpoint.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#1e1e1e;color:#dcdcdc;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span&gt;r
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;step-5-after-reaching-breakpoint-analyze-gef-context-command&quot;&gt;Step 5: After reaching breakpoint, analyze gef &lt;code&gt;context&lt;&#x2F;code&gt; command&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;luk6xff&#x2F;luk6xff.github.io&#x2F;master&#x2F;content&#x2F;other&#x2F;media&#x2F;gef_tool&#x2F;gef_context.png&quot; alt=&quot;Time Planner app&quot; &#x2F;&gt;&lt;br &#x2F;&gt;
+&lt;em&gt;Figure 1: gef context command - more details here: https:&#x2F;&#x2F;hugsy.github.io&#x2F;gef&#x2F;commands&#x2F;context&#x2F;&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;step-6-find-the-ret-address-of-the-process-credentials-function&quot;&gt;Step 6: Find the &lt;code&gt;ret&lt;&#x2F;code&gt; address of the &lt;code&gt;process_credentials&lt;&#x2F;code&gt; function&lt;&#x2F;h3&gt;
+&lt;p&gt;When brakpoint is reached, print the address of the stack pointer which contain the return address of &lt;code&gt;process_credentials&lt;&#x2F;code&gt; function. It will be used to overrite it with &lt;code&gt;admin_panel&lt;&#x2F;code&gt; address.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#1e1e1e;color:#dcdcdc;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span&gt;(gef) i r $rsp
+&lt;&#x2F;span&gt;&lt;span&gt;    rsp            0x7fffffffd838      0x7fffffffd838
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h4 id=&quot;step-7-step-through-the-code&quot;&gt;Step 7: Step Through the Code&lt;&#x2F;h4&gt;
+&lt;p&gt;Use the &lt;code&gt;next&lt;&#x2F;code&gt; or &lt;code&gt;n&lt;&#x2F;code&gt; command to step through the code line by line. If you want to step into functions (like &lt;code&gt;store_credentials_into_db&lt;&#x2F;code&gt;), use &lt;code&gt;step&lt;&#x2F;code&gt; or &lt;code&gt;s&lt;&#x2F;code&gt; instead.&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;step-8-inspect-variables-and-memory&quot;&gt;Step 8: Inspect Variables and Memory&lt;&#x2F;h4&gt;
+&lt;p&gt;As you reach the &lt;code&gt;std::cin&lt;&#x2F;code&gt; call, you can inspect the contents of &lt;code&gt;buffer&lt;&#x2F;code&gt; and other variables:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;If you want to dereference all the stack entries inside a function context (on a 64bit architecture): &lt;code&gt;p ($rbp - $rsp)&#x2F;8&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;Find the memory address of the &lt;code&gt;buffer&lt;&#x2F;code&gt; array: &lt;code&gt;p &amp;amp;buffer[0]&lt;&#x2F;code&gt;= 0x7fffffffd7b0&lt;&#x2F;li&gt;
+&lt;li&gt;To examine the content of &lt;code&gt;buffer&lt;&#x2F;code&gt;: &lt;code&gt;x&#x2F;128c buffer&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h4 id=&quot;step-9-continue-execution&quot;&gt;Step 9: Continue Execution&lt;&#x2F;h4&gt;
+&lt;p&gt;After inspecting the variables at the first breakpoint, continue execution to see if the second breakpoint (&lt;code&gt;admin_panel&lt;&#x2F;code&gt;) is hit.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#1e1e1e;color:#dcdcdc;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span&gt;(gef) continue
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h4 id=&quot;step-10-experiment-with-inputs&quot;&gt;Step 10: Experiment with Inputs&lt;&#x2F;h4&gt;
+&lt;p&gt;If you&#x27;re analyzing the program for vulnerabilities, you might try inputs that could potentially overflow &lt;code&gt;buffer&lt;&#x2F;code&gt; or otherwise manipulate the program&#x27;s flow. Run&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;step-11-utilize-gef-commands-for-deeper-analysis&quot;&gt;Step 11: Utilize GEF Commands for Deeper Analysis&lt;&#x2F;h4&gt;
+&lt;p&gt;GEF provides commands that are particularly useful for security analysis:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pattern create&lt;&#x2F;code&gt; and &lt;code&gt;pattern search&lt;&#x2F;code&gt; to test for buffer overflows.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;heap bins&lt;&#x2F;code&gt; to inspect the heap state if dynamic memory allocation is used elsewhere in the program.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h4 id=&quot;step-12-quit-gef&quot;&gt;Step 12: Quit GEF&lt;&#x2F;h4&gt;
+&lt;p&gt;Once you&#x27;re done debugging, you can quit GEF with the &lt;code&gt;quit&lt;&#x2F;code&gt; command.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;more-commands&quot;&gt;More commands&lt;&#x2F;h3&gt;
+&lt;p&gt;All the available GEF commands available &lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;hugsy.github.io&#x2F;gef-extras&#x2F;commands&#x2F;assemble&#x2F;&quot;&gt;here&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;bonus&quot;&gt;Bonus&lt;&#x2F;h3&gt;
+&lt;p&gt;I&#x27;ve also developed an exploit for the provided code using insights from gef. You can locate it &lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;luk6xff&#x2F;luk6xff.github.io&#x2F;tree&#x2F;master&#x2F;content&#x2F;other&#x2F;code&#x2F;gef_tool&#x2F;exploit_cpp.py&quot;&gt;here&lt;&#x2F;a&gt;. Please remember to customize the addresses, specifically process_credentials_ret_addr and buffer_addr, to match those on your system.&amp;quot;&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;&#x2F;h2&gt;
+&lt;p&gt;GEF is like a supercharged version of GDB that makes debugging less of a headache. It&#x27;s packed with features that give you a clearer view of your program and help you find and fix bugs more efficiently. Whether you&#x27;re a new developer or have been coding for years, GEF is a valuable tool to add to your software debugging toolkit.&lt;&#x2F;p&gt;
+&lt;p&gt;Happy hacking!&lt;&#x2F;p&gt;
+</description>
+      </item>
+    </channel>
+</rss>

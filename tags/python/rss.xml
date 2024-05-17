@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+      <title>luk6xff&#x27;s tech blog - python</title>
+      <link>https://luk6xff.github.io</link>
+      <description>A simple blog theme focused on writing powered by Bulma and Zola based on [deepthought](https:&#x2F;&#x2F;github.com&#x2F;RatanShreshtha&#x2F;DeepThought&#x2F;)</description>
+      <generator>Zola</generator>
+      <language>en</language>
+      <atom:link href="https://luk6xff.github.io/tags/python/rss.xml" rel="self" type="application/rss+xml"/>
+      <lastBuildDate>Thu, 23 Nov 2023 00:00:00 +0000</lastBuildDate>
+      <item>
+          <title>Building a Time Planner with Python and PySide6</title>
+          <pubDate>Thu, 23 Nov 2023 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://luk6xff.github.io/posts/time-planner-app/</link>
+          <guid>https://luk6xff.github.io/posts/time-planner-app/</guid>
+          <description xml:base="https://luk6xff.github.io/posts/time-planner-app/">&lt;h3 id=&quot;app-interface-overview&quot;&gt;App Interface Overview&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;luk6xff&#x2F;luk6xff.github.io&#x2F;master&#x2F;content&#x2F;other&#x2F;media&#x2F;time_planner_app&#x2F;time_planner_1.png&quot; alt=&quot;Time Planner app&quot; &#x2F;&gt;&lt;br &#x2F;&gt;
+&lt;em&gt;Figure 1: Time Planner app main widget.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;luk6xff&#x2F;luk6xff.github.io&#x2F;master&#x2F;content&#x2F;other&#x2F;media&#x2F;time_planner_app&#x2F;time_planner_2.png&quot; alt=&quot;Task configuration widget&quot; &#x2F;&gt;&lt;br &#x2F;&gt;
+&lt;em&gt;Figure 2: Task configuration widget.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;introduction&quot;&gt;Introduction&lt;&#x2F;h3&gt;
+&lt;p&gt;Have you ever felt overwhelmed by a busy schedule? This blog post explores the creation of a simple Time Planner app, developed in just a few hours to meet my wife&#x27;s needs for organizing her time spent on tasks. It utilizes Python&#x27;s powerful GUI framework, &lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;doc.qt.io&#x2F;qtforpython-6&#x2F;&quot;&gt;PySide6&lt;&#x2F;a&gt;, to achieve this.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;source-code-and-build-instructions&quot;&gt;Source Code and Build Instructions&lt;&#x2F;h3&gt;
+&lt;p&gt;The repository is, as always, available on &lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;luk6xff&#x2F;TimePlanner&quot;&gt;my GitHub&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;pyside6-in-action&quot;&gt;PySide6 in Action&lt;&#x2F;h3&gt;
+&lt;p&gt;PySide6 is the official Python module from the Qt for Python project, offering access to the complete Qt 6.0+ framework and excelling in creating user-friendly interfaces. Here&#x27;s how it enhances the TimePlanner:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Intuitive Layouts:&lt;&#x2F;strong&gt; PySide6&#x27;s widgets and layout managers facilitate the creation of a clear and organized interface, with task lists, scheduling components, and priority indicators neatly arranged for easy interaction.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;Seamless User Interaction:&lt;&#x2F;strong&gt; Featuring buttons, text boxes, and other interactive elements, it enables users to add, edit, or mark tasks as complete effortlessly.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;Cross-Platform Compatibility:&lt;&#x2F;strong&gt; One of its major advantages is ensuring that the app runs smoothly on both Windows and Linux, providing flexibility for users on different operating systems.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;development-process&quot;&gt;Development Process&lt;&#x2F;h3&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Conceptualization:&lt;&#x2F;strong&gt; The goal was to develop an app that allows users to add tasks to a daily list, store them, and start counting the time spent on a selected task upon clicking it.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;Environment Setup:&lt;&#x2F;strong&gt; The setup involves installing Python, PySide6, Pillow, and PyInstaller libraries. The development was primarily focused on Windows, as that&#x27;s my wife&#x27;s main operating system. To set up, simply run the following commands:&lt;pre data-lang=&quot;ps1&quot; style=&quot;background-color:#1e1e1e;color:#dcdcdc;&quot; class=&quot;language-ps1 &quot;&gt;&lt;code class=&quot;language-ps1&quot; data-lang=&quot;ps1&quot;&gt;&lt;span&gt;.\setup.ps1
+&lt;&#x2F;span&gt;&lt;span&gt;.\venv\Scripts\Activate.ps1
+&lt;&#x2F;span&gt;&lt;span&gt;pip install -r requirements.txt
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;GUI Design:&lt;&#x2F;strong&gt; The UI was entirely crafted manually, without the use of the Qt Designer tool, in the method &lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;luk6xff&#x2F;TimePlanner&#x2F;blob&#x2F;master&#x2F;main.py#L60&quot;&gt;&lt;code&gt;init_ui&lt;&#x2F;code&gt;&lt;&#x2F;a&gt;.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;Functionality Implementation:&lt;&#x2F;strong&gt; The rest of the logic is straightforwardly implemented as part of the &lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;luk6xff&#x2F;TimePlanner&#x2F;blob&#x2F;master&#x2F;main.py#L25&quot;&gt;&lt;code&gt;TimePlanner&lt;&#x2F;code&gt;&lt;&#x2F;a&gt; class, which inherits from &lt;code&gt;QWidget&lt;&#x2F;code&gt;.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;Storage:&lt;&#x2F;strong&gt; The history of tasks is stored in a &lt;code&gt;json&lt;&#x2F;code&gt; file named &lt;code&gt;tasks.json&lt;&#x2F;code&gt; in the root folder of your script or executable file.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;Local App Build:&lt;&#x2F;strong&gt; To build the app locally, simply run:&lt;pre data-lang=&quot;ps1&quot; style=&quot;background-color:#1e1e1e;color:#dcdcdc;&quot; class=&quot;language-ps1 &quot;&gt;&lt;code class=&quot;language-ps1&quot; data-lang=&quot;ps1&quot;&gt;&lt;span&gt;.\run.ps1
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;Standalone Executable Deployment:&lt;&#x2F;strong&gt; A statically linked PE executable can be created using the &lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;pyinstaller.org&#x2F;en&#x2F;stable&#x2F;&quot;&gt;PyInstaller tool&lt;&#x2F;a&gt; by running the &lt;code&gt;.\deploy.ps1&lt;&#x2F;code&gt; command.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;h3 id=&quot;benefits-and-impact&quot;&gt;Benefits and Impact&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Enhanced Organization:&lt;&#x2F;strong&gt; Tasks are clearly listed, prioritized, and easily accessible, fostering better focus and reducing mental clutter.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;Effective Time Management:&lt;&#x2F;strong&gt; Visual task scheduling aids in allocating time efficiently and avoiding last-minute rushes.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;Time Control:&lt;&#x2F;strong&gt; The app provides precise tracking of time spent on tasks, which can be useful for filling out timesheets in your company.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;future-enhancements&quot;&gt;Future Enhancements&lt;&#x2F;h3&gt;
+&lt;p&gt;The app has significant potential for further development, including:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Notifications:&lt;&#x2F;strong&gt; Using PySide6 to implement reminders or alerts for upcoming tasks or deadlines, ensuring important tasks are not overlooked.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;Collaboration Features:&lt;&#x2F;strong&gt; Potential for shared task lists or calendars, facilitating teamwork and project management.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;Data Synchronization:&lt;&#x2F;strong&gt; Exploring options for syncing task data across devices for seamless access from anywhere.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;&#x2F;h3&gt;
+&lt;p&gt;The TimePlanner app demonstrates the capabilities of Python and PySide6 in quickly creating user-friendly and effective tools. Originally developed for personal use, its core features can benefit anyone looking to optimize their schedule and improve time management skills.&lt;&#x2F;p&gt;
+</description>
+      </item>
+    </channel>
+</rss>
