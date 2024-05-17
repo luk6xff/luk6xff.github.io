@@ -10,3 +10,4 @@
 - [Rust for C++ Programmers](https://github.com/nrc/r4cppp)
 - [The Cargo Book](https://doc.rust-lang.org/cargo/index.html)
 - [Easy Rust](https://fongyoong.github.io/easy_rust/)
+- [Rust-Exercises](https://rust-exercises.com/)
